@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SignCloud</string>
+    <string name="app_tagline">Better sign experience for you</string>
 </resources>
