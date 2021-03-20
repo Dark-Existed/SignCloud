@@ -3,10 +3,14 @@ package com.de.signcloud.signinsignup
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusState
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onSizeChanged
@@ -21,8 +25,12 @@ import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
 import com.de.signcloud.ui.theme.SignCloudTheme
 
+sealed class WelcomeEvent {
+    data class SignInSignUp(val phone: String) : WelcomeEvent()
+}
+
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(onEvent: (WelcomeEvent) -> Unit) {
 
     var brandingBottom by remember { mutableStateOf(0f) }
     var showBranding by remember { mutableStateOf(true) }
@@ -57,6 +65,8 @@ fun WelcomeScreen() {
                     }
             )
             SignInCreateAccount(
+                onEvent = onEvent,
+                onFocusChange = { focused -> showBranding = !focused },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
@@ -120,8 +130,11 @@ private fun Logo(
 
 @Composable
 private fun SignInCreateAccount(
+    onEvent: (WelcomeEvent) -> Unit,
+    onFocusChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val phoneState = remember { PhoneState() }
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(
@@ -131,16 +144,27 @@ private fun SignInCreateAccount(
                 modifier = Modifier.padding(vertical = 24.dp)
             )
         }
+        val onSubmit = {
+            if (phoneState.isValid) {
+//                onEvent(WelcomeEvent.SignInSignUp(phoneState.text))
+            } else {
+                phoneState.enableShowErrors()
+            }
+        }
+        onFocusChange(phoneState.isFocused)
+        Phone(phoneState = phoneState, imeAction = ImeAction.Done, onImeAction = onSubmit)
+        Button(
+            onClick = onSubmit,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 28.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.user_continue),
+                style = MaterialTheme.typography.subtitle2
+            )
+        }
     }
-}
-
-
-@Composable
-fun Phone(
-    imeAction: ImeAction = ImeAction.Next,
-    onImeAction: () -> Unit = {}
-) {
-//    OutlinedTextField(value = , onValueChange = { /*TODO*/ })
 }
 
 
@@ -148,7 +172,7 @@ fun Phone(
 @Composable
 fun WelComeScreenPreview() {
     SignCloudTheme {
-        WelcomeScreen()
+        WelcomeScreen {}
     }
 }
 
@@ -157,6 +181,6 @@ fun WelComeScreenPreview() {
 @Composable
 fun WelComeScreenPreviewDark() {
     SignCloudTheme(darkTheme = true) {
-        WelcomeScreen()
+        WelcomeScreen {}
     }
 }

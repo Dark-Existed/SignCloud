@@ -23,7 +23,7 @@ class WelcomeFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
-                    WelcomeScreen()
+                    WelcomeScreen {}
                 }
             }
         }
