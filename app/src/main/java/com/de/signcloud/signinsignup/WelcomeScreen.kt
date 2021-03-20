@@ -13,10 +13,13 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
+import com.de.signcloud.ui.theme.SignCloudTheme
 
 @Composable
 fun WelcomeScreen() {
@@ -53,6 +56,11 @@ fun WelcomeScreen() {
                         }
                     }
             )
+            SignInCreateAccount(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+            )
         }
     }
 }
@@ -73,7 +81,9 @@ private fun Modifier.brandingPreferredHeight(
 
 @Composable
 fun Branding(modifier: Modifier = Modifier) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier.wrapContentHeight(align = Alignment.CenterVertically)
+    ) {
         Logo(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
@@ -109,10 +119,44 @@ private fun Logo(
 }
 
 @Composable
-private fun SignInCreateAccount() {
-    Column() {
+private fun SignInCreateAccount(
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-//            Text(text = stringResource(id = ))
+            Text(
+                text = stringResource(id = R.string.sign_in_create_account),
+                style = MaterialTheme.typography.subtitle2,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(vertical = 24.dp)
+            )
         }
+    }
+}
+
+
+@Composable
+fun Phone(
+    imeAction: ImeAction = ImeAction.Next,
+    onImeAction: () -> Unit = {}
+) {
+//    OutlinedTextField(value = , onValueChange = { /*TODO*/ })
+}
+
+
+@Preview
+@Composable
+fun WelComeScreenPreview() {
+    SignCloudTheme {
+        WelcomeScreen()
+    }
+}
+
+
+@Preview
+@Composable
+fun WelComeScreenPreviewDark() {
+    SignCloudTheme(darkTheme = true) {
+        WelcomeScreen()
     }
 }

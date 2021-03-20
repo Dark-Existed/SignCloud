@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">SignCloud</string>
     <string name="app_tagline">Better sign experience for you</string>
-    <string name="sign_in_create_account">Sign in or create an account</string>
+    <string name="sign_in_create_account">登入或创建账号</string>
 </resources>
