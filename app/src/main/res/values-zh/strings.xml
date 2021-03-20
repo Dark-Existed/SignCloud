@@ -4,4 +4,5 @@
     <string name="sign_in_create_account">登入或创建账号</string>
     <string name="phone">手机号码</string>
     <string name="user_continue">下一步</string>
+    <string name="invalid_phone">手机号码有误: </string>
 </resources>
