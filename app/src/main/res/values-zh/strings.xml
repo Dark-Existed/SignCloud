@@ -5,4 +5,8 @@
     <string name="phone">手机号码</string>
     <string name="user_continue">下一步</string>
     <string name="invalid_phone">手机号码有误: </string>
+    <string name="back">返回</string>
+    <string name="create_account">创建账户</string>
+    <string name="show_password">显示密码</string>
+    <string name="hide_password">隐藏密码</string>
 </resources>
