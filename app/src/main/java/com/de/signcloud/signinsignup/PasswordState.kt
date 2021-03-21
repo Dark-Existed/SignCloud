@@ -21,6 +21,7 @@ private fun passwordAndConfirmationValid(password: String, confirmedPassword: St
 }
 
 private fun isPasswordValid(password: String): Boolean {
+    // TODO: 2021/3/21 add regex to check password complexity
     return password.length > 3
 }
 

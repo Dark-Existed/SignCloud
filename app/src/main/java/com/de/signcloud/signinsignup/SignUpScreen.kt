@@ -4,8 +4,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -54,15 +55,42 @@ fun SignUpContent(
         val passwordFocusRequest = remember { FocusRequester() }
         val confirmationPasswordFocusRequest = remember { FocusRequester() }
         val phoneState = remember { PhoneState() }
+
         Phone(phoneState, onImeAction = {passwordFocusRequest.requestFocus()})
         Spacer(modifier = Modifier.height(16.dp))
-//        Password(
-//            label = stringResource(id = R.string.password),
-//            passwordState = passwordState,
-//            imeAction = ImeAction.Next,
-//            onImeAction = { confirmationPasswordFocusRequest.requestFocus() },
-//            modifier = Modifier.focusRequester(passwordFocusRequest)
-//        )
+
+        val passwordState = remember { PasswordState() }
+        Password(
+            label = stringResource(id = R.string.password),
+            passwordState = passwordState,
+            imeAction = ImeAction.Next,
+            onImeAction = { confirmationPasswordFocusRequest.requestFocus() },
+            modifier = Modifier.focusRequester(passwordFocusRequest)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        val confirmPasswordState = remember { ConfirmPasswordState(passwordState = passwordState) }
+        Password(
+            label = stringResource(id = R.string.confirm_password),
+            passwordState = confirmPasswordState,
+            onImeAction = { onSignUpSubmitted(phoneState.text, passwordState.text) },
+            modifier = Modifier.focusRequester(confirmationPasswordFocusRequest)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+            Text(
+                text = stringResource(id = R.string.terms_and_conditions),
+                style = MaterialTheme.typography.caption
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = { onSignUpSubmitted(phoneState.text, passwordState.text) },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = phoneState.isValid &&
+                    passwordState.isValid && confirmPasswordState.isValid
+        ) {
+            Text(text = stringResource(id = R.string.create_account))
+        }
     }
 }
 

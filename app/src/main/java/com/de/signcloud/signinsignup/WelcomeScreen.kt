@@ -146,7 +146,7 @@ private fun SignInCreateAccount(
         }
         val onSubmit = {
             if (phoneState.isValid) {
-//                onEvent(WelcomeEvent.SignInSignUp(phoneState.text))
+                onEvent(WelcomeEvent.SignInSignUp(phoneState.text))
             } else {
                 phoneState.enableShowErrors()
             }

@@ -15,18 +15,18 @@ object UserRepository {
     val user: User
         get() = _user
 
-    @Suppress("UNUSED_PARAMETER")
+
     fun signIn(phone: String, password: String) {
         _user = User.LoggedInUser(phone)
     }
 
-    @Suppress("UNUSED_PARAMETER")
+
     fun signUp(phone: String, password: String) {
         _user = User.LoggedInUser(phone)
     }
 
     fun isKnownUserPhone(phone: String): Boolean {
         // if the phone contains "sign up" we consider it unknown
-        return !phone.contains("signup")
+        return !phone.contains("17")
     }
 }

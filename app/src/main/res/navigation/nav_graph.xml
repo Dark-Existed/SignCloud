@@ -3,10 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
     app:startDestination="@+id/welcome_fragment">
-
     <fragment
         android:id="@+id/welcome_fragment"
         android:name="com.de.signcloud.signinsignup.WelcomeFragment"
         android:label="Welcome"/>
-
+    <fragment
+        android:id="@+id/sign_in_fragment"
+        android:name="com.de.signcloud.signinsignup.SignInFragment"
+        android:label="Sign In"/>
+    <fragment
+        android:id="@+id/sign_up_fragment"
+        android:name="com.de.signcloud.signinsignup.SignUpFragment"
+        android:label="Sign Up"/>
 </navigation>
