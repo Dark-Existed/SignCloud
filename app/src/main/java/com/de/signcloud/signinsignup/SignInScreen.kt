@@ -19,7 +19,6 @@ import com.de.signcloud.ui.theme.SignCloudTheme
 
 sealed class SignInEvent {
     data class SignIn(val phone: String, val password: String) : SignInEvent()
-    object SignUp : SignInEvent()
     object NavigateBack : SignInEvent()
 }
 
