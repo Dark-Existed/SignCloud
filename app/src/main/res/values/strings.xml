@@ -4,7 +4,7 @@
     <string name="sign_in_create_account">Sign in or create an account</string>
     <string name="phone">Phone</string>
     <string name="password">Password</string>
-    <string name="sign_in">Sign in</string>
+    <string name="sign_in">Sign In</string>
     <string name="confirm_password">Confirm password</string>
     <string name="user_continue">CONTINUE</string>
     <string name="invalid_phone">Invalid phone: </string>
@@ -16,4 +16,6 @@
     <string name="terms_and_conditions">By continuing, you agree to our Terms of Service. We’ll
         handle your data according to our Privacy Policy.</string>
     <string name="validate_code">Validate Code</string>
+    <string name="sign_in_with_password">Password</string>
+    <string name="sign_in_with_validate_code">Validate Code</string>
 </resources>

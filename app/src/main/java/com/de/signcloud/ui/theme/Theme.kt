@@ -5,18 +5,18 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
-private val DarkColorPalette = darkColors(
+val DarkColorPalette = darkColors(
     primary = Teal200,
     primaryVariant = Teal700,
     secondary = Purple200
 )
 
-private val LightColorPalette = lightColors(
+val LightColorPalette = lightColors(
     primary = Teal500,
     primaryVariant = Teal700,
     secondary = Purple200
-
     /* Other default colors to override
     background = Color.White,
     surface = Color.White,
@@ -26,6 +26,7 @@ private val LightColorPalette = lightColors(
     onSurface = Color.Black,
     */
 )
+
 
 @Composable
 fun SignCloudTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
