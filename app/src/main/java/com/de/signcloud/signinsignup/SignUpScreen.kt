@@ -76,6 +76,18 @@ fun SignUpContent(
             modifier = Modifier.focusRequester(confirmationPasswordFocusRequest)
         )
         Spacer(modifier = Modifier.height(16.dp))
+        val validateCodeState = remember { ValidateCodeState() }
+        ValidateCode(validateCodeState = validateCodeState)
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = { /*TODO*/ },
+            modifier = Modifier.fillMaxWidth(),
+            enabled =  phoneState.isValid &&
+                    passwordState.isValid && confirmPasswordState.isValid
+        ) {
+            Text(text = stringResource(id = R.string.get_validate_code))
+        }
+        Spacer(modifier = Modifier.height(16.dp))
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(
                 text = stringResource(id = R.string.terms_and_conditions),
@@ -87,7 +99,7 @@ fun SignUpContent(
             onClick = { onSignUpSubmitted(phoneState.text, passwordState.text) },
             modifier = Modifier.fillMaxWidth(),
             enabled = phoneState.isValid &&
-                    passwordState.isValid && confirmPasswordState.isValid
+                    passwordState.isValid && confirmPasswordState.isValid && validateCodeState.isValid
         ) {
             Text(text = stringResource(id = R.string.create_account))
         }

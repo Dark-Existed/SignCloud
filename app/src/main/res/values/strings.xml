@@ -10,8 +10,10 @@
     <string name="invalid_phone">Invalid phone: </string>
     <string name="back">Back</string>
     <string name="create_account">CREATE ACCOUNT</string>
+    <string name="get_validate_code">GET VALIDATE</string>
     <string name="show_password">Show password</string>
     <string name="hide_password">Hide password</string>
     <string name="terms_and_conditions">By continuing, you agree to our Terms of Service. We’ll
         handle your data according to our Privacy Policy.</string>
+    <string name="validate_code">Validate Code</string>
 </resources>

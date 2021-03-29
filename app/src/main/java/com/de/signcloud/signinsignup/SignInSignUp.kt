@@ -186,6 +186,49 @@ fun Password(
     passwordState.getError()?.let { error -> TextFieldError(textError = error) }
 }
 
+@Composable
+fun ValidateCode(
+    validateCodeState: TextFieldState,
+    modifier: Modifier = Modifier,
+    imeAction: ImeAction = ImeAction.Done,
+    onImeAction: () -> Unit = {}
+) {
+    OutlinedTextField(
+        value = validateCodeState.text,
+        onValueChange = {
+            validateCodeState.text = it
+            validateCodeState.enableShowErrors()
+        },
+        label = {
+            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                Text(
+                    text = stringResource(id = R.string.validate_code),
+                    style = MaterialTheme.typography.body2
+                )
+            }
+        },
+        modifier = modifier
+            .fillMaxWidth()
+            .onFocusChanged { focusState ->
+                val focused = focusState == FocusState.Active
+                validateCodeState.onFocusChange(focused)
+                if (!focused) {
+                    validateCodeState.enableShowErrors()
+                }
+            },
+        textStyle = MaterialTheme.typography.body2,
+        isError = validateCodeState.showErrors(),
+        keyboardOptions = KeyboardOptions.Default.copy(
+            imeAction = imeAction, keyboardType = KeyboardType.Number
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                onImeAction()
+            }
+        )
+    )
+}
+
 
 @Composable
 fun TextFieldError(textError: String) {

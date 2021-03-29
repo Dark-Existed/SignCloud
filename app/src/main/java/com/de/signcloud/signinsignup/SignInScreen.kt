@@ -81,9 +81,6 @@ fun SignInContent(
 }
 
 
-
-
-
 @Preview(name = "Sign in light theme")
 @Composable
 fun SignInPreview() {
