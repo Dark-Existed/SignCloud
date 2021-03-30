@@ -58,7 +58,6 @@ fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
                                 selected = selectedState.value == index,
                                 onClick = { selectedState.value = index },
                                 selectedContentColor = selectedColor,
-                                unselectedContentColor = Color.Black.copy(alpha = ContentAlpha.medium)
                             ) {
                                 Text(
                                     text = title,
@@ -73,7 +72,7 @@ fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
                             onSignInSubmitted = { phone, password ->
                                 onNavigationEvent(SignInEvent.SignIn(phone, password))
                             })
-                        1-> SignInWithValidateCodeContent()
+                        1 -> SignInWithValidateCodeContent()
                     }
 
                 }
@@ -130,14 +129,16 @@ fun SignInWithValidateCodeContent(
         Button(
             onClick = { /*TODO*/ },
             modifier = Modifier.fillMaxWidth(),
-            enabled =  phoneState.isValid
+            enabled = phoneState.isValid
         ) {
             Text(text = stringResource(id = R.string.get_validate_code))
         }
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {},
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
             enabled = phoneState.isValid && validateCodeState.isValid
         ) {
             Text(
