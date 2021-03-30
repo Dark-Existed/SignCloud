@@ -5,6 +5,7 @@
     <string name="phone">手机号码</string>
     <string name="password">密码</string>
     <string name="sign_in">登入</string>
+    <string name="forgot_password">忘记密码?</string>
     <string name="confirm_password">确认密码</string>
     <string name="user_continue">下一步</string>
     <string name="invalid_phone">手机号码有误: </string>

@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
 import com.de.signcloud.ui.theme.*
+import kotlinx.coroutines.launch
 
 sealed class SignInEvent {
     data class SignIn(val phone: String, val password: String) : SignInEvent()
@@ -68,11 +69,12 @@ fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     when (selectedState.value) {
-                        0 -> SignInWithPasswordContent(
-                            onSignInSubmitted = { phone, password ->
-                                onNavigationEvent(SignInEvent.SignIn(phone, password))
-                            })
-                        1 -> SignInWithValidateCodeContent()
+                        0 -> SignInWithPasswordContent { phone, password ->
+                            onNavigationEvent(SignInEvent.SignIn(phone, password))
+                        }
+                        1 -> SignInWithValidateCodeContent { phone, validateCode ->
+
+                        }
                     }
 
                 }
@@ -110,12 +112,19 @@ fun SignInWithPasswordContent(
                 text = stringResource(id = R.string.sign_in)
             )
         }
+        Spacer(modifier = Modifier.height(16.dp))
+        TextButton(
+            onClick = { /*TODO*/ },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = stringResource(id = R.string.forgot_password))
+        }
     }
 }
 
 @Composable
 fun SignInWithValidateCodeContent(
-
+    onSignInSubmitted: (phone: String, validateCode: String) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val focusRequester = remember { FocusRequester() }
@@ -135,7 +144,7 @@ fun SignInWithValidateCodeContent(
         }
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = {},
+            onClick = { /*TODO*/ },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
