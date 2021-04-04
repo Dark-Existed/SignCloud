@@ -18,4 +18,10 @@
     <string name="validate_code">验证码</string>
     <string name="sign_in_with_password">密码登入</string>
     <string name="sign_in_with_validate_code">验证码登入</string>
+
+    <string name="courses">课程</string>
+    <string name="create_course">创建课程</string>
+    <string name="scan_code">扫码</string>
+    <string name="me">我</string>
+
 </resources>

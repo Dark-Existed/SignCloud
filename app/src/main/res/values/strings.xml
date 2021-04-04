@@ -19,4 +19,9 @@
     <string name="validate_code">Validate Code</string>
     <string name="sign_in_with_password">Password</string>
     <string name="sign_in_with_validate_code">Validate Code</string>
+
+    <string name="courses">Courses</string>
+    <string name="create_course">Create Course</string>
+    <string name="scan_code">Scan Code</string>
+    <string name="me">Me</string>
 </resources>
