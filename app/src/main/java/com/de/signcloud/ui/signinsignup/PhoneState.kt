@@ -1,9 +1,6 @@
-package com.de.signcloud.signinsignup
+package com.de.signcloud.ui.signinsignup
 
 
-import android.content.res.Resources
-import androidx.compose.ui.platform.LocalContext
-import com.de.signcloud.R
 import java.util.regex.Pattern
 
 private const val PHONE_VALIDATION_REGEX =

@@ -1,4 +1,4 @@
-package com.de.signcloud.signinsignup
+package com.de.signcloud.ui.signinsignup
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

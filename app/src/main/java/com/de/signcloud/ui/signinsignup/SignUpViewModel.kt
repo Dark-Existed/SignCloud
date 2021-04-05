@@ -1,11 +1,10 @@
-package com.de.signcloud.signinsignup
+package com.de.signcloud.ui.signinsignup
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.de.signcloud.Screen
-import com.de.signcloud.Screen.SignIn
 import com.de.signcloud.utils.Event
 
 class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() {

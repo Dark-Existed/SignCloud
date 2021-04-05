@@ -1,4 +1,4 @@
-package com.de.signcloud.home
+package com.de.signcloud.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

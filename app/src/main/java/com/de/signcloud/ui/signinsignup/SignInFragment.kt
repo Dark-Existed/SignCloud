@@ -1,4 +1,4 @@
-package com.de.signcloud.signinsignup
+package com.de.signcloud.ui.signinsignup
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,9 +11,9 @@ import com.de.signcloud.Screen
 import com.de.signcloud.navigate
 import com.de.signcloud.ui.theme.SignCloudTheme
 
-class WelcomeFragment : Fragment() {
+class SignInFragment : Fragment() {
 
-    private val viewModel: WelcomeViewModel by viewModels { WelcomeViewModelFactory() }
+    private val viewModel: SignInViewModel by viewModels { SignInViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,19 +22,24 @@ class WelcomeFragment : Fragment() {
     ): View? {
         viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
             navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
-                navigate(navigateTo, Screen.Welcome)
+                navigate(navigateTo, Screen.SignIn)
             }
         }
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
-                    WelcomeScreen { event ->
-                        when (event) {
-                            is WelcomeEvent.SignInSignUp -> viewModel.handleContinue(
-                                event.phone
-                            )
+                    SignIn(
+                        onNavigationEvent = { event ->
+                            when (event) {
+                                is SignInEvent.SignIn -> {
+                                    viewModel.signIn(event.phone, event.password)
+                                }
+                                SignInEvent.NavigateBack -> {
+                                    activity?.onBackPressedDispatcher?.onBackPressed()
+                                }
+                            }
                         }
-                    }
+                    )
                 }
             }
         }

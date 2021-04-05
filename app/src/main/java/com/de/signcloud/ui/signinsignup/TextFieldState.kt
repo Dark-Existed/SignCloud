@@ -1,4 +1,4 @@
-package com.de.signcloud.signinsignup
+package com.de.signcloud.ui.signinsignup
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

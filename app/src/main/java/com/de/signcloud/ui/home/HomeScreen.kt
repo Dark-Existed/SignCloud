@@ -1,4 +1,4 @@
-package com.de.signcloud.home
+package com.de.signcloud.ui.home
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.core.Animatable
@@ -24,8 +24,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.de.signcloud.R
-import com.de.signcloud.ui.theme.SignCloudColors
-import com.de.signcloud.ui.theme.SignCloudTheme
 
 class HomeScreen {
 
