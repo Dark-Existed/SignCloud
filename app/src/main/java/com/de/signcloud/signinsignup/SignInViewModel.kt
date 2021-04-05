@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.de.signcloud.Screen
+import com.de.signcloud.Screen.Home
 import com.de.signcloud.Screen.SignUp
 import com.de.signcloud.utils.Event
 
@@ -15,7 +16,7 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
 
     fun signIn(phone: String, password: String) {
         userRepository.signIn(phone, password)
-//        _navigateTo.value = Event(Survey)
+        _navigateTo.value = Event(Home)
     }
 
 }
