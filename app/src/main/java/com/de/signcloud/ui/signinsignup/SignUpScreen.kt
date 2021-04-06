@@ -16,10 +16,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
+import com.de.signcloud.bean.ValidateCode
 import com.de.signcloud.ui.theme.SignCloudTheme
 
 sealed class SignUpEvent {
     object SignIn : SignUpEvent()
+    data class GetValidate(val phone: String) : SignUpEvent()
     data class SignUp(val phone: String, val password: String) : SignUpEvent()
     object NavigateBack : SignUpEvent()
 }
@@ -37,9 +39,14 @@ fun SignUp(onNavigationEvent: (SignUpEvent) -> Unit) {
         content = {
             SignInSignUpScreen(modifier = Modifier.fillMaxWidth()) {
                 Column {
-                    SignUpContent { phone, password ->
-                        onNavigationEvent(SignUpEvent.SignUp(phone, password))
-                    }
+                    SignUpContent(
+                        onSignUpSubmitted = { phone, password ->
+                            onNavigationEvent(SignUpEvent.SignUp(phone, password))
+                        },
+                        onGetValidateCode = { phone ->
+                            onNavigationEvent(SignUpEvent.GetValidate(phone))
+                        }
+                    )
                 }
             }
         }
@@ -50,13 +57,14 @@ fun SignUp(onNavigationEvent: (SignUpEvent) -> Unit) {
 @Composable
 fun SignUpContent(
     onSignUpSubmitted: (phone: String, password: String) -> Unit,
+    onGetValidateCode: (phone: String) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val passwordFocusRequest = remember { FocusRequester() }
         val confirmationPasswordFocusRequest = remember { FocusRequester() }
         val phoneState = remember { PhoneState() }
 
-        Phone(phoneState, onImeAction = {passwordFocusRequest.requestFocus()})
+        Phone(phoneState, onImeAction = { passwordFocusRequest.requestFocus() })
         Spacer(modifier = Modifier.height(16.dp))
 
         val passwordState = remember { PasswordState() }
@@ -80,9 +88,9 @@ fun SignUpContent(
         ValidateCode(validateCodeState = validateCodeState)
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { onGetValidateCode(phoneState.text) },
             modifier = Modifier.fillMaxWidth(),
-            enabled =  phoneState.isValid &&
+            enabled = phoneState.isValid &&
                     passwordState.isValid && confirmPasswordState.isValid
         ) {
             Text(text = stringResource(id = R.string.get_validate_code))

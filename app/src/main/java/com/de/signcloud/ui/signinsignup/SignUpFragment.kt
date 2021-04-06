@@ -27,7 +27,10 @@ class SignUpFragment : Fragment() {
                                 is SignUpEvent.SignUp -> {
                                     viewModel.signUp(event.phone, event.password)
                                 }
-                                SignUpEvent.NavigateBack -> {
+                                is SignUpEvent.GetValidate -> {
+                                    viewModel.getValidateCode(event.phone)
+                                }
+                                is SignUpEvent.NavigateBack -> {
                                     activity?.onBackPressedDispatcher?.onBackPressed()
                                 }
                             }

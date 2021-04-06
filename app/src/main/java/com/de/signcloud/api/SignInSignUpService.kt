@@ -1,5 +1,7 @@
 package com.de.signcloud.api
 
+import com.de.signcloud.bean.ValidateCode
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -19,9 +21,9 @@ interface SignInSignUpService {
     )
 
     @GET("/api/getCode")
-    suspend fun signInWithValidateCode(
+    suspend fun getValidateCode(
         @Query("phone") phone: String
-    )
+    ): Call<ValidateCode>
 
     @POST("/api/forgetPassword")
     suspend fun resetPassword(
