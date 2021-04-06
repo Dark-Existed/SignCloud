@@ -4,6 +4,7 @@ buildscript {
         kotlin_version = '1.4.31'
         compose_version = '1.0.0-beta03'
         navigation_version = '2.3.4'
+        retrofit_version = '2.9.0'
     }
     repositories {
         google()

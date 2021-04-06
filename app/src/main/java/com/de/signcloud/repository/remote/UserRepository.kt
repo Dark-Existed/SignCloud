@@ -1,4 +1,4 @@
-package com.de.signcloud.ui.signinsignup
+package com.de.signcloud.repository.remote
 
 import androidx.compose.runtime.Immutable
 

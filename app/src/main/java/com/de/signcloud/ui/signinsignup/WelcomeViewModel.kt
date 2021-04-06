@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.de.signcloud.Screen
 import com.de.signcloud.Screen.SignIn
 import com.de.signcloud.Screen.SignUp
+import com.de.signcloud.repository.remote.UserRepository
 import com.de.signcloud.utils.Event
 
 class WelcomeViewModel(private val userRepository: UserRepository) : ViewModel() {

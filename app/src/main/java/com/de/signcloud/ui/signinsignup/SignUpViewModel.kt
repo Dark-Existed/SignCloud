@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.de.signcloud.Screen
+import com.de.signcloud.Screen.Home
+import com.de.signcloud.repository.remote.UserRepository
 import com.de.signcloud.utils.Event
 
 class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() {
@@ -16,7 +18,7 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
      */
     fun signUp(phone: String, password: String) {
         userRepository.signUp(phone, password)
-//        _navigateTo.value = Event(Survey)
+        _navigateTo.value = Event(Home)
     }
 }
 
