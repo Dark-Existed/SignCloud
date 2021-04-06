@@ -18,6 +18,7 @@ object SignCloudNetwork {
     suspend fun getValidateCode(phone: String) =
         signInSignUpService.getValidateCode(phone).await()
 
+    
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {
