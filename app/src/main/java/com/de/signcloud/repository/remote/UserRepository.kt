@@ -1,5 +1,6 @@
 package com.de.signcloud.repository.remote
 
+import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.liveData
 import com.de.signcloud.api.SignCloudNetwork
@@ -45,7 +46,7 @@ object UserRepository {
                 Result.failure(RuntimeException("respnse status is ${validateCodeResponse.code}"))
             }
         } catch (e:Exception) {
-            Result.failure (e)
+            Result.failure(e)
         }
         emit(result)
     }

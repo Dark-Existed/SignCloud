@@ -25,7 +25,7 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
 
     fun getValidateCode(phone: String) {
         val validateCodeResult = userRepository.getValidate(phone)
-        Log.d("SignUpViewModel", validateCodeResult.toString())
+//        Log.d("SignUpViewModel", validateCodeResult.value.toString())
     }
 
 }
