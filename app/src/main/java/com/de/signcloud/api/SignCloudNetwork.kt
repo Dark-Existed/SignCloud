@@ -18,7 +18,6 @@ object SignCloudNetwork {
     suspend fun getValidateCode(phone: String) =
         signInSignUpService.getValidateCode(phone).await()
 
-    
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {
@@ -27,6 +26,7 @@ object SignCloudNetwork {
                     if (body != null) continuation.resume(body)
                     else continuation.resumeWithException(RuntimeException("response body is null"))
                 }
+
                 override fun onFailure(call: Call<T>, t: Throwable) {
                     continuation.resumeWithException(t)
                 }

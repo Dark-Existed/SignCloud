@@ -9,6 +9,8 @@
     <string name="confirm_password">Confirm password</string>
     <string name="user_continue">CONTINUE</string>
     <string name="invalid_phone">Invalid phone: </string>
+    <string name="password_dont_match">Passwords don\'t match</string>
+
     <string name="back">Back</string>
     <string name="create_account">CREATE ACCOUNT</string>
     <string name="get_validate_code">GET VALIDATE</string>

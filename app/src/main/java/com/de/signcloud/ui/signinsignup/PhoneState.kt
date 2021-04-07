@@ -1,6 +1,8 @@
 package com.de.signcloud.ui.signinsignup
 
 
+import com.de.signcloud.R
+import com.de.signcloud.SignCloudApplication
 import java.util.regex.Pattern
 
 private const val PHONE_VALIDATION_REGEX =
@@ -10,8 +12,7 @@ class PhoneState : TextFieldState(validator = ::isPhoneValid, errorFor = ::phone
 
 
 private fun phoneValidationError(phone: String): String {
-    // TODO: 2021/3/20 get string from resource by context
-    return "Invalid phone: $phone"
+    return SignCloudApplication.context.getString(R.string.invalid_phone) + phone
 }
 
 private fun isPhoneValid(email: String): Boolean {

@@ -43,7 +43,7 @@ object UserRepository {
             if (validateCodeResponse.code == 200) {
                 Result.success(validateCodeResponse)
             } else {
-                Result.failure(RuntimeException("respnse status is ${validateCodeResponse.code}"))
+                Result.failure(RuntimeException("response status is ${validateCodeResponse.code}"))
             }
         } catch (e:Exception) {
             Result.failure(e)

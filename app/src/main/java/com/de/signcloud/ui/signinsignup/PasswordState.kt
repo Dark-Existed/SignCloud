@@ -1,5 +1,8 @@
 package com.de.signcloud.ui.signinsignup
 
+import com.de.signcloud.R
+import com.de.signcloud.SignCloudApplication
+
 class PasswordState :
     TextFieldState(validator = ::isPasswordValid, errorFor = ::passwordValidationError)
 
@@ -27,9 +30,11 @@ private fun isPasswordValid(password: String): Boolean {
 
 
 private fun passwordValidationError(password: String): String {
+    // TODO: 2021/4/7 return the result why password invalidate
     return "Invalid password"
 }
 
+
 private fun passwordConfirmationError(): String {
-    return "Passwords don't match"
+    return SignCloudApplication.context.getString(R.string.password_dont_match)
 }
