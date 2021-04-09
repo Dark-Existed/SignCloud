@@ -9,24 +9,24 @@ import retrofit2.http.Query
 interface SignInSignUpService {
 
     @POST("/api/mobileRegister")
-    suspend fun signUp(
+    fun signUp(
         @Query("phone") phone: String,
         @Query("password") password: String,
         @Query("verificationCode") validateCode: String
     )
 
     @POST("/api/login")
-    suspend fun signInWithPassword(
+    fun signInWithPassword(
         @Query("userLogin") userLogin: String
     )
 
     @GET("/api/getCode")
-    suspend fun getValidateCode(
+    fun getValidateCode(
         @Query("phone") phone: String
     ): Call<ValidateCode>
 
     @POST("/api/forgetPassword")
-    suspend fun resetPassword(
+    fun resetPassword(
         @Query("phone") phone: String,
         @Query("password") password: String,
         @Query("verificationCode") validateCode: String
