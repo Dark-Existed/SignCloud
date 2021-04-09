@@ -16,7 +16,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
-import com.de.signcloud.bean.ValidateCode
 import com.de.signcloud.ui.theme.SignCloudTheme
 
 sealed class SignUpEvent {

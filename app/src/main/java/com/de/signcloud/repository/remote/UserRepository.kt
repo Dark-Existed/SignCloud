@@ -41,6 +41,7 @@ object UserRepository {
         val result = try {
             val validateCodeResponse: ValidateCode = SignCloudNetwork.getValidateCode(phone)
             if (validateCodeResponse.code == 200) {
+                Log.d("UserRepository", validateCodeResponse.data)
                 Result.success(validateCodeResponse)
             } else {
                 Result.failure(RuntimeException("response status is ${validateCodeResponse.code}"))

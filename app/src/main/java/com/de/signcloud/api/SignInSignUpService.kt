@@ -10,14 +10,23 @@ interface SignInSignUpService {
 
     @POST("/api/mobileRegister")
     fun signUp(
+        @Query("username") userName: String,
         @Query("phone") phone: String,
         @Query("password") password: String,
+        @Query("role") role: String,
         @Query("verificationCode") validateCode: String
     )
 
-    @POST("/api/login")
+    @POST("/api/mobieLoginByPwd")
     fun signInWithPassword(
-        @Query("userLogin") userLogin: String
+        @Query("phone") phone: String,
+        @Query("password") password: String
+    )
+
+    @POST("/api/mobieLoginByVerificationCode")
+    fun signInWithValidateCode(
+        @Query("phone") phone: String,
+        @Query("verificationCode") validateCode: String
     )
 
     @GET("/api/getCode")
