@@ -12,11 +12,19 @@ object SignCloudNetwork {
 
     private val signInSignUpService = ServiceCreator.create<SignInSignUpService>()
 
+
     suspend fun signUp(phone: String, password: String, validateCode: String) =
         signInSignUpService.signUp(phone, phone, password, validateCode).await()
 
     suspend fun getValidateCode(phone: String) =
         signInSignUpService.getValidateCode(phone).await()
+
+    suspend fun signInWithPassword(phone: String, password: String) =
+        signInSignUpService.signInWithPassword(phone, password).await()
+
+    suspend fun signInWithValidateCode(phone: String, validateCode: String) =
+        signInSignUpService.signInWithValidateCode(phone, validateCode).await()
+
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine {

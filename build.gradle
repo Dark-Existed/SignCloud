@@ -5,6 +5,8 @@ buildscript {
         compose_version = '1.0.0-beta03'
         navigation_version = '2.3.4'
         retrofit_version = '2.9.0'
+        lifecycle_version = '2.3.1'
+        datastore_version = '1.0.0-alpha08'
     }
     repositories {
         google()

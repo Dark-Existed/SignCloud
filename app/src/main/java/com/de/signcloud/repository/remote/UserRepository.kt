@@ -4,8 +4,9 @@ import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.liveData
 import com.de.signcloud.api.SignCloudNetwork
+import com.de.signcloud.bean.SignInResult
 import com.de.signcloud.bean.SignUpResult
-import com.de.signcloud.bean.ValidateCode
+import com.de.signcloud.bean.ValidateCodeResult
 import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
 
@@ -24,12 +25,40 @@ object UserRepository {
     val user: User
         get() = _user
 
-    fun signInWithPassword(phone: String, password: String) {
-        _user = User.LoggedInUser(phone)
+//    fun signInWithPassword(phone: String, password: String) {
+//        _user = User.LoggedInUser(phone)
+//    }
+
+    fun signInWithPassword(phone: String, password: String) = liveData(Dispatchers.IO) {
+        val result = try {
+            val signInResult: SignInResult = SignCloudNetwork.signInWithPassword(phone, password)
+            if (signInResult.code == 200) {
+                // TODO: 2021/4/11 store token to local
+                Result.success(signInResult)
+            } else {
+                Result.failure(RuntimeException("sign in response status is ${signInResult.code}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+        emit(result)
     }
 
-    fun signInWithValidateCode(phone: String, validateCode: String) {
+    fun signInWithValidateCode(phone: String, validateCode: String) = liveData(Dispatchers.IO) {
+        val result = try {
+            val signInResult: SignInResult =
+                SignCloudNetwork.signInWithValidateCode(phone, validateCode)
+            if (signInResult.code == 200) {
+                // TODO: 2021/4/11 store token to local
 
+                Result.success(signInResult)
+            } else {
+                Result.failure(RuntimeException("sign in response status is ${signInResult.code}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+        emit(result)
     }
 
     fun signUp(phone: String, password: String, validateCode: String) = liveData(Dispatchers.IO) {
@@ -39,7 +68,7 @@ object UserRepository {
 //                _user = User.LoggedInUser(phone)
                 Result.success(signUpResult)
             } else {
-                Result.failure(RuntimeException("response status is ${signUpResult.code}"))
+                Result.failure(RuntimeException("sign up response status is ${signUpResult.code}"))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -49,7 +78,7 @@ object UserRepository {
 
     fun getValidate(phone: String) = liveData(Dispatchers.IO) {
         val result = try {
-            val validateCodeResponse: ValidateCode = SignCloudNetwork.getValidateCode(phone)
+            val validateCodeResponse: ValidateCodeResult = SignCloudNetwork.getValidateCode(phone)
             if (validateCodeResponse.code == 200) {
                 Log.d("UserRepository", validateCodeResponse.data)
                 Result.success(validateCodeResponse)
@@ -66,4 +95,7 @@ object UserRepository {
         // if the phone contains "sign up" we consider it unknown
         return !phone.contains("1360")
     }
+
+
+
 }

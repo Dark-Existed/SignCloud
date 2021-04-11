@@ -1,13 +1,11 @@
 package com.de.signcloud.ui.signinsignup
 
 import android.os.CountDownTimer
-import android.util.Log
 import androidx.lifecycle.*
 import com.de.signcloud.R
 import com.de.signcloud.Screen
 import com.de.signcloud.Screen.Home
 import com.de.signcloud.SignCloudApplication
-import com.de.signcloud.bean.ValidateCode
 import com.de.signcloud.repository.remote.UserRepository
 import com.de.signcloud.utils.Event
 

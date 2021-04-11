@@ -1,7 +1,8 @@
 package com.de.signcloud.api
 
+import com.de.signcloud.bean.SignInResult
 import com.de.signcloud.bean.SignUpResult
-import com.de.signcloud.bean.ValidateCode
+import com.de.signcloud.bean.ValidateCodeResult
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -21,18 +22,18 @@ interface SignInSignUpService {
     fun signInWithPassword(
         @Query("phone") phone: String,
         @Query("password") password: String
-    )
+    ): Call<SignInResult>
 
     @POST("/api/mobileLoginByVerificationCode")
     fun signInWithValidateCode(
         @Query("phone") phone: String,
         @Query("verificationCode") validateCode: String
-    )
+    ): Call<SignInResult>
 
     @GET("/api/getCode")
     fun getValidateCode(
         @Query("phone") phone: String
-    ): Call<ValidateCode>
+    ): Call<ValidateCodeResult>
 
     @POST("/api/forgetPassword")
     fun resetPassword(
