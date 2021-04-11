@@ -22,7 +22,9 @@ import com.de.signcloud.ui.theme.SignCloudTheme
 sealed class SignUpEvent {
     object SignIn : SignUpEvent()
     data class GetValidate(val phone: String) : SignUpEvent()
-    data class SignUp(val phone: String, val password: String) : SignUpEvent()
+    data class SignUp(val phone: String, val password: String, val validateCode: String) :
+        SignUpEvent()
+
     object NavigateBack : SignUpEvent()
 }
 
@@ -44,8 +46,8 @@ fun SignUp(
             SignInSignUpScreen(modifier = Modifier.fillMaxWidth()) {
                 Column {
                     SignUpContent(
-                        onSignUpSubmitted = { phone, password ->
-                            onNavigationEvent(SignUpEvent.SignUp(phone, password))
+                        onSignUpSubmitted = { phone, password, validateCode ->
+                            onNavigationEvent(SignUpEvent.SignUp(phone, password, validateCode))
                         },
                         onGetValidateCode = { phone ->
                             onNavigationEvent(SignUpEvent.GetValidate(phone))
@@ -64,7 +66,7 @@ fun SignUp(
 fun SignUpContent(
     validateButtonText: String,
     validateButtonClickable: Boolean,
-    onSignUpSubmitted: (phone: String, password: String) -> Unit,
+    onSignUpSubmitted: (phone: String, password: String, validateCode: String) -> Unit,
     onGetValidateCode: (phone: String) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -88,7 +90,6 @@ fun SignUpContent(
         Password(
             label = stringResource(id = R.string.confirm_password),
             passwordState = confirmPasswordState,
-            onImeAction = { onSignUpSubmitted(phoneState.text, passwordState.text) },
             modifier = Modifier.focusRequester(confirmationPasswordFocusRequest)
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -99,7 +100,7 @@ fun SignUpContent(
             onClick = { onGetValidateCode(phoneState.text) },
             modifier = Modifier.fillMaxWidth(),
             enabled = phoneState.isValid &&
-                    passwordState.isValid && 
+                    passwordState.isValid &&
                     confirmPasswordState.isValid &&
                     validateButtonClickable
         ) {
@@ -114,7 +115,13 @@ fun SignUpContent(
         }
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { onSignUpSubmitted(phoneState.text, passwordState.text) },
+            onClick = {
+                onSignUpSubmitted(
+                    phoneState.text,
+                    passwordState.text,
+                    validateCodeState.text
+                )
+            },
             modifier = Modifier.fillMaxWidth(),
             enabled = phoneState.isValid &&
                     passwordState.isValid &&

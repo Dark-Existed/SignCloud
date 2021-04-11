@@ -31,8 +31,8 @@ class SignInFragment : Fragment() {
                     SignIn(
                         onNavigationEvent = { event ->
                             when (event) {
-                                is SignInEvent.SignIn -> {
-                                    viewModel.signIn(event.phone, event.password)
+                                is SignInEvent.SignInWithPassword -> {
+                                    viewModel.signInWithPassword(event.phone, event.password)
                                 }
                                 SignInEvent.NavigateBack -> {
                                     activity?.onBackPressedDispatcher?.onBackPressed()

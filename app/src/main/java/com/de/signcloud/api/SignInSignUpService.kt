@@ -1,5 +1,6 @@
 package com.de.signcloud.api
 
+import com.de.signcloud.bean.SignUpResult
 import com.de.signcloud.bean.ValidateCode
 import retrofit2.Call
 import retrofit2.http.GET
@@ -14,7 +15,7 @@ interface SignInSignUpService {
         @Query("phone") phone: String,
         @Query("password") password: String,
         @Query("verificationCode") validateCode: String
-    )
+    ): Call<SignUpResult>
 
     @POST("/api/mobileLoginByPwd")
     fun signInWithPassword(

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.liveData
 import com.de.signcloud.api.SignCloudNetwork
+import com.de.signcloud.bean.SignUpResult
 import com.de.signcloud.bean.ValidateCode
 import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
@@ -23,8 +24,7 @@ object UserRepository {
     val user: User
         get() = _user
 
-
-    fun signIn(phone: String, password: String) {
+    fun signInWithPassword(phone: String, password: String) {
         _user = User.LoggedInUser(phone)
     }
 
@@ -32,9 +32,19 @@ object UserRepository {
 
     }
 
-    fun signUp(phone: String, password: String) {
-        // TODO: 2021/4/6 random user name
-        _user = User.LoggedInUser(phone)
+    fun signUp(phone: String, password: String, validateCode: String) = liveData(Dispatchers.IO) {
+        val result = try {
+            val signUpResult: SignUpResult = SignCloudNetwork.signUp(phone, password, validateCode)
+            if (signUpResult.code == 200) {
+//                _user = User.LoggedInUser(phone)
+                Result.success(signUpResult)
+            } else {
+                Result.failure(RuntimeException("response status is ${signUpResult.code}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+        emit(result)
     }
 
     fun getValidate(phone: String) = liveData(Dispatchers.IO) {
@@ -46,7 +56,7 @@ object UserRepository {
             } else {
                 Result.failure(RuntimeException("response status is ${validateCodeResponse.code}"))
             }
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             Result.failure(e)
         }
         emit(result)

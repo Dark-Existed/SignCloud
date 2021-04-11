@@ -12,8 +12,8 @@ object SignCloudNetwork {
 
     private val signInSignUpService = ServiceCreator.create<SignInSignUpService>()
 
-//    suspend fun signUp(phone: String, password: String, validateCode: String) =
-//        signInSignUpService.signUp(phone, password, validateCode)
+    suspend fun signUp(phone: String, password: String, validateCode: String) =
+        signInSignUpService.signUp(phone, phone, password, validateCode).await()
 
     suspend fun getValidateCode(phone: String) =
         signInSignUpService.getValidateCode(phone).await()

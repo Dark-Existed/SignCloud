@@ -17,7 +17,8 @@ import com.de.signcloud.R
 import com.de.signcloud.ui.theme.*
 
 sealed class SignInEvent {
-    data class SignIn(val phone: String, val password: String) : SignInEvent()
+    data class SignInWithPassword(val phone: String, val password: String) : SignInEvent()
+    data class SignInWithValidateCode(val phone: String, val validateCode: String) : SignInEvent()
     object NavigateBack : SignInEvent()
 }
 
@@ -68,10 +69,10 @@ fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
                     Spacer(modifier = Modifier.height(16.dp))
                     when (selectedState.value) {
                         0 -> SignInWithPasswordContent { phone, password ->
-                            onNavigationEvent(SignInEvent.SignIn(phone, password))
+                            onNavigationEvent(SignInEvent.SignInWithPassword(phone, password))
                         }
                         1 -> SignInWithValidateCodeContent { phone, validateCode ->
-
+                            onNavigationEvent(SignInEvent.SignInWithValidateCode(phone, validateCode))
                         }
                     }
 
