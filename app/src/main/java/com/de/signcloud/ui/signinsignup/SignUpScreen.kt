@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.viewModels
 import com.de.signcloud.R
 import com.de.signcloud.ui.theme.SignCloudTheme
 
@@ -27,7 +28,11 @@ sealed class SignUpEvent {
 
 
 @Composable
-fun SignUp(onNavigationEvent: (SignUpEvent) -> Unit) {
+fun SignUp(
+    validateButtonText: String = stringResource(id = R.string.get_validate_code),
+    validateButtonClickable: Boolean = true,
+    onNavigationEvent: (SignUpEvent) -> Unit,
+) {
     Scaffold(
         topBar = {
             SignInSignUpTopAppBar(
@@ -44,7 +49,9 @@ fun SignUp(onNavigationEvent: (SignUpEvent) -> Unit) {
                         },
                         onGetValidateCode = { phone ->
                             onNavigationEvent(SignUpEvent.GetValidate(phone))
-                        }
+                        },
+                        validateButtonText = validateButtonText,
+                        validateButtonClickable = validateButtonClickable
                     )
                 }
             }
@@ -55,8 +62,10 @@ fun SignUp(onNavigationEvent: (SignUpEvent) -> Unit) {
 
 @Composable
 fun SignUpContent(
+    validateButtonText: String,
+    validateButtonClickable: Boolean,
     onSignUpSubmitted: (phone: String, password: String) -> Unit,
-    onGetValidateCode: (phone: String) -> Unit
+    onGetValidateCode: (phone: String) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val passwordFocusRequest = remember { FocusRequester() }
@@ -90,9 +99,11 @@ fun SignUpContent(
             onClick = { onGetValidateCode(phoneState.text) },
             modifier = Modifier.fillMaxWidth(),
             enabled = phoneState.isValid &&
-                    passwordState.isValid && confirmPasswordState.isValid
+                    passwordState.isValid && 
+                    confirmPasswordState.isValid &&
+                    validateButtonClickable
         ) {
-            Text(text = stringResource(id = R.string.get_validate_code))
+            Text(text = validateButtonText)
         }
         Spacer(modifier = Modifier.height(16.dp))
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
@@ -106,7 +117,9 @@ fun SignUpContent(
             onClick = { onSignUpSubmitted(phoneState.text, passwordState.text) },
             modifier = Modifier.fillMaxWidth(),
             enabled = phoneState.isValid &&
-                    passwordState.isValid && confirmPasswordState.isValid && validateCodeState.isValid
+                    passwordState.isValid &&
+                    confirmPasswordState.isValid &&
+                    validateCodeState.isValid
         ) {
             Text(text = stringResource(id = R.string.create_account))
         }

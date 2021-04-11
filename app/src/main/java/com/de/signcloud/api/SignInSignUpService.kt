@@ -13,17 +13,16 @@ interface SignInSignUpService {
         @Query("username") userName: String,
         @Query("phone") phone: String,
         @Query("password") password: String,
-        @Query("role") role: String,
         @Query("verificationCode") validateCode: String
     )
 
-    @POST("/api/mobieLoginByPwd")
+    @POST("/api/mobileLoginByPwd")
     fun signInWithPassword(
         @Query("phone") phone: String,
         @Query("password") password: String
     )
 
-    @POST("/api/mobieLoginByVerificationCode")
+    @POST("/api/mobileLoginByVerificationCode")
     fun signInWithValidateCode(
         @Query("phone") phone: String,
         @Query("verificationCode") validateCode: String
