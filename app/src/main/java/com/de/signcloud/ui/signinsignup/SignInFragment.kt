@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,18 +30,30 @@ class SignInFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
+
+                    viewModel.validateCodeLiveData.observeAsState()
+                    val validateButtonText by viewModel.validateButtonText.observeAsState("")
+                    val validateButtonClickable by viewModel.isValidateButtonClickable.observeAsState(true)
+
                     SignIn(
-                        onNavigationEvent = { event ->
-                            when (event) {
-                                is SignInEvent.SignInWithPassword -> {
-                                    viewModel.signInWithPassword(event.phone, event.password)
-                                }
-                                SignInEvent.NavigateBack -> {
-                                    activity?.onBackPressedDispatcher?.onBackPressed()
-                                }
+                        validateButtonText = validateButtonText,
+                        validateButtonClickable = validateButtonClickable
+                    ) { event ->
+                        when (event) {
+                            is SignInEvent.SignInWithPassword -> {
+                                viewModel.signInWithPassword(event.phone, event.password)
+                            }
+                            is SignInEvent.GetValidate -> {
+                                viewModel.getValidateCode(event.phone)
+                            }
+                            is SignInEvent.SignInWithValidateCode -> {
+
+                            }
+                            is SignInEvent.NavigateBack -> {
+                                activity?.onBackPressedDispatcher?.onBackPressed()
                             }
                         }
-                    )
+                    }
                 }
             }
         }

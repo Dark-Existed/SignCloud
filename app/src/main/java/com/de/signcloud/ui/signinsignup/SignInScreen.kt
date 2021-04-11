@@ -18,12 +18,17 @@ import com.de.signcloud.ui.theme.*
 
 sealed class SignInEvent {
     data class SignInWithPassword(val phone: String, val password: String) : SignInEvent()
+    data class GetValidate(val phone: String) : SignInEvent()
     data class SignInWithValidateCode(val phone: String, val validateCode: String) : SignInEvent()
     object NavigateBack : SignInEvent()
 }
 
 @Composable
-fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
+fun SignIn(
+    validateButtonText: String = stringResource(id = R.string.get_validate_code),
+    validateButtonClickable: Boolean = true,
+    onEvent: (SignInEvent) -> Unit
+) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -31,7 +36,7 @@ fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
         topBar = {
             SignInSignUpTopAppBar(
                 topAppBarText = stringResource(id = R.string.sign_in),
-                onBackPressed = { onNavigationEvent(SignInEvent.NavigateBack) }
+                onBackPressed = { onEvent(SignInEvent.NavigateBack) }
             )
         },
         content = {
@@ -69,11 +74,23 @@ fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
                     Spacer(modifier = Modifier.height(16.dp))
                     when (selectedState.value) {
                         0 -> SignInWithPasswordContent { phone, password ->
-                            onNavigationEvent(SignInEvent.SignInWithPassword(phone, password))
+                            onEvent(SignInEvent.SignInWithPassword(phone, password))
                         }
-                        1 -> SignInWithValidateCodeContent { phone, validateCode ->
-                            onNavigationEvent(SignInEvent.SignInWithValidateCode(phone, validateCode))
-                        }
+                        1 -> SignInWithValidateCodeContent(
+                            validateButtonText = validateButtonText,
+                            validateButtonClickable = validateButtonClickable,
+                            onGetValidateCode = { phone ->
+                                onEvent(SignInEvent.GetValidate(phone))
+                            },
+                            onSignInSubmitted = { phone, validateCode ->
+                                onEvent(
+                                    SignInEvent.SignInWithValidateCode(
+                                        phone,
+                                        validateCode
+                                    )
+                                )
+                            }
+                        )
                     }
 
                 }
@@ -123,6 +140,9 @@ fun SignInWithPasswordContent(
 
 @Composable
 fun SignInWithValidateCodeContent(
+    validateButtonText: String,
+    validateButtonClickable: Boolean,
+    onGetValidateCode: (phone: String) -> Unit,
     onSignInSubmitted: (phone: String, validateCode: String) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -135,15 +155,19 @@ fun SignInWithValidateCodeContent(
         ValidateCode(validateCodeState = validateCodeState)
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                onGetValidateCode(phoneState.text)
+            },
             modifier = Modifier.fillMaxWidth(),
-            enabled = phoneState.isValid
+            enabled = phoneState.isValid && validateButtonClickable
         ) {
-            Text(text = stringResource(id = R.string.get_validate_code))
+            Text(text = validateButtonText)
         }
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                onSignInSubmitted(phoneState.text, validateCodeState.text)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),

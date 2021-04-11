@@ -24,7 +24,6 @@ sealed class SignUpEvent {
     data class GetValidate(val phone: String) : SignUpEvent()
     data class SignUp(val phone: String, val password: String, val validateCode: String) :
         SignUpEvent()
-
     object NavigateBack : SignUpEvent()
 }
 
@@ -33,24 +32,24 @@ sealed class SignUpEvent {
 fun SignUp(
     validateButtonText: String = stringResource(id = R.string.get_validate_code),
     validateButtonClickable: Boolean = true,
-    onNavigationEvent: (SignUpEvent) -> Unit,
+    onEvent: (SignUpEvent) -> Unit,
 ) {
     Scaffold(
         topBar = {
             SignInSignUpTopAppBar(
                 topAppBarText = stringResource(id = R.string.create_account),
-                onBackPressed = { onNavigationEvent(SignUpEvent.NavigateBack) }
+                onBackPressed = { onEvent(SignUpEvent.NavigateBack) }
             )
         },
         content = {
             SignInSignUpScreen(modifier = Modifier.fillMaxWidth()) {
                 Column {
                     SignUpContent(
-                        onSignUpSubmitted = { phone, password, validateCode ->
-                            onNavigationEvent(SignUpEvent.SignUp(phone, password, validateCode))
-                        },
                         onGetValidateCode = { phone ->
-                            onNavigationEvent(SignUpEvent.GetValidate(phone))
+                            onEvent(SignUpEvent.GetValidate(phone))
+                        },
+                        onSignUpSubmitted = { phone, password, validateCode ->
+                            onEvent(SignUpEvent.SignUp(phone, password, validateCode))
                         },
                         validateButtonText = validateButtonText,
                         validateButtonClickable = validateButtonClickable
@@ -66,8 +65,8 @@ fun SignUp(
 fun SignUpContent(
     validateButtonText: String,
     validateButtonClickable: Boolean,
-    onSignUpSubmitted: (phone: String, password: String, validateCode: String) -> Unit,
     onGetValidateCode: (phone: String) -> Unit,
+    onSignUpSubmitted: (phone: String, password: String, validateCode: String) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val passwordFocusRequest = remember { FocusRequester() }
