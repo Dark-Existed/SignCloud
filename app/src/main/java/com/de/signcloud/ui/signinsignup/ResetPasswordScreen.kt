@@ -4,9 +4,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -15,45 +16,41 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.viewModels
 import com.de.signcloud.R
 import com.de.signcloud.ui.theme.SignCloudTheme
 
-sealed class SignUpEvent {
-    object SignIn : SignUpEvent()
-    data class GetValidate(val phone: String) : SignUpEvent()
-    data class SignUp(val phone: String, val password: String, val validateCode: String) :
-        SignUpEvent()
-
-    object NavigateBack : SignUpEvent()
+sealed class ResetPasswordEvent {
+    data class GetValidate(val phone: String) : ResetPasswordEvent()
+    data class ResetPassword(val phone: String, val password: String, val validateCode: String) :
+        ResetPasswordEvent()
+    object NavigateBack : ResetPasswordEvent()
 }
 
-
 @Composable
-fun SignUp(
+fun ResetPassword(
     validateButtonText: String = stringResource(id = R.string.get_validate_code),
     validateButtonClickable: Boolean = true,
-    onEvent: (SignUpEvent) -> Unit,
+    onEvent: (ResetPasswordEvent) -> Unit,
 ) {
     Scaffold(
         topBar = {
             SignInSignUpTopAppBar(
-                topAppBarText = stringResource(id = R.string.create_account),
-                onBackPressed = { onEvent(SignUpEvent.NavigateBack) }
+                topAppBarText = stringResource(id = R.string.reset_password),
+                onBackPressed = { onEvent(ResetPasswordEvent.NavigateBack) }
             )
         },
         content = {
             SignInSignUpScreen(modifier = Modifier.fillMaxWidth()) {
                 Column {
-                    SignUpContent(
-                        onGetValidateCode = { phone ->
-                            onEvent(SignUpEvent.GetValidate(phone))
-                        },
-                        onSignUpSubmitted = { phone, password, validateCode ->
-                            onEvent(SignUpEvent.SignUp(phone, password, validateCode))
-                        },
+                    ResetPasswordContent(
                         validateButtonText = validateButtonText,
-                        validateButtonClickable = validateButtonClickable
+                        validateButtonClickable = validateButtonClickable,
+                        onGetValidateCode = { phone ->
+                            onEvent(ResetPasswordEvent.GetValidate(phone))
+                        },
+                        onResetPassword = { phone, password, validateCode ->
+                            onEvent(ResetPasswordEvent.ResetPassword(phone, password, validateCode))
+                        }
                     )
                 }
             }
@@ -61,13 +58,12 @@ fun SignUp(
     )
 }
 
-
 @Composable
-fun SignUpContent(
+fun ResetPasswordContent(
     validateButtonText: String,
     validateButtonClickable: Boolean,
     onGetValidateCode: (phone: String) -> Unit,
-    onSignUpSubmitted: (phone: String, password: String, validateCode: String) -> Unit,
+    onResetPassword: (phone: String, password: String, validateCode: String) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val passwordFocusRequest = remember { FocusRequester() }
@@ -114,17 +110,9 @@ fun SignUpContent(
         }
         Spacer(modifier = Modifier.height(16.dp))
 
-        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-            Text(
-                text = stringResource(id = R.string.terms_and_conditions),
-                style = MaterialTheme.typography.caption
-            )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-
         Button(
             onClick = {
-                onSignUpSubmitted(
+                onResetPassword(
                     phoneState.text,
                     passwordState.text,
                     validateCodeState.text
@@ -136,16 +124,15 @@ fun SignUpContent(
                     confirmPasswordState.isValid &&
                     validateCodeState.isValid
         ) {
-            Text(text = stringResource(id = R.string.create_account))
+            Text(text = stringResource(id = R.string.reset_password))
         }
     }
 }
 
-
 @Preview
 @Composable
-fun SignUpPreview() {
+fun ResetPasswordPreview() {
     SignCloudTheme {
-        SignUp {}
+        ResetPassword {}
     }
 }

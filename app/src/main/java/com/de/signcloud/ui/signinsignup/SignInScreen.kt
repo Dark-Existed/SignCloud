@@ -20,6 +20,7 @@ sealed class SignInEvent {
     data class SignInWithPassword(val phone: String, val password: String) : SignInEvent()
     data class GetValidate(val phone: String) : SignInEvent()
     data class SignInWithValidateCode(val phone: String, val validateCode: String) : SignInEvent()
+    object ResetPassword : SignInEvent()
     object NavigateBack : SignInEvent()
 }
 
@@ -73,9 +74,14 @@ fun SignIn(
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     when (selectedState.value) {
-                        0 -> SignInWithPasswordContent { phone, password ->
-                            onEvent(SignInEvent.SignInWithPassword(phone, password))
-                        }
+                        0 -> SignInWithPasswordContent(
+                            onSignInSubmitted = { phone, password ->
+                                onEvent(SignInEvent.SignInWithPassword(phone, password))
+                            },
+                            onResetPassword = {
+                                onEvent(SignInEvent.ResetPassword)
+                            }
+                        )
                         1 -> SignInWithValidateCodeContent(
                             validateButtonText = validateButtonText,
                             validateButtonClickable = validateButtonClickable,
@@ -103,6 +109,7 @@ fun SignIn(
 @Composable
 fun SignInWithPasswordContent(
     onSignInSubmitted: (phone: String, password: String) -> Unit,
+    onResetPassword: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val focusRequester = remember { FocusRequester() }
@@ -130,7 +137,9 @@ fun SignInWithPasswordContent(
         }
         Spacer(modifier = Modifier.height(16.dp))
         TextButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                onResetPassword()
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = stringResource(id = R.string.forgot_password))

@@ -4,30 +4,16 @@ import android.os.CountDownTimer
 import androidx.lifecycle.*
 import com.de.signcloud.R
 import com.de.signcloud.Screen
-import com.de.signcloud.Screen.Home
-import com.de.signcloud.Screen.ResetPassword
 import com.de.signcloud.SignCloudApplication
 import com.de.signcloud.repository.remote.UserRepository
 import com.de.signcloud.utils.Event
 
-class SignInViewModel(private val userRepository: UserRepository) : ViewModel() {
+class ResetPasswordViewModel() : ViewModel() {
+
     private val _navigateTo = MutableLiveData<Event<Screen>>()
     val navigateTo: LiveData<Event<Screen>>
         get() = _navigateTo
 
-    fun signInWithPassword(phone: String, password: String) {
-        userRepository.signInWithPassword(phone, password)
-        _navigateTo.value = Event(Home)
-    }
-
-    fun signInWithValidateCode(phone: String, validateCode: String) {
-        userRepository.signInWithValidateCode(phone, validateCode)
-        _navigateTo.value = Event(Home)
-    }
-
-    fun navigateToResetPassword() {
-        _navigateTo.value = Event(ResetPassword)
-    }
 
 
     private val _validateCodePhone = MutableLiveData<String>()
@@ -38,7 +24,7 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
 
     val validateCodeLiveData = Transformations.switchMap(_validateCodePhone) {
         countDown()
-        userRepository.getValidate(it)
+        UserRepository.getValidate(it)
     }
 
     private val _validateCountDown = MutableLiveData(60)
@@ -66,15 +52,14 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
             }
         }.start()
     }
-
-
 }
 
-@Suppress("UNCHECKED_CAST")
-class SignInViewModelFactory : ViewModelProvider.Factory {
+
+class ResetPasswordViewModelFactory : ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SignInViewModel::class.java)) {
-            return SignInViewModel(UserRepository) as T
+        if (modelClass.isAssignableFrom(ResetPasswordViewModel::class.java)) {
+            return ResetPasswordViewModel() as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

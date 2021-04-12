@@ -16,6 +16,10 @@
         android:name="com.de.signcloud.ui.signinsignup.SignUpFragment"
         android:label="Sign Up"/>
     <fragment
+        android:id="@+id/reset_password_fragment"
+        android:name="com.de.signcloud.ui.signinsignup.ResetPasswordFragment"
+        android:label="Reset Password"/>
+    <fragment
         android:id="@+id/home_fragment"
         android:name="com.de.signcloud.ui.home.HomeFragment"
         android:label="Home"/>

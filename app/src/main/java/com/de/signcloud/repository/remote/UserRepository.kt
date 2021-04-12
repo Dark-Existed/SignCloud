@@ -2,13 +2,17 @@ package com.de.signcloud.repository.remote
 
 import android.util.Log
 import androidx.compose.runtime.Immutable
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.liveData
+import com.de.signcloud.SignCloudApplication.Companion.context
 import com.de.signcloud.api.SignCloudNetwork
 import com.de.signcloud.bean.SignInResult
 import com.de.signcloud.bean.SignUpResult
 import com.de.signcloud.bean.ValidateCodeResult
+import com.de.signcloud.utils.UserInfoDataStoreKey
+import com.de.signcloud.utils.userInfoDataStore
 import kotlinx.coroutines.Dispatchers
-import java.lang.Exception
+
 
 sealed class User {
     @Immutable
@@ -33,7 +37,7 @@ object UserRepository {
         val result = try {
             val signInResult: SignInResult = SignCloudNetwork.signInWithPassword(phone, password)
             if (signInResult.code == 200) {
-                // TODO: 2021/4/11 store token to local
+                updateToken(signInResult.data!!.token)
                 Result.success(signInResult)
             } else {
                 Result.failure(RuntimeException("sign in response status is ${signInResult.code}"))
@@ -49,8 +53,7 @@ object UserRepository {
             val signInResult: SignInResult =
                 SignCloudNetwork.signInWithValidateCode(phone, validateCode)
             if (signInResult.code == 200) {
-                // TODO: 2021/4/11 store token to local
-
+                updateToken(signInResult.data!!.token)
                 Result.success(signInResult)
             } else {
                 Result.failure(RuntimeException("sign in response status is ${signInResult.code}"))
@@ -97,5 +100,10 @@ object UserRepository {
     }
 
 
+    suspend fun updateToken(token: String) {
+        context.userInfoDataStore.edit { userInfo ->
+            userInfo[UserInfoDataStoreKey.tokenKey] = token
+        }
+    }
 
 }

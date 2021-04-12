@@ -18,13 +18,13 @@ interface SignInSignUpService {
         @Query("verificationCode") validateCode: String
     ): Call<SignUpResult>
 
-    @POST("/api/mobileLoginByPwd")
+    @POST("/api/loginByPwd")
     fun signInWithPassword(
         @Query("phone") phone: String,
         @Query("password") password: String
     ): Call<SignInResult>
 
-    @POST("/api/mobileLoginByVerificationCode")
+    @POST("/api/loginByVerificationCode")
     fun signInWithValidateCode(
         @Query("phone") phone: String,
         @Query("verificationCode") validateCode: String

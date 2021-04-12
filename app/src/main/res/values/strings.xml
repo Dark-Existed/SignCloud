@@ -21,6 +21,7 @@
     <string name="validate_code">Validate Code</string>
     <string name="sign_in_with_password">Password</string>
     <string name="sign_in_with_validate_code">Validate Code</string>
+    <string name="reset_password">Reset Password</string>
 
     <string name="courses">Courses</string>
     <string name="create_course">Create Course</string>

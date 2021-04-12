@@ -9,56 +9,43 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.de.signcloud.Screen
-import com.de.signcloud.navigate
 import com.de.signcloud.ui.theme.SignCloudTheme
 
-class SignInFragment : Fragment() {
+class ResetPasswordFragment : Fragment() {
 
-    private val viewModel: SignInViewModel by viewModels { SignInViewModelFactory() }
+    private val viewModel: ResetPasswordViewModel by viewModels { ResetPasswordViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
-            navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
-                navigate(navigateTo, Screen.SignIn)
-            }
-        }
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
-
                     viewModel.validateCodeLiveData.observeAsState()
                     val validateButtonText by viewModel.validateButtonText.observeAsState("")
                     val validateButtonClickable by viewModel.isValidateButtonClickable.observeAsState(
                         true
                     )
 
-                    SignIn(
+                    ResetPassword(
                         validateButtonText = validateButtonText,
                         validateButtonClickable = validateButtonClickable
                     ) { event ->
                         when (event) {
-                            is SignInEvent.SignInWithPassword -> {
-                                viewModel.signInWithPassword(event.phone, event.password)
-                            }
-                            is SignInEvent.GetValidate -> {
-                                viewModel.getValidateCode(event.phone)
-                            }
-                            is SignInEvent.SignInWithValidateCode -> {
+                            is ResetPasswordEvent.GetValidate -> {
 
                             }
-                            is SignInEvent.ResetPassword -> {
-                                viewModel.navigateToResetPassword()
+                            is ResetPasswordEvent.ResetPassword -> {
+
                             }
-                            is SignInEvent.NavigateBack -> {
+                            is ResetPasswordEvent.NavigateBack -> {
                                 activity?.onBackPressedDispatcher?.onBackPressed()
                             }
                         }
                     }
+
                 }
             }
         }
