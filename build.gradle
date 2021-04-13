@@ -7,6 +7,7 @@ buildscript {
         retrofit_version = '2.9.0'
         lifecycle_version = '2.3.1'
         datastore_version = '1.0.0-alpha08'
+        accompanist_version = '0.7.0'
     }
     repositories {
         google()

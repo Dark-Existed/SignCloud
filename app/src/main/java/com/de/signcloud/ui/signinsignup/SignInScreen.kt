@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
@@ -114,7 +115,10 @@ fun SignInWithPasswordContent(
     Column(modifier = Modifier.fillMaxWidth()) {
         val focusRequester = remember { FocusRequester() }
         val phoneState = remember { PhoneState() }
-        Phone(phoneState, onImeAction = { focusRequester.requestFocus() })
+        Phone(
+            phoneState,
+            onImeAction = { focusRequester.requestFocus() },
+        )
         Spacer(modifier = Modifier.height(16.dp))
         val passwordState = remember { PasswordState() }
         Password(
@@ -167,7 +171,9 @@ fun SignInWithValidateCodeContent(
             onClick = {
                 onGetValidateCode(phoneState.text)
             },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
             enabled = phoneState.isValid && validateButtonClickable
         ) {
             Text(text = validateButtonText)
@@ -178,8 +184,7 @@ fun SignInWithValidateCodeContent(
                 onSignInSubmitted(phoneState.text, validateCodeState.text)
             },
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
+                .fillMaxWidth(),
             enabled = phoneState.isValid && validateCodeState.isValid
         ) {
             Text(

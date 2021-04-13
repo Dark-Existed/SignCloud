@@ -26,6 +26,8 @@ val LightColorPalette = SignCloudColors(
 
     brand = Teal700,
     iconSecondary = Neutral7,
+    iconInteractive = Neutral0,
+    iconInteractiveInactive = Neutral1,
     isDark = false
 )
 
@@ -45,6 +47,8 @@ val DarkColorPalette = SignCloudColors(
 
     brand = Teal700,
     iconSecondary = Teal50,
+    iconInteractive = Neutral7,
+    iconInteractiveInactive = Neutral6,
     isDark = true
 )
 
@@ -95,6 +99,8 @@ class SignCloudColors(
     brand: Color,
     iconPrimary: Color = brand,
     iconSecondary: Color,
+    iconInteractive: Color,
+    iconInteractiveInactive: Color,
     isDark: Boolean
 ) {
     var primary by mutableStateOf(primary)
@@ -130,6 +136,10 @@ class SignCloudColors(
         private set
     var iconSecondary by mutableStateOf(iconSecondary)
         private set
+    var iconInteractive by mutableStateOf(iconInteractive)
+        private set
+    var iconInteractiveInactive by mutableStateOf(iconInteractiveInactive)
+        private set
 
     fun update(other: SignCloudColors) {
         primary = other.primary
@@ -138,6 +148,8 @@ class SignCloudColors(
         brand = other.brand
         iconPrimary = other.iconPrimary
         iconSecondary = other.iconSecondary
+        iconInteractive = other.iconInteractive
+        iconInteractiveInactive = other.iconInteractiveInactive
         isDark = other.isDark
     }
 }

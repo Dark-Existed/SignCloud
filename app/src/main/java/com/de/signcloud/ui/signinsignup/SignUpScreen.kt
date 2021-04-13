@@ -1,9 +1,6 @@
 package com.de.signcloud.ui.signinsignup
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -104,7 +101,9 @@ fun SignUpContent(
 
         Button(
             onClick = { onGetValidateCode(phoneState.text) },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
             enabled = phoneState.isValid &&
                     passwordState.isValid &&
                     confirmPasswordState.isValid &&
@@ -112,7 +111,7 @@ fun SignUpContent(
         ) {
             Text(text = validateButtonText)
         }
-        Spacer(modifier = Modifier.height(16.dp))
+//        Spacer(modifier = Modifier.height(16.dp))
 
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(

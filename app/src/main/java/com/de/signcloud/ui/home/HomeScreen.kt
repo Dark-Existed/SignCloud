@@ -1,31 +1,49 @@
 package com.de.signcloud.ui.home
 
+import androidx.annotation.FloatRange
 import androidx.annotation.StringRes
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.SpringSpec
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.layout.*
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
+import androidx.core.os.ConfigurationCompat
 import com.de.signcloud.R
+import com.de.signcloud.ui.theme.SignCloudTheme
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.navigationBarsPadding
 
-class HomeScreen {
+
+class Home(onSnackSelected: (Long) -> Unit) {
 
 }
 
@@ -41,8 +59,8 @@ private fun SignCloudBottomNav(
     currentSection: HomeSections,
     onSectionSelected: (HomeSections) -> Unit,
     items: List<HomeSections>,
-    color: Color,
-    contentColor: Color
+    color: Color = SignCloudTheme.colors.iconPrimary,
+    contentColor: Color = SignCloudTheme.colors.iconInteractive
 ) {
     Surface(
         color = color,
@@ -55,6 +73,48 @@ private fun SignCloudBottomNav(
             )
         }
 
+        SignCloudBottomNavLayout(
+            selectedIndex = currentSection.ordinal,
+            itemCount = items.size,
+            indicator = { SignCloudBottomNavIndicator() },
+            animSpec = springSpec,
+            modifier = Modifier.navigationBarsPadding(left = false, right = false)
+        ) {
+            items.forEach { section ->
+                val selected = section == currentSection
+                val tint by animateColorAsState(
+                    if (selected) {
+                        SignCloudTheme.colors.iconInteractive
+                    } else {
+                        SignCloudTheme.colors.iconInteractiveInactive
+                    }
+                )
+
+                SignCloudBottomNavigationItem(
+                    icon = {
+                        Icon(imageVector = section.icon, tint = tint, contentDescription = null)
+                    },
+                    text = {
+                        Text(
+                            text = stringResource(section.title).toUpperCase(
+                                ConfigurationCompat.getLocales(
+                                    LocalConfiguration.current
+                                ).get(0)
+                            ),
+                            color = tint,
+                            style = MaterialTheme.typography.button,
+                            maxLines = 1
+                        )
+                    },
+                    selected = selected,
+                    onSelected = { onSectionSelected(section) },
+                    animSpec = springSpec,
+                    modifier = BottomNavigationItemPadding
+                        .clip(BottomNavIndicatorShape)
+                )
+
+            }
+        }
     }
 }
 
@@ -68,6 +128,7 @@ private fun SignCloudBottomNavLayout(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
+    // Track how "selected" each item is [0, 1]
     val selectionFractions = remember(itemCount) {
         List(itemCount) { i ->
             Animatable(if (i == selectedIndex) 1f else 0f)
@@ -135,11 +196,95 @@ private fun SignCloudBottomNavLayout(
     }
 }
 
+@Composable
+fun SignCloudBottomNavigationItem(
+    icon: @Composable BoxScope.() -> Unit,
+    text: @Composable BoxScope.() -> Unit,
+    selected: Boolean,
+    onSelected: () -> Unit,
+    animSpec: AnimationSpec<Float>,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier.selectable(selected = selected, onClick = onSelected),
+        contentAlignment = Alignment.Center
+    ) {
+        // Animate the icon/text positions within the item based on selection
+        val animationProgress by animateFloatAsState(if (selected) 1f else 0f, animSpec)
+        SignCloudBottomNavItemLayout(
+            icon = icon,
+            text = text,
+            animationProgress = animationProgress
+        )
+    }
+}
+
+
+@Composable
+private fun SignCloudBottomNavItemLayout(
+    icon: @Composable BoxScope.() -> Unit,
+    text: @Composable BoxScope.() -> Unit,
+    @FloatRange(from = 0.0, to = 1.0) animationProgress: Float
+) {
+    Layout(
+        content = {
+            Box(Modifier.layoutId("icon"), content = icon)
+            val scale = lerp(0.6f, 1f, animationProgress)
+            Box(
+                modifier = Modifier
+                    .layoutId("text")
+                    .padding(start = TextIconSpacing)
+                    .graphicsLayer {
+                        alpha = animationProgress
+                        scaleX = scale
+                        scaleY = scale
+                        transformOrigin = BottomNavLabelTransformOrigin
+                    },
+                content = text
+            )
+        }
+    ) { measurables, constraints ->
+        val iconPlaceable = measurables.first { it.layoutId == "icon" }.measure(constraints)
+        val textPlaceable = measurables.first { it.layoutId == "text" }.measure(constraints)
+
+        placeTextAndIcon(
+            textPlaceable,
+            iconPlaceable,
+            constraints.maxWidth,
+            constraints.maxHeight,
+            animationProgress
+        )
+    }
+}
+
+
+private fun MeasureScope.placeTextAndIcon(
+    textPlaceable: Placeable,
+    iconPlaceable: Placeable,
+    width: Int,
+    height: Int,
+    @FloatRange(from = 0.0, to = 1.0) animationProgress: Float
+): MeasureResult {
+    val iconY = (height - iconPlaceable.height) / 2
+    val textY = (height - textPlaceable.height) / 2
+
+    val textWidth = textPlaceable.width * animationProgress
+    val iconX = (width - textWidth - iconPlaceable.width) / 2
+    val textX = iconX + iconPlaceable.width
+
+    return layout(width, height) {
+        iconPlaceable.place(iconX.toInt(), iconY)
+        if (animationProgress != 0f) {
+            textPlaceable.place(textX.toInt(), textY)
+        }
+    }
+}
+
 
 @Composable
 private fun SignCloudBottomNavIndicator(
     strokeWidth: Dp = 2.dp,
-    color: Color,
+    color: Color = SignCloudTheme.colors.iconInteractive,
     shape: Shape = BottomNavIndicatorShape
 ) {
     Spacer(
@@ -158,4 +303,19 @@ private enum class HomeSections(
     CreateCourse(R.string.create_course, Icons.Outlined.AddCircleOutline),
     ScanCode(R.string.scan_code, Icons.Outlined.QrCode),
     Me(R.string.me, Icons.Outlined.PersonOutline)
+}
+
+
+@Preview
+@Composable
+private fun SignCloudBottomNavPreview() {
+    ProvideWindowInsets {
+        SignCloudTheme {
+            SignCloudBottomNav(
+                currentSection = HomeSections.Courses,
+                onSectionSelected = {},
+                items = HomeSections.values().toList()
+            )
+        }
+    }
 }
