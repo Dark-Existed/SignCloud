@@ -1,6 +1,7 @@
 package com.de.signcloud.ui.signinsignup
 
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.*
 import com.de.signcloud.R
 import com.de.signcloud.Screen
@@ -11,24 +12,28 @@ import com.de.signcloud.repository.remote.UserRepository
 import com.de.signcloud.utils.Event
 
 class SignInViewModel(private val userRepository: UserRepository) : ViewModel() {
+
     private val _navigateTo = MutableLiveData<Event<Screen>>()
     val navigateTo: LiveData<Event<Screen>>
         get() = _navigateTo
 
+
     fun signInWithPassword(phone: String, password: String) {
-        userRepository.signInWithPassword(phone, password)
-        _navigateTo.value = Event(Home)
+        val result = userRepository.signInWithPassword(phone, password)
+        if (result.value?.isSuccess == true)
+            _navigateTo.value = Event(Home)
     }
 
     fun signInWithValidateCode(phone: String, validateCode: String) {
-        userRepository.signInWithValidateCode(phone, validateCode)
-        _navigateTo.value = Event(Home)
+        val result = userRepository.signInWithValidateCode(phone, validateCode)
+        if (result.value?.isSuccess == true)
+            _navigateTo.value = Event(Home)
     }
+
 
     fun navigateToResetPassword() {
         _navigateTo.value = Event(ResetPassword)
     }
-
 
     private val _validateCodePhone = MutableLiveData<String>()
 

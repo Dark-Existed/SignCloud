@@ -19,7 +19,7 @@ class HomeFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
-                    Text(text = "home screen")
+                    Home(onSnackSelected = { /*TODO*/ })
                 }
             }
         }

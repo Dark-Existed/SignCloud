@@ -35,9 +35,10 @@ object UserRepository {
 
     fun signInWithPassword(phone: String, password: String) = liveData(Dispatchers.IO) {
         val result = try {
+            Log.d("UserRepository", "Log In With Password")
             val signInResult: SignInResult = SignCloudNetwork.signInWithPassword(phone, password)
             if (signInResult.code == 200) {
-                updateToken(signInResult.data!!.token)
+                updateUserInfo(signInResult)
                 Result.success(signInResult)
             } else {
                 Result.failure(RuntimeException("sign in response status is ${signInResult.code}"))
@@ -53,7 +54,7 @@ object UserRepository {
             val signInResult: SignInResult =
                 SignCloudNetwork.signInWithValidateCode(phone, validateCode)
             if (signInResult.code == 200) {
-                updateToken(signInResult.data!!.token)
+                updateUserInfo(signInResult)
                 Result.success(signInResult)
             } else {
                 Result.failure(RuntimeException("sign in response status is ${signInResult.code}"))
@@ -100,9 +101,12 @@ object UserRepository {
     }
 
 
-    suspend fun updateToken(token: String) {
+    suspend fun updateUserInfo(signInResult: SignInResult) {
         context.userInfoDataStore.edit { userInfo ->
-            userInfo[UserInfoDataStoreKey.tokenKey] = token
+            userInfo[UserInfoDataStoreKey.userNameKey] = signInResult.data!!.userInfo.userName
+            userInfo[UserInfoDataStoreKey.phoneKey] = signInResult.data.userInfo.phone
+            userInfo[UserInfoDataStoreKey.defaultRoleKey] = signInResult.data.userInfo.defaultRole
+            userInfo[UserInfoDataStoreKey.tokenKey] = signInResult.data.token
         }
     }
 

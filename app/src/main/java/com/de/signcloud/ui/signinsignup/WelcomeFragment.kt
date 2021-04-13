@@ -20,11 +20,8 @@ class WelcomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
-            navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
-                navigate(navigateTo, Screen.Welcome)
-            }
-        }
+        setUpObserver()
+
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
@@ -36,6 +33,15 @@ class WelcomeFragment : Fragment() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+
+    private fun setUpObserver() {
+        viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
+            navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
+                navigate(navigateTo, Screen.Welcome)
             }
         }
     }

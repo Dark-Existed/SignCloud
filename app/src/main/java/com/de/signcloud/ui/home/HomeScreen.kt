@@ -2,6 +2,7 @@ package com.de.signcloud.ui.home
 
 import androidx.annotation.FloatRange
 import androidx.annotation.StringRes
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
@@ -11,16 +12,11 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,9 +38,46 @@ import com.de.signcloud.ui.theme.SignCloudTheme
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 
+@Composable
+fun Home(
+    isStudent: Boolean = true,
+    onSnackSelected: (Long) -> Unit
+) {
+    val (currentSection, setCurrentSection) = rememberSaveable {
+        mutableStateOf(HomeSections.Courses)
+    }
+    val navItems = if (isStudent) {
+        HomeSections.values().toList().filter { it == HomeSections.CreateCourse }
+    } else {
+        HomeSections.values().toList().filter { it == HomeSections.ScanCode }
+    }
+    Scaffold(
+        bottomBar = {
+            SignCloudBottomNav(
+                currentSection = currentSection,
+                onSectionSelected = { /*TODO*/ },
+                items = navItems
+            )
+        }
+    ) { innerPadding ->
+        val modifier = Modifier.padding(innerPadding)
+        Crossfade(currentSection) { section ->
+            when (section) {
+                HomeSections.Courses -> {
 
-class Home(onSnackSelected: (Long) -> Unit) {
+                }
+                HomeSections.CreateCourse -> {
 
+                }
+                HomeSections.ScanCode -> {
+
+                }
+                HomeSections.Me -> {
+
+                }
+            }
+        }
+    }
 }
 
 private val TextIconSpacing = 4.dp
@@ -297,7 +330,7 @@ private fun SignCloudBottomNavIndicator(
 
 private enum class HomeSections(
     @StringRes val title: Int,
-    val icon: ImageVector
+    val icon: ImageVector,
 ) {
     Courses(R.string.courses, Icons.Outlined.EventNote),
     CreateCourse(R.string.create_course, Icons.Outlined.AddCircleOutline),

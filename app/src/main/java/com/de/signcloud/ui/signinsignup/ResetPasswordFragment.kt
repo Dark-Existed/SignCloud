@@ -9,6 +9,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.de.signcloud.Screen
+import com.de.signcloud.navigate
 import com.de.signcloud.ui.theme.SignCloudTheme
 
 class ResetPasswordFragment : Fragment() {
@@ -20,6 +22,7 @@ class ResetPasswordFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setUpObserver()
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
@@ -50,4 +53,13 @@ class ResetPasswordFragment : Fragment() {
             }
         }
     }
+    
+    private fun setUpObserver() {
+        viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
+            navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
+                navigate(navigateTo, Screen.ResetPassword)
+            }
+        }
+    }
+
 }
