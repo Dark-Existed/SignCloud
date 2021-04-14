@@ -53,7 +53,7 @@ class ResetPasswordFragment : Fragment() {
             }
         }
     }
-    
+
     private fun setUpObserver() {
         viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
             navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->

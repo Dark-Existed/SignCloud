@@ -30,6 +30,7 @@ class SignInFragment : Fragment() {
             setContent {
                 SignCloudTheme {
                     viewModel.validateCodeLiveData.observeAsState()
+                    viewModel.signInWithPasswordLiveData.observeAsState()
                     val validateButtonText by viewModel.validateButtonText.observeAsState("")
                     val validateButtonClickable by viewModel.isValidateButtonClickable.observeAsState(
                         true
@@ -41,7 +42,8 @@ class SignInFragment : Fragment() {
                     ) { event ->
                         when (event) {
                             is SignInEvent.SignInWithPassword -> {
-                                viewModel.signInWithPassword(event.phone, event.password)
+//                                viewModel.signInWithPassword(event.phone, event.password)
+                                viewModel.signInWithPassword(event)
                             }
                             is SignInEvent.GetValidate -> {
                                 viewModel.getValidateCode(event.phone)
@@ -68,6 +70,9 @@ class SignInFragment : Fragment() {
                 navigate(navigateTo, Screen.SignIn)
             }
         }
+//        viewModel.signInWithPasswordLiveData.observe(viewLifecycleOwner) {
+//            Log.d("SignInFragment", (it.getOrNull() == null).toString())
+//        }
     }
 
 }

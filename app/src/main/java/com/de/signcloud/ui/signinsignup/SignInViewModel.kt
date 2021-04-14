@@ -18,6 +18,24 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
         get() = _navigateTo
 
 
+    private val _signInWithPasswordEvent = MutableLiveData<SignInEvent.SignInWithPassword>()
+    val signInWithPasswordEvent: LiveData<SignInEvent.SignInWithPassword>
+        get() = _signInWithPasswordEvent
+
+    val signInWithPasswordLiveData = Transformations.switchMap(_signInWithPasswordEvent) {
+        Log.d("SignInViewModel", _signInWithPasswordEvent.value!!.phone)
+        Log.d("SignInViewModel", _signInWithPasswordEvent.value!!.password)
+        val result = userRepository.signInWithPassword(
+            _signInWithPasswordEvent.value!!.phone,
+            _signInWithPasswordEvent.value!!.password
+        )
+        return@switchMap result
+    }
+
+    fun signInWithPassword(event: SignInEvent.SignInWithPassword) {
+        _signInWithPasswordEvent.value = event
+    }
+
     fun signInWithPassword(phone: String, password: String) {
         val result = userRepository.signInWithPassword(phone, password)
         if (result.value?.isSuccess == true)
