@@ -11,8 +11,12 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.de.signcloud.Screen
+import com.de.signcloud.bean.SignInResponse
 import com.de.signcloud.navigate
 import com.de.signcloud.ui.theme.SignCloudTheme
+import com.de.signcloud.utils.Result
+import com.de.signcloud.utils.getOrNull
+import com.de.signcloud.utils.isSuccess
 
 class SignInFragment : Fragment() {
 
@@ -70,8 +74,13 @@ class SignInFragment : Fragment() {
                 navigate(navigateTo, Screen.SignIn)
             }
         }
-        viewModel.signInWithPasswordLiveData.observe(viewLifecycleOwner, { signInResponse ->
-            Log.d("SignInFragment", "???")
+        viewModel.signInWithPasswordLiveData.observe(viewLifecycleOwner, {
+            val result = it.getOrNull()
+            if (result == null) {
+                Log.d("SignInFragment", "Sign In failed")
+            } else {
+                Log.d("SignInFragment", result.code.toString())
+            }
         })
     }
 

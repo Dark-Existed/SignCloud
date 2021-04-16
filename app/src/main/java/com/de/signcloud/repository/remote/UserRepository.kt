@@ -11,6 +11,7 @@ import com.de.signcloud.bean.SignUpResponse
 import com.de.signcloud.bean.ValidateCodeResponse
 import com.de.signcloud.utils.UserInfoDataStoreKey
 import com.de.signcloud.utils.userInfoDataStore
+import com.de.signcloud.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
@@ -41,12 +42,12 @@ object UserRepository {
                 SignCloudNetwork.signInWithPassword(phone, password)
             if (signInResponse.code == 200) {
                 updateUserInfo(signInResponse)
-                Result.success(signInResponse)
+                Result.Success(signInResponse)
             } else {
-                Result.failure(RuntimeException("sign in response status is ${signInResponse.code}"))
+                Result.Failure(RuntimeException("sign in response status is ${signInResponse.code}"))
             }
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.Failure(e)
         }
         emit(result)
     }
@@ -55,10 +56,10 @@ object UserRepository {
         val signInResponse = SignCloudNetwork.signInWithPassword(phone, password)
         if (signInResponse.code == 200) {
             Log.d("Repository", "response code is 200")
-            Result.success(signInResponse)
+            Result.Success(signInResponse)
         } else {
             Log.d("Repository", "sign in failed")
-            Result.failure(RuntimeException("response code is ${signInResponse.code}"))
+            Result.Failure(RuntimeException("response code is ${signInResponse.code}"))
         }
     }
 
@@ -68,12 +69,12 @@ object UserRepository {
                 SignCloudNetwork.signInWithValidateCode(phone, validateCode)
             if (signInResponse.code == 200) {
                 updateUserInfo(signInResponse)
-                Result.success(signInResponse)
+                Result.Success(signInResponse)
             } else {
-                Result.failure(RuntimeException("sign in response status is ${signInResponse.code}"))
+                Result.Failure(RuntimeException("sign in response status is ${signInResponse.code}"))
             }
         } catch (e: Exception) {
-            Result.failure<SignInResponse>(e)
+            Result.Failure<SignInResponse>(e)
         }
         emit(result)
     }
@@ -84,12 +85,12 @@ object UserRepository {
                 SignCloudNetwork.signUp(phone, password, validateCode)
             if (signUpResponse.code == 200) {
 //                _user = User.LoggedInUser(phone)
-                Result.success(signUpResponse)
+                Result.Success(signUpResponse)
             } else {
-                Result.failure(RuntimeException("sign up response status is ${signUpResponse.code}"))
+                Result.Failure(RuntimeException("sign up response status is ${signUpResponse.code}"))
             }
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.Failure(e)
         }
         emit(result)
     }
@@ -99,12 +100,12 @@ object UserRepository {
             val validateCodeResponse: ValidateCodeResponse = SignCloudNetwork.getValidateCode(phone)
             if (validateCodeResponse.code == 200) {
                 Log.d("UserRepository", validateCodeResponse.data)
-                Result.success(validateCodeResponse)
+                Result.Success(validateCodeResponse)
             } else {
-                Result.failure(RuntimeException("response status is ${validateCodeResponse.code}"))
+                Result.Failure(RuntimeException("response status is ${validateCodeResponse.code}"))
             }
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.Failure(e)
         }
         emit(result)
     }
@@ -130,7 +131,7 @@ object UserRepository {
             val result = try {
                 block()
             } catch (e: Exception) {
-                Result.failure<T>(e)
+                Result.Failure<T>(e)
             }
             emit(result)
         }

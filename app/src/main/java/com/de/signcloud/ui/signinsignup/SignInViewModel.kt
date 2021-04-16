@@ -10,6 +10,7 @@ import com.de.signcloud.Screen.ResetPassword
 import com.de.signcloud.SignCloudApplication
 import com.de.signcloud.repository.remote.UserRepository
 import com.de.signcloud.utils.Event
+import com.de.signcloud.utils.isSuccess
 
 class SignInViewModel(private val userRepository: UserRepository) : ViewModel() {
 
@@ -30,8 +31,8 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
 
     fun signInWithValidateCode(phone: String, validateCode: String) {
         val result = userRepository.signInWithValidateCode(phone, validateCode)
-        if (result.value?.isSuccess == true)
-            _navigateTo.value = Event(Home)
+//        if (result.value?.isSuccess == true)
+//            _navigateTo.value = Event(Home)
     }
 
     fun navigateToResetPassword() {
