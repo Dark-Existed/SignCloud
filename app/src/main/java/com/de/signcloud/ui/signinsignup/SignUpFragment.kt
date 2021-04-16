@@ -38,7 +38,7 @@ class SignUpFragment : Fragment() {
                     ) { event ->
                         when (event) {
                             is SignUpEvent.SignUp -> {
-                                viewModel.signUp(event.phone, event.password, event.validateCode)
+                                viewModel.signUp(event)
                             }
                             is SignUpEvent.GetValidate -> {
                                 viewModel.getValidateCode(event.phone)

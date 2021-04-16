@@ -1,5 +1,6 @@
 package com.de.signcloud.ui.home
 
+import android.util.Log
 import androidx.annotation.FloatRange
 import androidx.annotation.StringRes
 import androidx.compose.animation.Crossfade
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.core.os.ConfigurationCompat
 import com.de.signcloud.R
+import com.de.signcloud.components.SignCloudSurface
 import com.de.signcloud.ui.theme.SignCloudTheme
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
@@ -47,15 +49,15 @@ fun Home(
         mutableStateOf(HomeSections.Courses)
     }
     val navItems = if (isStudent) {
-        HomeSections.values().toList().filter { it == HomeSections.CreateCourse }
+        HomeSections.values().toList().filter { it != HomeSections.CreateCourse }
     } else {
-        HomeSections.values().toList().filter { it == HomeSections.ScanCode }
+        HomeSections.values().toList().filter { it != HomeSections.ScanCode }
     }
     Scaffold(
         bottomBar = {
             SignCloudBottomNav(
                 currentSection = currentSection,
-                onSectionSelected = { /*TODO*/ },
+                onSectionSelected = setCurrentSection,
                 items = navItems
             )
         }
@@ -80,13 +82,6 @@ fun Home(
     }
 }
 
-private val TextIconSpacing = 4.dp
-private val BottomNavHeight = 56.dp
-private val BottomNavLabelTransformOrigin = TransformOrigin(0f, 0.5f)
-private val BottomNavIndicatorShape = RoundedCornerShape(percent = 50)
-private val BottomNavigationItemPadding = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-
-
 @Composable
 private fun SignCloudBottomNav(
     currentSection: HomeSections,
@@ -95,7 +90,7 @@ private fun SignCloudBottomNav(
     color: Color = SignCloudTheme.colors.iconPrimary,
     contentColor: Color = SignCloudTheme.colors.iconInteractive
 ) {
-    Surface(
+    SignCloudSurface(
         color = color,
         contentColor = contentColor
     ) {
@@ -125,7 +120,11 @@ private fun SignCloudBottomNav(
 
                 SignCloudBottomNavigationItem(
                     icon = {
-                        Icon(imageVector = section.icon, tint = tint, contentDescription = null)
+                        Icon(
+                            imageVector = section.icon,
+                            tint = tint,
+                            contentDescription = null
+                        )
                     },
                     text = {
                         Text(
@@ -327,6 +326,12 @@ private fun SignCloudBottomNavIndicator(
             .border(strokeWidth, color, shape)
     )
 }
+
+private val TextIconSpacing = 4.dp
+private val BottomNavHeight = 56.dp
+private val BottomNavLabelTransformOrigin = TransformOrigin(0f, 0.5f)
+private val BottomNavIndicatorShape = RoundedCornerShape(percent = 50)
+private val BottomNavigationItemPadding = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
 
 private enum class HomeSections(
     @StringRes val title: Int,

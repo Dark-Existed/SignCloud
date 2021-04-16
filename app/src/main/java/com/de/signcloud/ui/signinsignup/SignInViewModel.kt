@@ -29,10 +29,18 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
         signInWithPasswordEvent.value = event
     }
 
-    fun signInWithValidateCode(phone: String, validateCode: String) {
-        val result = userRepository.signInWithValidateCode(phone, validateCode)
-//        if (result.value?.isSuccess == true)
-//            _navigateTo.value = Event(Home)
+    private val signInWithValidateCode = MutableLiveData<SignInEvent.SignInWithValidateCode>()
+
+    val signInWithValidateCodeLivaData =Transformations.switchMap(signInWithValidateCode) {
+        userRepository.signInWithValidateCode(it.phone, it.validateCode)
+    }
+
+    fun signInWithValidateCode(event: SignInEvent.SignInWithValidateCode) {
+        signInWithValidateCode.value = event
+    }
+
+    fun navigateToHome() {
+        _navigateTo.value = Event(Home)
     }
 
     fun navigateToResetPassword() {

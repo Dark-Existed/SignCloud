@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import com.de.signcloud.ui.theme.SignCloudTheme
+import com.google.accompanist.insets.ProvideWindowInsets
 
 class HomeFragment : Fragment() {
 
@@ -18,8 +19,10 @@ class HomeFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                SignCloudTheme {
-                    Home(onSnackSelected = { /*TODO*/ })
+                ProvideWindowInsets {
+                    SignCloudTheme {
+                        Home(onSnackSelected = { /*TODO*/ })
+                    }
                 }
             }
         }

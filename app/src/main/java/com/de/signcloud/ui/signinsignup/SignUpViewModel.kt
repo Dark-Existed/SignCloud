@@ -17,10 +17,15 @@ class SignUpViewModel(
     val navigateTo: LiveData<Event<Screen>>
         get() = _navigateTo
 
-    fun signUp(phone: String, password: String, validateCode: String) {
-        userRepository.signUp(phone, password, validateCode)
 
-        _navigateTo.value = Event(Home)
+    private val signUpEvent = MutableLiveData<SignUpEvent.SignUp>()
+
+    val signUpLiveData = Transformations.switchMap(signUpEvent) {
+        userRepository.signUp(it.phone, it.password, it.validateCode)
+    }
+
+    fun signUp(event: SignUpEvent.SignUp) {
+        signUpEvent.value = event
     }
 
 

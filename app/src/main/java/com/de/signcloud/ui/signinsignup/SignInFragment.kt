@@ -28,12 +28,10 @@ class SignInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         setUpObserver()
-
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
                     viewModel.validateCodeLiveData.observeAsState()
-//                    viewModel.signInWithPasswordLiveData.observeAsState()
                     val validateButtonText by viewModel.validateButtonText.observeAsState("")
                     val validateButtonClickable by viewModel.isValidateButtonClickable.observeAsState(
                         true
@@ -45,14 +43,13 @@ class SignInFragment : Fragment() {
                     ) { event ->
                         when (event) {
                             is SignInEvent.SignInWithPassword -> {
-//                                viewModel.signInWithPassword(event.phone, event.password)
                                 viewModel.signInWithPassword(event)
                             }
                             is SignInEvent.GetValidate -> {
                                 viewModel.getValidateCode(event.phone)
                             }
                             is SignInEvent.SignInWithValidateCode -> {
-                                viewModel.signInWithValidateCode(event.phone, event.validateCode)
+                                viewModel.signInWithValidateCode(event)
                             }
                             is SignInEvent.ResetPassword -> {
                                 viewModel.navigateToResetPassword()
@@ -76,12 +73,16 @@ class SignInFragment : Fragment() {
         }
         viewModel.signInWithPasswordLiveData.observe(viewLifecycleOwner, {
             val result = it.getOrNull()
-            if (result == null) {
-                Log.d("SignInFragment", "Sign In failed")
-            } else {
-                Log.d("SignInFragment", result.code.toString())
+            if (result != null) {
+                viewModel.navigateToHome()
             }
         })
+        viewModel.signInWithValidateCodeLivaData.observe(viewLifecycleOwner) {
+            val result = it.getOrNull()
+            if (result != null) {
+                viewModel.navigateToHome()
+            }
+        }
     }
 
 }

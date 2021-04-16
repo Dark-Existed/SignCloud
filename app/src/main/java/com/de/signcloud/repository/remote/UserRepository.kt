@@ -52,16 +52,6 @@ object UserRepository {
         emit(result)
     }
 
-    fun signInWithPasswordFire(phone: String, password: String) = fire(Dispatchers.IO) {
-        val signInResponse = SignCloudNetwork.signInWithPassword(phone, password)
-        if (signInResponse.code == 200) {
-            Log.d("Repository", "response code is 200")
-            Result.Success(signInResponse)
-        } else {
-            Log.d("Repository", "sign in failed")
-            Result.Failure(RuntimeException("response code is ${signInResponse.code}"))
-        }
-    }
 
     fun signInWithValidateCode(phone: String, validateCode: String) = liveData(Dispatchers.IO) {
         val result = try {
@@ -74,7 +64,7 @@ object UserRepository {
                 Result.Failure(RuntimeException("sign in response status is ${signInResponse.code}"))
             }
         } catch (e: Exception) {
-            Result.Failure<SignInResponse>(e)
+            Result.Failure(e)
         }
         emit(result)
     }
@@ -99,7 +89,6 @@ object UserRepository {
         val result = try {
             val validateCodeResponse: ValidateCodeResponse = SignCloudNetwork.getValidateCode(phone)
             if (validateCodeResponse.code == 200) {
-                Log.d("UserRepository", validateCodeResponse.data)
                 Result.Success(validateCodeResponse)
             } else {
                 Result.Failure(RuntimeException("response status is ${validateCodeResponse.code}"))
@@ -127,11 +116,11 @@ object UserRepository {
 
 
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
-        liveData<Result<T>>(context) {
+        liveData(context) {
             val result = try {
                 block()
             } catch (e: Exception) {
-                Result.Failure<T>(e)
+                Result.Failure(e)
             }
             emit(result)
         }
