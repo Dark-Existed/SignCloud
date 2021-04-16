@@ -10,7 +10,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
 import com.de.signcloud.ui.theme.SignCloudTheme
@@ -30,7 +29,7 @@ class SignInFragment : Fragment() {
             setContent {
                 SignCloudTheme {
                     viewModel.validateCodeLiveData.observeAsState()
-                    viewModel.signInWithPasswordLiveData.observeAsState()
+//                    viewModel.signInWithPasswordLiveData.observeAsState()
                     val validateButtonText by viewModel.validateButtonText.observeAsState("")
                     val validateButtonClickable by viewModel.isValidateButtonClickable.observeAsState(
                         true
@@ -64,15 +63,16 @@ class SignInFragment : Fragment() {
         }
     }
 
+
     private fun setUpObserver() {
         viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
             navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
                 navigate(navigateTo, Screen.SignIn)
             }
         }
-//        viewModel.signInWithPasswordLiveData.observe(viewLifecycleOwner) {
-//            Log.d("SignInFragment", (it.getOrNull() == null).toString())
-//        }
+        viewModel.signInWithPasswordLiveData.observe(viewLifecycleOwner, { signInResponse ->
+            Log.d("SignInFragment", "???")
+        })
     }
 
 }

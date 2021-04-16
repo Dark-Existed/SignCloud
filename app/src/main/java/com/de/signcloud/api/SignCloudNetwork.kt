@@ -10,7 +10,7 @@ import kotlin.coroutines.suspendCoroutine
 
 object SignCloudNetwork {
 
-    private val signInSignUpService = ServiceCreator.create<SignInSignUpService>()
+    private val signInSignUpService = ServiceCreator.create(SignInSignUpService::class.java)
 
 
     suspend fun signUp(phone: String, password: String, validateCode: String) =
@@ -27,16 +27,16 @@ object SignCloudNetwork {
 
 
     private suspend fun <T> Call<T>.await(): T {
-        return suspendCoroutine {
+        return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {
                 override fun onResponse(call: Call<T>, response: Response<T>) {
                     val body = response.body()
-                    if (body != null) it.resume(body)
-                    else it.resumeWithException(RuntimeException("response body is null"))
+                    if (body != null) continuation.resume(body)
+                    else continuation.resumeWithException(RuntimeException("response body is null"))
                 }
 
                 override fun onFailure(call: Call<T>, t: Throwable) {
-                    it.resumeWithException(t)
+                    continuation.resumeWithException(t)
                 }
             })
         }

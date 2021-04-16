@@ -18,28 +18,14 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
         get() = _navigateTo
 
 
-    private val _signInWithPasswordEvent = MutableLiveData<SignInEvent.SignInWithPassword>()
-    val signInWithPasswordEvent: LiveData<SignInEvent.SignInWithPassword>
-        get() = _signInWithPasswordEvent
+    private val signInWithPasswordEvent = MutableLiveData<SignInEvent.SignInWithPassword>()
 
-    val signInWithPasswordLiveData = Transformations.switchMap(_signInWithPasswordEvent) {
-        Log.d("SignInViewModel", _signInWithPasswordEvent.value!!.phone)
-        Log.d("SignInViewModel", _signInWithPasswordEvent.value!!.password)
-        val result = userRepository.signInWithPassword(
-            _signInWithPasswordEvent.value!!.phone,
-            _signInWithPasswordEvent.value!!.password
-        )
-        return@switchMap result
+    val signInWithPasswordLiveData = Transformations.switchMap(signInWithPasswordEvent) {
+        userRepository.signInWithPassword(it.phone, it.password)
     }
 
     fun signInWithPassword(event: SignInEvent.SignInWithPassword) {
-        _signInWithPasswordEvent.value = event
-    }
-
-    fun signInWithPassword(phone: String, password: String) {
-        val result = userRepository.signInWithPassword(phone, password)
-        if (result.value?.isSuccess == true)
-            _navigateTo.value = Event(Home)
+        signInWithPasswordEvent.value = event
     }
 
     fun signInWithValidateCode(phone: String, validateCode: String) {
@@ -47,7 +33,6 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
         if (result.value?.isSuccess == true)
             _navigateTo.value = Event(Home)
     }
-
 
     fun navigateToResetPassword() {
         _navigateTo.value = Event(ResetPassword)
