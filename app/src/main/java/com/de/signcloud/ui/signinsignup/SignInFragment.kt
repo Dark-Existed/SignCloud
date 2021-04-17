@@ -10,6 +10,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.de.signcloud.R
 import com.de.signcloud.Screen
 import com.de.signcloud.bean.SignInResponse
 import com.de.signcloud.navigate
@@ -29,6 +30,7 @@ class SignInFragment : Fragment() {
     ): View? {
         setUpObserver()
         return ComposeView(requireContext()).apply {
+            id = R.id.sign_in_fragment
             setContent {
                 SignCloudTheme {
                     viewModel.validateCodeLiveData.observeAsState()

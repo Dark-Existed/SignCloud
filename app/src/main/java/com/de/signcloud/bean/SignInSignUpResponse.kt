@@ -2,6 +2,8 @@ package com.de.signcloud.bean
 
 import com.google.gson.annotations.SerializedName
 
+class IsPhoneExistResponse(val code: Int, val message: String, val data: Boolean)
+
 class ValidateCodeResponse(val code: Int, val message: String, val data: String)
 
 class SignUpResponse(val code: Int, val message: String, val data: String?)

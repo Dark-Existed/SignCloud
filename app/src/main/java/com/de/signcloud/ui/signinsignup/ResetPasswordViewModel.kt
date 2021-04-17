@@ -8,7 +8,9 @@ import com.de.signcloud.SignCloudApplication
 import com.de.signcloud.repository.remote.UserRepository
 import com.de.signcloud.utils.Event
 
-class ResetPasswordViewModel() : ViewModel() {
+class ResetPasswordViewModel(
+    private val userRepository: UserRepository,
+) : ViewModel() {
 
     private val _navigateTo = MutableLiveData<Event<Screen>>()
     val navigateTo: LiveData<Event<Screen>>
@@ -24,7 +26,7 @@ class ResetPasswordViewModel() : ViewModel() {
 
     val validateCodeLiveData = Transformations.switchMap(_validateCodePhone) {
         countDown()
-        UserRepository.getValidate(it)
+        userRepository.getValidate(it)
     }
 
     private val _validateCountDown = MutableLiveData(60)
@@ -59,7 +61,7 @@ class ResetPasswordViewModelFactory : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ResetPasswordViewModel::class.java)) {
-            return ResetPasswordViewModel() as T
+            return ResetPasswordViewModel(UserRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

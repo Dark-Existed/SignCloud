@@ -9,6 +9,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.de.signcloud.R
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
 import com.de.signcloud.ui.theme.SignCloudTheme
@@ -25,9 +26,9 @@ class SignUpFragment : Fragment() {
         setUpObserver()
 
         return ComposeView(requireContext()).apply {
+            id = R.id.sign_up_fragment
             setContent {
                 SignCloudTheme {
-
                     viewModel.validateCodeLiveData.observeAsState()
                     val validateButtonText by viewModel.validateButtonText.observeAsState("")
                     val validateButtonClickable by viewModel.isValidateButtonClickable.observeAsState(true)

@@ -1,6 +1,5 @@
 package com.de.signcloud.ui.signinsignup
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,10 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
-import com.de.signcloud.repository.local.UserDao
 import com.de.signcloud.ui.theme.SignCloudTheme
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
+import com.de.signcloud.utils.getOrNull
 
 class WelcomeFragment : Fragment() {
 
@@ -31,9 +28,7 @@ class WelcomeFragment : Fragment() {
                 SignCloudTheme {
                     WelcomeScreen { event ->
                         when (event) {
-                            is WelcomeEvent.SignInSignUp -> viewModel.handleContinue(
-                                event.phone
-                            )
+                            is WelcomeEvent.SignInSignUp -> viewModel.handleContinue(event.phone)
                         }
                     }
                 }
@@ -45,6 +40,13 @@ class WelcomeFragment : Fragment() {
         viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
             navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
                 navigate(navigateTo, Screen.Welcome)
+            }
+        }
+        viewModel.isPhoneExistLivaData.observe(viewLifecycleOwner) { isPhoneExistResult ->
+            val result = isPhoneExistResult.getOrNull()
+            if (result != null) {
+                if (result) viewModel.navigateToSignIn()
+                else viewModel.navigateToSignUp()
             }
         }
     }

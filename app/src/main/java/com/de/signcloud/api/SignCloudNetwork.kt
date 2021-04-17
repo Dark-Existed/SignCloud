@@ -12,6 +12,7 @@ object SignCloudNetwork {
 
     private val signInSignUpService = ServiceCreator.create(SignInSignUpService::class.java)
 
+    suspend fun isPhoneExist(phone: String) = signInSignUpService.isPhoneExist(phone).await()
 
     suspend fun signUp(phone: String, password: String, validateCode: String) =
         signInSignUpService.signUp(phone, phone, password, validateCode).await()
@@ -24,7 +25,6 @@ object SignCloudNetwork {
 
     suspend fun signInWithValidateCode(phone: String, validateCode: String) =
         signInSignUpService.signInWithValidateCode(phone, validateCode).await()
-
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->

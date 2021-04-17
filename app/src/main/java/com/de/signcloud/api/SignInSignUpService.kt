@@ -1,5 +1,6 @@
 package com.de.signcloud.api
 
+import com.de.signcloud.bean.IsPhoneExistResponse
 import com.de.signcloud.bean.SignInResponse
 import com.de.signcloud.bean.SignUpResponse
 import com.de.signcloud.bean.ValidateCodeResponse
@@ -9,6 +10,11 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface SignInSignUpService {
+
+    @GET("/api/phone-exist")
+    fun isPhoneExist(
+        @Query("phone") phone: String
+    ): Call<IsPhoneExistResponse>
 
     @POST("/api/mobileRegister")
     fun signUp(

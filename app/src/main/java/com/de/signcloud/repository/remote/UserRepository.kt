@@ -15,6 +15,9 @@ import com.de.signcloud.utils.UserInfoDataStoreKey
 import com.de.signcloud.utils.userInfoDataStore
 import com.de.signcloud.utils.Result
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 
@@ -37,21 +40,31 @@ object UserRepository {
 //        _user = User.LoggedInUser(phone)
 //    }
 
-    fun signInWithPassword(phone: String, password: String) = liveData(Dispatchers.IO) {
-        val result = try {
-            Log.d("UserRepository", "Log In With Password")
-            val signInResponse: SignInResponse =
-                SignCloudNetwork.signInWithPassword(phone, password)
-            if (signInResponse.code == 200) {
-                updateUserInfo(signInResponse)
-                Result.Success(signInResponse)
-            } else {
-                Result.Failure(RuntimeException("sign in response status is ${signInResponse.code}"))
-            }
-        } catch (e: Exception) {
-            Result.Failure(e)
+    fun isPhoneExist(phone: String) = request(Dispatchers.IO) {
+        val result = SignCloudNetwork.isPhoneExist(phone)
+        if (result.code == 200) {
+            Result.Success(result.data)
+        } else {
+            Result.Failure(RuntimeException("response status code is ${result.code}"))
         }
-        emit(result)
+    }
+
+
+    fun isKnownUserPhone(phone: String): Boolean {
+        // if the phone contains "sign up" we consider it unknown
+        return !phone.contains("1360")
+    }
+
+
+    fun signInWithPassword(phone: String, password: String) = request(Dispatchers.IO) {
+        Log.d("UserRepository", "Log in with password")
+        val signInResponse: SignInResponse = SignCloudNetwork.signInWithPassword(phone, password)
+        if (signInResponse.code == 200) {
+            updateUserInfo(signInResponse)
+            Result.Success(signInResponse)
+        } else {
+            Result.Failure(RuntimeException("response status code is ${signInResponse.code}"))
+        }
     }
 
 
@@ -101,11 +114,6 @@ object UserRepository {
         emit(result)
     }
 
-    fun isKnownUserPhone(phone: String): Boolean {
-        // if the phone contains "sign up" we consider it unknown
-        return !phone.contains("1360")
-    }
-
 
     private suspend fun updateUserInfo(signInResponse: SignInResponse) {
         context.userInfoDataStore.edit { userInfo ->
@@ -118,7 +126,7 @@ object UserRepository {
     }
 
 
-    private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
+    private fun <T> request(context: CoroutineContext, block: suspend () -> Result<T>) =
         liveData(context) {
             val result = try {
                 block()
