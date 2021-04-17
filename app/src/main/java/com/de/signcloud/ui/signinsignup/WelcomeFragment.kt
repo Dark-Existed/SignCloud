@@ -13,15 +13,12 @@ import com.de.signcloud.Screen
 import com.de.signcloud.navigate
 import com.de.signcloud.repository.local.UserDao
 import com.de.signcloud.ui.theme.SignCloudTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 class WelcomeFragment : Fragment() {
 
     private val viewModel: WelcomeViewModel by viewModels { WelcomeViewModelFactory() }
-
-    override fun onAttach(context: Context) {
-        viewModel.isUserSignIn()
-        super.onAttach(context)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

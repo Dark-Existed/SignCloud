@@ -1,5 +1,6 @@
 package com.de.signcloud.repository.remote
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.datastore.preferences.core.edit
@@ -9,6 +10,7 @@ import com.de.signcloud.api.SignCloudNetwork
 import com.de.signcloud.bean.SignInResponse
 import com.de.signcloud.bean.SignUpResponse
 import com.de.signcloud.bean.ValidateCodeResponse
+import com.de.signcloud.repository.local.UserDao
 import com.de.signcloud.utils.UserInfoDataStoreKey
 import com.de.signcloud.utils.userInfoDataStore
 import com.de.signcloud.utils.Result
@@ -105,13 +107,14 @@ object UserRepository {
     }
 
 
-    suspend fun updateUserInfo(signInResponse: SignInResponse) {
+    private suspend fun updateUserInfo(signInResponse: SignInResponse) {
         context.userInfoDataStore.edit { userInfo ->
             userInfo[UserInfoDataStoreKey.userNameKey] = signInResponse.data!!.userInfo.userName
             userInfo[UserInfoDataStoreKey.phoneKey] = signInResponse.data.userInfo.phone
             userInfo[UserInfoDataStoreKey.defaultRoleKey] = signInResponse.data.userInfo.defaultRole
             userInfo[UserInfoDataStoreKey.tokenKey] = signInResponse.data.token
         }
+        UserDao.signIn()
     }
 
 

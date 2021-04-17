@@ -1,15 +1,10 @@
 package com.de.signcloud.ui.signinsignup
 
-import android.util.Log
 import androidx.lifecycle.*
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.de.signcloud.Screen
 import com.de.signcloud.Screen.*
-import com.de.signcloud.repository.local.UserDao
 import com.de.signcloud.repository.remote.UserRepository
 import com.de.signcloud.utils.Event
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 class WelcomeViewModel(private val userRepository: UserRepository) : ViewModel() {
     private val _navigateTo = MutableLiveData<Event<Screen>>()
@@ -21,20 +16,6 @@ class WelcomeViewModel(private val userRepository: UserRepository) : ViewModel()
         } else {
             _navigateTo.value = Event(SignUp)
         }
-    }
-
-    fun isUserSignIn() {
-        viewModelScope.launch {
-            val isUserSignIn  = async { UserDao.isUserSignIn() }
-            if (isUserSignIn.await()) {
-                navigateToHome()
-            }
-        }
-    }
-
-
-    fun navigateToHome() {
-        _navigateTo.value = Event(Home)
     }
 
 }
