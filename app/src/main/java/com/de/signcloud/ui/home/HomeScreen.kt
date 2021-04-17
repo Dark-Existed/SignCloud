@@ -1,6 +1,5 @@
 package com.de.signcloud.ui.home
 
-import android.util.Log
 import androidx.annotation.FloatRange
 import androidx.annotation.StringRes
 import androidx.compose.animation.Crossfade
@@ -48,11 +47,7 @@ fun Home(
     val (currentSection, setCurrentSection) = rememberSaveable {
         mutableStateOf(HomeSections.Courses)
     }
-    val navItems = if (isStudent) {
-        HomeSections.values().toList().filter { it != HomeSections.CreateCourse }
-    } else {
-        HomeSections.values().toList().filter { it != HomeSections.ScanCode }
-    }
+    val navItems = HomeSections.values().toList()
     Scaffold(
         bottomBar = {
             SignCloudBottomNav(
@@ -96,11 +91,11 @@ private fun SignCloudBottomNav(
     ) {
         val springSpec = remember {
             SpringSpec<Float>(
+                // Determined experimentally
                 stiffness = 800f,
                 dampingRatio = 0.8f
             )
         }
-
         SignCloudBottomNavLayout(
             selectedIndex = currentSection.ordinal,
             itemCount = items.size,
@@ -144,12 +139,10 @@ private fun SignCloudBottomNav(
                     modifier = BottomNavigationItemPadding
                         .clip(BottomNavIndicatorShape)
                 )
-
             }
         }
     }
 }
-
 
 @Composable
 private fun SignCloudBottomNavLayout(
@@ -251,7 +244,6 @@ fun SignCloudBottomNavigationItem(
     }
 }
 
-
 @Composable
 private fun SignCloudBottomNavItemLayout(
     icon: @Composable BoxScope.() -> Unit,
@@ -289,7 +281,6 @@ private fun SignCloudBottomNavItemLayout(
     }
 }
 
-
 private fun MeasureScope.placeTextAndIcon(
     textPlaceable: Placeable,
     iconPlaceable: Placeable,
@@ -311,7 +302,6 @@ private fun MeasureScope.placeTextAndIcon(
         }
     }
 }
-
 
 @Composable
 private fun SignCloudBottomNavIndicator(

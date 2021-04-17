@@ -1,6 +1,8 @@
 package com.de.signcloud.ui.signinsignup
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +11,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
+import com.de.signcloud.repository.local.UserDao
 import com.de.signcloud.ui.theme.SignCloudTheme
 
 class WelcomeFragment : Fragment() {
 
     private val viewModel: WelcomeViewModel by viewModels { WelcomeViewModelFactory() }
+
+    override fun onAttach(context: Context) {
+        viewModel.isUserSignIn()
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,7 +29,6 @@ class WelcomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         setUpObserver()
-
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
@@ -37,7 +44,6 @@ class WelcomeFragment : Fragment() {
         }
     }
 
-
     private fun setUpObserver() {
         viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
             navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
@@ -45,7 +51,5 @@ class WelcomeFragment : Fragment() {
             }
         }
     }
-
-
 
 }
