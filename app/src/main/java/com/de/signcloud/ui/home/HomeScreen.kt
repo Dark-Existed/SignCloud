@@ -112,7 +112,6 @@ private fun SignCloudBottomNav(
                         SignCloudTheme.colors.iconInteractiveInactive
                     }
                 )
-
                 SignCloudBottomNavigationItem(
                     icon = {
                         Icon(

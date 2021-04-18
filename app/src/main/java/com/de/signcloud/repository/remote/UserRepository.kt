@@ -1,7 +1,5 @@
 package com.de.signcloud.repository.remote
 
-import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.liveData
@@ -15,9 +13,6 @@ import com.de.signcloud.utils.UserInfoDataStoreKey
 import com.de.signcloud.utils.userInfoDataStore
 import com.de.signcloud.utils.Result
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 
@@ -49,92 +44,74 @@ object UserRepository {
         }
     }
 
-
     fun isKnownUserPhone(phone: String): Boolean {
         // if the phone contains "sign up" we consider it unknown
         return !phone.contains("1360")
     }
 
-
     fun signInWithPassword(phone: String, password: String) = request(Dispatchers.IO) {
-        Log.d("UserRepository", "Log in with password")
-        val signInResponse: SignInResponse = SignCloudNetwork.signInWithPassword(phone, password)
+        val signInResponse: SignInResponse =
+            SignCloudNetwork.signInWithPassword(phone, password)
         if (signInResponse.code == 200) {
             updateUserInfo(signInResponse)
             Result.Success(signInResponse)
         } else {
-            Result.Failure(RuntimeException("response status code is ${signInResponse.code}"))
+            Result.Failure(RuntimeException("sign in response status is ${signInResponse.code}"))
         }
     }
 
 
-    fun signInWithValidateCode(phone: String, validateCode: String) = liveData(Dispatchers.IO) {
-        val result = try {
-            val signInResponse: SignInResponse =
-                SignCloudNetwork.signInWithValidateCode(phone, validateCode)
-            if (signInResponse.code == 200) {
-                updateUserInfo(signInResponse)
-                Result.Success(signInResponse)
-            } else {
-                Result.Failure(RuntimeException("sign in response status is ${signInResponse.code}"))
-            }
-        } catch (e: Exception) {
-            Result.Failure(e)
+    fun signInWithValidateCode(phone: String, validateCode: String) = request(Dispatchers.IO) {
+        val signInResponse: SignInResponse =
+            SignCloudNetwork.signInWithValidateCode(phone, validateCode)
+        if (signInResponse.code == 200) {
+            updateUserInfo(signInResponse)
+            Result.Success(signInResponse)
+        } else {
+            Result.Failure(RuntimeException("sign in response status is ${signInResponse.code}"))
         }
-        emit(result)
     }
 
-    fun signUp(phone: String, password: String, validateCode: String) = liveData(Dispatchers.IO) {
-        val result = try {
-            val signUpResponse: SignUpResponse =
-                SignCloudNetwork.signUp(phone, password, validateCode)
-            if (signUpResponse.code == 200) {
+    fun signUp(phone: String, password: String, validateCode: String) = request(Dispatchers.IO) {
+        val signUpResponse: SignUpResponse =
+            SignCloudNetwork.signUp(phone, password, validateCode)
+        if (signUpResponse.code == 200) {
 //                _user = User.LoggedInUser(phone)
-                Result.Success(signUpResponse)
-            } else {
-                Result.Failure(RuntimeException("sign up response status is ${signUpResponse.code}"))
-            }
-        } catch (e: Exception) {
-            Result.Failure(e)
+            Result.Success(signUpResponse)
+        } else {
+            Result.Failure(RuntimeException("sign up response status is ${signUpResponse.code}"))
         }
-        emit(result)
     }
 
-    fun getValidate(phone: String) = liveData(Dispatchers.IO) {
-        val result = try {
-            val validateCodeResponse: ValidateCodeResponse = SignCloudNetwork.getValidateCode(phone)
-            if (validateCodeResponse.code == 200) {
-                Result.Success(validateCodeResponse)
-            } else {
-                Result.Failure(RuntimeException("response status is ${validateCodeResponse.code}"))
-            }
-        } catch (e: Exception) {
-            Result.Failure(e)
+    fun getValidate(phone: String) = request(Dispatchers.IO) {
+        val validateCodeResponse: ValidateCodeResponse = SignCloudNetwork.getValidateCode(phone)
+        if (validateCodeResponse.code == 200) {
+            Result.Success(validateCodeResponse)
+        } else {
+            Result.Failure(RuntimeException("response status is ${validateCodeResponse.code}"))
         }
-        emit(result)
     }
-
-
-    private suspend fun updateUserInfo(signInResponse: SignInResponse) {
-        context.userInfoDataStore.edit { userInfo ->
-            userInfo[UserInfoDataStoreKey.userNameKey] = signInResponse.data!!.userInfo.userName
-            userInfo[UserInfoDataStoreKey.phoneKey] = signInResponse.data.userInfo.phone
-            userInfo[UserInfoDataStoreKey.defaultRoleKey] = signInResponse.data.userInfo.defaultRole
-            userInfo[UserInfoDataStoreKey.tokenKey] = signInResponse.data.token
-        }
-        UserDao.signIn()
-    }
-
-
-    private fun <T> request(context: CoroutineContext, block: suspend () -> Result<T>) =
-        liveData(context) {
-            val result = try {
-                block()
-            } catch (e: Exception) {
-                Result.Failure(e)
-            }
-            emit(result)
-        }
-
 
 }
+
+
+private suspend fun updateUserInfo(signInResponse: SignInResponse) {
+    context.userInfoDataStore.edit { userInfo ->
+        userInfo[UserInfoDataStoreKey.userNameKey] = signInResponse.data!!.userInfo.userName
+        userInfo[UserInfoDataStoreKey.phoneKey] = signInResponse.data.userInfo.phone
+        userInfo[UserInfoDataStoreKey.defaultRoleKey] = signInResponse.data.userInfo.defaultRole
+        userInfo[UserInfoDataStoreKey.tokenKey] = signInResponse.data.token
+    }
+    UserDao.signIn()
+}
+
+
+private fun <T> request(context: CoroutineContext, block: suspend () -> Result<T>) =
+    liveData(context) {
+        val result = try {
+            block()
+        } catch (e: Exception) {
+            Result.Failure(e)
+        }
+        emit(result)
+    }

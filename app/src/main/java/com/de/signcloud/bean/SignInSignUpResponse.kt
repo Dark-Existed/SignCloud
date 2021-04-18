@@ -10,13 +10,13 @@ class SignUpResponse(val code: Int, val message: String, val data: String?)
 
 class SignInResponse(val code: Int, val message: String, val data: Data?) {
     class Data(
-        @SerializedName("userinfo") val userInfo: UserInfo,
+        val userInfo: UserInfo,
         val token: String
     )
 
     class UserInfo(
-        @SerializedName("username") val userName: String,
         val phone: String,
+        @SerializedName("username") val userName: String,
         val avatar: String?,
         val roles: List<String>,
         val defaultRole: String
