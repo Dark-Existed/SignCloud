@@ -39,15 +39,36 @@ import com.de.signcloud.ui.theme.SignCloudTheme
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 
+private val TextIconSpacing = 4.dp
+private val BottomNavHeight = 56.dp
+private val BottomNavLabelTransformOrigin = TransformOrigin(0f, 0.5f)
+private val BottomNavIndicatorShape = RoundedCornerShape(percent = 50)
+private val BottomNavigationItemPadding = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+
+private enum class HomeSections(
+    @StringRes val title: Int,
+    val icon: ImageVector,
+) {
+    Courses(R.string.courses, Icons.Outlined.EventNote),
+    CreateCourse(R.string.create_course, Icons.Outlined.AddCircleOutline),
+    ScanCode(R.string.scan_code, Icons.Outlined.QrCode),
+    Me(R.string.me, Icons.Outlined.PersonOutline)
+}
+
+
 @Composable
 fun Home(
-    isStudent: Boolean = true,
+    isStudent: Boolean = false,
     onSnackSelected: (Long) -> Unit
 ) {
     val (currentSection, setCurrentSection) = rememberSaveable {
         mutableStateOf(HomeSections.Courses)
     }
-    val navItems = HomeSections.values().toList()
+    val navItems = if (isStudent) {
+        HomeSections.values().toList().filter { it != HomeSections.CreateCourse }
+    } else {
+        HomeSections.values().toList().filter { it != HomeSections.ScanCode }
+    }
     Scaffold(
         bottomBar = {
             SignCloudBottomNav(
@@ -97,7 +118,7 @@ private fun SignCloudBottomNav(
             )
         }
         SignCloudBottomNavLayout(
-            selectedIndex = currentSection.ordinal,
+            selectedIndex = items.indexOf(currentSection),
             itemCount = items.size,
             indicator = { SignCloudBottomNavIndicator() },
             animSpec = springSpec,
@@ -314,22 +335,6 @@ private fun SignCloudBottomNavIndicator(
             .then(BottomNavigationItemPadding)
             .border(strokeWidth, color, shape)
     )
-}
-
-private val TextIconSpacing = 4.dp
-private val BottomNavHeight = 56.dp
-private val BottomNavLabelTransformOrigin = TransformOrigin(0f, 0.5f)
-private val BottomNavIndicatorShape = RoundedCornerShape(percent = 50)
-private val BottomNavigationItemPadding = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-
-private enum class HomeSections(
-    @StringRes val title: Int,
-    val icon: ImageVector,
-) {
-    Courses(R.string.courses, Icons.Outlined.EventNote),
-    CreateCourse(R.string.create_course, Icons.Outlined.AddCircleOutline),
-    ScanCode(R.string.scan_code, Icons.Outlined.QrCode),
-    Me(R.string.me, Icons.Outlined.PersonOutline)
 }
 
 
