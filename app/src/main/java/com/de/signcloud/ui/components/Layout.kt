@@ -1,4 +1,4 @@
-package com.de.signcloud.ui.signinsignup
+package com.de.signcloud.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun SignInSignUpScreen(
+fun SignInSignUpLayout(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {

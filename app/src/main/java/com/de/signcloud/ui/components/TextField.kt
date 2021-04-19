@@ -24,8 +24,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
-import com.de.signcloud.ui.signinsignup.PhoneState
-import com.de.signcloud.ui.signinsignup.TextFieldState
+import com.de.signcloud.ui.components.textfieldstate.PhoneState
+import com.de.signcloud.ui.components.textfieldstate.TextFieldState
 
 @Composable
 fun Phone(
@@ -68,7 +68,6 @@ fun Phone(
     )
     phoneState.getError()?.let { error -> TextFieldError(textError = error) }
 }
-
 
 
 @Composable
@@ -179,6 +178,53 @@ fun ValidateCode(
             }
         )
     )
+    validateCodeState.getError()?.let { error -> TextFieldError(textError = error) }
+}
+
+
+@Composable
+fun GeneralTextField(
+    generalTextFieldState: TextFieldState,
+    hintText: String,
+    modifier: Modifier = Modifier,
+    imeAction: ImeAction = ImeAction.Done,
+    onImeAction: () -> Unit
+) {
+    OutlinedTextField(
+        value = generalTextFieldState.text,
+        onValueChange = {
+            generalTextFieldState.text = it
+            generalTextFieldState.showErrors()
+        },
+        label = {
+            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                Text(
+                    text = hintText,
+                    style = MaterialTheme.typography.body2
+                )
+            }
+        },
+        modifier = modifier
+            .fillMaxWidth()
+            .onFocusChanged { focusState ->
+                val focused = focusState == FocusState.Active
+                generalTextFieldState.onFocusChange(focused)
+                if (!focused) {
+                    generalTextFieldState.enableShowErrors()
+                }
+            },
+        textStyle = MaterialTheme.typography.body2,
+        isError = generalTextFieldState.showErrors(),
+        keyboardOptions = KeyboardOptions.Default.copy(
+            imeAction = imeAction, keyboardType = KeyboardType.Text
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                onImeAction()
+            }
+        )
+    )
+    generalTextFieldState.getError()?.let { error -> TextFieldError(textError = error) }
 }
 
 

@@ -11,14 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
-import com.de.signcloud.ui.components.Password
-import com.de.signcloud.ui.components.Phone
-import com.de.signcloud.ui.components.SignCloudTopAppBarWithBack
-import com.de.signcloud.ui.components.ValidateCode
+import com.de.signcloud.ui.components.*
+import com.de.signcloud.ui.components.textfieldstate.PasswordState
+import com.de.signcloud.ui.components.textfieldstate.PhoneState
+import com.de.signcloud.ui.components.textfieldstate.ValidateCodeState
 import com.de.signcloud.ui.theme.*
 
 sealed class SignInEvent {
@@ -52,7 +51,7 @@ fun SignIn(
                 stringResource(id = R.string.sign_in_with_validate_code)
             )
 
-            SignInSignUpScreen(modifier = Modifier.fillMaxWidth()) {
+            SignInSignUpLayout(modifier = Modifier.fillMaxWidth()) {
                 val selectedColor = if (isSystemInDarkTheme()) {
                     DarkColorPalette.primary
                 } else {

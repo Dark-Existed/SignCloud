@@ -27,4 +27,6 @@
     <string name="create_course">Create Course</string>
     <string name="scan_code">Scan Code</string>
     <string name="me">Me</string>
+
+    <string name="course_name">Course Name</string>
 </resources>
