@@ -58,7 +58,7 @@ fun SignCloudTopAppBarWithAction(
         title = {
             Text(
                 text = topAppBarText,
-                textAlign = TextAlign.Start,
+                textAlign = TextAlign.Center,
                 modifier = Modifier
                     .wrapContentSize(Alignment.Center)
             )

@@ -14,7 +14,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import com.de.signcloud.R
+import com.de.signcloud.ui.components.Password
+import com.de.signcloud.ui.components.Phone
 import com.de.signcloud.ui.components.SignCloudTopAppBarWithBack
+import com.de.signcloud.ui.components.ValidateCode
 import com.de.signcloud.ui.theme.SignCloudTheme
 
 sealed class SignUpEvent {
