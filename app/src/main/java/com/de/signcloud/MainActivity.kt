@@ -20,8 +20,10 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         if (viewModel.isUserSignIn()) {
+            navController.popBackStack()
             navController.navigate(R.id.home_fragment)
+        } else {
+            navView.setupWithNavController(navController)
         }
-        navView.setupWithNavController(navController)
     }
 }

@@ -23,4 +23,8 @@
         android:id="@+id/home_fragment"
         android:name="com.de.signcloud.ui.home.HomeFragment"
         android:label="Home"/>
+    <fragment
+        android:id="@+id/create_course_fragment"
+        android:name="com.de.signcloud.ui.createcourse.CreateCourseFragment"
+        android:label="Create Course"/>
 </navigation>

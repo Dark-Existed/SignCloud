@@ -7,21 +7,17 @@ import androidx.compose.ui.res.stringResource
 import com.de.signcloud.R
 import com.de.signcloud.ui.components.SignCloudTopAppBarWithAction
 
-sealed class CoursesEvent {
-    object ActionPressed : CoursesEvent()
-}
 
 @Composable
 fun Courses(
-    onSnackClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
-    onEvent: (CoursesEvent) -> Unit
+    onEvent: (HomeEvent) -> Unit
 ) {
     Scaffold(
         topBar = {
             SignCloudTopAppBarWithAction(
                 topAppBarText = stringResource(id = R.string.courses),
-                onActionPressed = { onEvent(CoursesEvent.ActionPressed) }
+                onActionPressed = { onEvent(HomeEvent.NavigateToCreateCourse) }
             )
         }
     ) {

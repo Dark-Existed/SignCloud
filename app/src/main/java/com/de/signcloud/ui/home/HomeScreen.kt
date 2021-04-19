@@ -47,7 +47,7 @@ private val BottomNavIndicatorShape = RoundedCornerShape(percent = 50)
 private val BottomNavigationItemPadding = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
 
 
-private enum class HomeSections(
+enum class HomeSections(
     @StringRes val title: Int,
     val icon: ImageVector,
 ) {
@@ -57,11 +57,15 @@ private enum class HomeSections(
     Me(R.string.me, Icons.Outlined.PersonOutline)
 }
 
+sealed class HomeEvent {
+    object NavigateToCreateCourse : HomeEvent()
+}
+
 
 @Composable
 fun Home(
     isStudent: Boolean = false,
-    onSnackSelected: (Long) -> Unit
+    onEvent: (HomeEvent) -> Unit,
 ) {
     val (currentSection, setCurrentSection) = rememberSaveable {
         mutableStateOf(HomeSections.Courses)
@@ -83,11 +87,7 @@ fun Home(
         val modifier = Modifier.padding(innerPadding)
         Crossfade(currentSection) { section ->
             when (section) {
-                HomeSections.Courses -> {
-                    Courses(onSnackSelected, modifier) {
-
-                    }
-                }
+                HomeSections.Courses -> Courses(modifier, onEvent)
                 HomeSections.CreateCourse -> {
 
                 }

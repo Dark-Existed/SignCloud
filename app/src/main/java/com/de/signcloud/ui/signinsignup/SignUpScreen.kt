@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import com.de.signcloud.R
+import com.de.signcloud.ui.components.SignCloudTopAppBarWithBack
 import com.de.signcloud.ui.theme.SignCloudTheme
 
 sealed class SignUpEvent {
@@ -34,7 +35,7 @@ fun SignUp(
 ) {
     Scaffold(
         topBar = {
-            SignInSignUpTopAppBar(
+            SignCloudTopAppBarWithBack(
                 topAppBarText = stringResource(id = R.string.create_account),
                 onBackPressed = { onEvent(SignUpEvent.NavigateBack) }
             )

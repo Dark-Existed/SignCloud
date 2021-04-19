@@ -49,35 +49,6 @@ fun SignInSignUpScreen(
 
 
 @Composable
-fun SignInSignUpTopAppBar(topAppBarText: String, onBackPressed: () -> Unit) {
-    TopAppBar(
-        title = {
-            Text(
-                text = topAppBarText,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .wrapContentSize(Alignment.Center)
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = onBackPressed) {
-                Icon(
-                    imageVector = Icons.Filled.ChevronLeft,
-                    contentDescription = stringResource(id = R.string.back)
-                )
-            }
-        },
-        actions = {
-            Spacer(modifier = Modifier.width(68.dp))
-        },
-        backgroundColor = MaterialTheme.colors.surface,
-        elevation = 0.dp
-    )
-}
-
-
-@Composable
 fun Phone(
     phoneState: PhoneState = remember { PhoneState() },
     imeAction: ImeAction = ImeAction.Next,

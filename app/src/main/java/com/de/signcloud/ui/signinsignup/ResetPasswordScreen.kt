@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
+import com.de.signcloud.ui.components.SignCloudTopAppBarWithBack
 import com.de.signcloud.ui.theme.SignCloudTheme
 
 sealed class ResetPasswordEvent {
@@ -34,7 +35,7 @@ fun ResetPassword(
 ) {
     Scaffold(
         topBar = {
-            SignInSignUpTopAppBar(
+            SignCloudTopAppBarWithBack(
                 topAppBarText = stringResource(id = R.string.reset_password),
                 onBackPressed = { onEvent(ResetPasswordEvent.NavigateBack) }
             )
