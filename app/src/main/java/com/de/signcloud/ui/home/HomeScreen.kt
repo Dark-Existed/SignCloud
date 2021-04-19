@@ -34,16 +34,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.core.os.ConfigurationCompat
 import com.de.signcloud.R
-import com.de.signcloud.components.SignCloudSurface
+import com.de.signcloud.ui.components.SignCloudSurface
 import com.de.signcloud.ui.theme.SignCloudTheme
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
+
 
 private val TextIconSpacing = 4.dp
 private val BottomNavHeight = 56.dp
 private val BottomNavLabelTransformOrigin = TransformOrigin(0f, 0.5f)
 private val BottomNavIndicatorShape = RoundedCornerShape(percent = 50)
 private val BottomNavigationItemPadding = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+
 
 private enum class HomeSections(
     @StringRes val title: Int,
@@ -82,7 +84,9 @@ fun Home(
         Crossfade(currentSection) { section ->
             when (section) {
                 HomeSections.Courses -> {
+                    Courses(onSnackSelected, modifier) {
 
+                    }
                 }
                 HomeSections.CreateCourse -> {
 

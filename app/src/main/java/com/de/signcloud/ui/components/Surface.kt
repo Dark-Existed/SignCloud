@@ -1,4 +1,4 @@
-package com.de.signcloud.components
+package com.de.signcloud.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
