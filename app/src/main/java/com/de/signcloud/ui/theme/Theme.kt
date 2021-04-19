@@ -26,6 +26,7 @@ val LightColorPalette = SignCloudColors(
 
     brand = Teal700,
     uiBackground = Neutral0,
+    uiBorder = Neutral4,
     textSecondary = Neutral7,
     iconSecondary = Neutral7,
     iconInteractive = Neutral0,
@@ -49,6 +50,7 @@ val DarkColorPalette = SignCloudColors(
 
     brand = Teal700,
     uiBackground = Neutral8,
+    uiBorder = Neutral3,
     textSecondary = Neutral0,
     iconSecondary = Teal50,
     iconInteractive = Neutral7,
@@ -102,6 +104,7 @@ class SignCloudColors(
 
     brand: Color,
     uiBackground: Color,
+    uiBorder: Color,
     iconPrimary: Color = brand,
     iconSecondary: Color,
     iconInteractive: Color,
@@ -140,6 +143,8 @@ class SignCloudColors(
         private set
     var uiBackground by mutableStateOf(uiBackground)
         private set
+    var uiBorder by mutableStateOf(uiBorder)
+        private set
     var iconPrimary by mutableStateOf(iconPrimary)
         private set
     var iconSecondary by mutableStateOf(iconSecondary)
@@ -158,6 +163,7 @@ class SignCloudColors(
         secondary = other.secondary
         brand = other.brand
         uiBackground = other.uiBackground
+        uiBorder = other.uiBorder
         textSecondary = other.textSecondary
         iconPrimary = other.iconPrimary
         iconSecondary = other.iconSecondary

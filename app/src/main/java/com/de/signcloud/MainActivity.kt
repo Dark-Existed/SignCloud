@@ -22,8 +22,7 @@ class MainActivity : AppCompatActivity() {
         if (viewModel.isUserSignIn()) {
             navController.popBackStack()
             navController.navigate(R.id.home_fragment)
-        } else {
-            navView.setupWithNavController(navController)
         }
+        navView.setupWithNavController(navController)
     }
 }
