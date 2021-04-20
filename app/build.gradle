@@ -72,6 +72,8 @@ dependencies {
     implementation "com.google.accompanist:accompanist-coil:$accompanist_version"
     implementation "com.google.accompanist:accompanist-insets:$accompanist_version"
 
+    implementation "io.github.vanpra.compose-material-dialogs:core:$vanpra_material_dialog_version"
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
