@@ -13,14 +13,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
 import com.de.signcloud.ui.components.GeneralTextField
+import com.de.signcloud.ui.components.ReadonlyTextField
 import com.de.signcloud.ui.components.SignCloudTopAppBarWithBack
 import com.de.signcloud.ui.components.SingleChoiceTextFieldDialog
+import com.de.signcloud.ui.components.textfieldstate.BigButton
 import com.de.signcloud.ui.components.textfieldstate.GenerateNotNullState
 import com.de.signcloud.ui.components.textfieldstate.GenerateState
 import com.de.signcloud.ui.theme.SignCloudTheme
 
 sealed class CreateCourseEvent {
     data class OnCourseCreate(val courseName: String) : CreateCourseEvent()
+    object SelectSchool : CreateCourseEvent()
     object NavigateBack : CreateCourseEvent()
 }
 
@@ -87,6 +90,14 @@ fun CreateCourseContent(
             label = stringResource(id = R.string.select_semester),
             items = semesterItems,
             generateTextFieldState = semesterSelectedState
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+
+        val schoolSelectState = remember { GenerateState() }
+        ReadonlyTextField(
+            schoolSelectState,
+            label = { Text(text = stringResource(id = R.string.select_school)) },
+            onClick = { onEvent(CreateCourseEvent.SelectSchool) }
         )
         Spacer(modifier = Modifier.height(16.dp))
 

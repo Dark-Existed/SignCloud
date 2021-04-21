@@ -31,9 +31,12 @@
     <string name="course_name">Course Name</string>
     <string name="select_grade">Select Grade</string>
     <string name="select_semester">Select Semester</string>
+    <string name="select_school">Select School</string>
     <string name="semester">semester</string>
     <string name="teacher_name">Teacher Name</string>
     <string name="course_requirement">Course Requirements</string>
     <string name="class_schedule">Class Schedule</string>
     <string name="exam_arrangement">Exam Arrangement</string>
+    <string name="search">Search</string>
+    <string name="search_school">Search School</string>
 </resources>

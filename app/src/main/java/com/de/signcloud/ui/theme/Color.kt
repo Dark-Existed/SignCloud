@@ -24,3 +24,5 @@ val Neutral2 = Color(0x61ffffff)
 val Neutral1 = Color(0xbdffffff)
 val Neutral0 = Color(0xffffffff)
 
+val FunctionalGrey = Color(0xfff6f6f6)
+val FunctionalDarkGrey = Color(0xff2e2e2e)

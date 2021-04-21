@@ -10,7 +10,8 @@ enum class Screen {
     SignUp,
     ResetPassword,
     Home,
-    CreateCourse
+    CreateCourse,
+    SelectSchool,
 }
 
 fun Fragment.navigate(to: Screen, from: Screen) {
@@ -36,6 +37,9 @@ fun Fragment.navigate(to: Screen, from: Screen) {
         }
         Screen.CreateCourse -> {
             findNavController().navigate(R.id.create_course_fragment)
+        }
+        Screen.SelectSchool -> {
+            findNavController().navigate(R.id.select_school_fragment)
         }
     }
 

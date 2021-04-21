@@ -29,7 +29,13 @@ class CreateCourseFragment : Fragment() {
                         semesterItems = viewModel.semesterItems.value!!
                     ) { event ->
                         when (event) {
-                            CreateCourseEvent.NavigateBack -> {
+                            is CreateCourseEvent.SelectSchool -> {
+                                viewModel.navigateToSelectSchool()
+                            }
+                            is CreateCourseEvent.OnCourseCreate -> {
+
+                            }
+                            is CreateCourseEvent.NavigateBack -> {
                                 activity?.onBackPressedDispatcher?.onBackPressed()
                             }
                         }

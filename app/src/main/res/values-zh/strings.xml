@@ -29,9 +29,12 @@
     <string name="course_name">课程名</string>
     <string name="select_grade">选择年级</string>
     <string name="select_semester">选择学期</string>
+    <string name="select_school">选择学校</string>
     <string name="semester">学期</string>
     <string name="teacher_name">教师名</string>
     <string name="course_requirement">课程要求</string>
     <string name="class_schedule">课程安排</string>
     <string name="exam_arrangement">考试安排</string>
+    <string name="search">搜索</string>
+    <string name="search_school">搜索学校</string>
 </resources>

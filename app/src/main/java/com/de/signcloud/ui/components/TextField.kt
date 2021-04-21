@@ -2,6 +2,7 @@ package com.de.signcloud.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -14,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
@@ -265,6 +267,12 @@ fun ReadonlyTextField(
             modifier = Modifier
                 .matchParentSize()
                 .alpha(0f)
+                .clip(
+                    MaterialTheme.shapes.small.copy(
+                        bottomEnd = ZeroCornerSize,
+                        bottomStart = ZeroCornerSize
+                    )
+                )
                 .clickable(onClick = onClick),
         )
     }

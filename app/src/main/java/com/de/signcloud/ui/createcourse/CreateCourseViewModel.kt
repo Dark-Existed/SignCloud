@@ -23,6 +23,10 @@ class CreateCourseViewModel() : ViewModel() {
         get() = _semesterItems
 
 
+    fun navigateToSelectSchool() {
+        _navigateTo.value = Event(Screen.SelectSchool)
+    }
+
     private fun generateGradeItems(itemSize: Int = 5): List<String> {
         val calendar: Calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
