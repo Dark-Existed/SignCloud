@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
 import com.de.signcloud.ui.components.textfieldstate.PhoneState
 import com.de.signcloud.ui.components.textfieldstate.TextFieldState
+import com.de.signcloud.ui.theme.*
 
 @Composable
 fun Phone(
@@ -60,7 +61,8 @@ fun Phone(
             onDone = {
                 onImeAction()
             }
-        )
+        ),
+        singleLine = true
     )
     phoneState.getError()?.let { error -> TextFieldError(textError = error) }
 }
@@ -127,7 +129,8 @@ fun Password(
             onDone = {
                 onImeAction()
             }
-        )
+        ),
+        singleLine = true
     )
     passwordState.getError()?.let { error -> TextFieldError(textError = error) }
 }
@@ -172,7 +175,8 @@ fun ValidateCode(
             onDone = {
                 onImeAction()
             }
-        )
+        ),
+        singleLine = true
     )
     validateCodeState.getError()?.let { error -> TextFieldError(textError = error) }
 }
@@ -218,7 +222,8 @@ fun GeneralTextField(
             onDone = {
                 onImeAction()
             }
-        )
+        ),
+        singleLine = true
     )
     generalTextFieldState.getError()?.let { error -> TextFieldError(textError = error) }
 }
@@ -251,7 +256,10 @@ fun ReadonlyTextField(
                 textFieldState.text = it
             },
             modifier = modifier.fillMaxWidth(),
-            label = label
+            label = label,
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = SignCloudTheme.colors.uiBorder
+            )
         )
         Box(
             modifier = Modifier

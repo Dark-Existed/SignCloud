@@ -52,12 +52,14 @@ enum class HomeSections(
     val icon: ImageVector,
 ) {
     Courses(R.string.courses, Icons.Outlined.EventNote),
-    CreateCourse(R.string.create_course, Icons.Outlined.AddCircleOutline),
-    ScanCode(R.string.scan_code, Icons.Outlined.QrCode),
+
+    //    CreateCourse(R.string.create_course, Icons.Outlined.AddCircleOutline),
+//    ScanCode(R.string.scan_code, Icons.Outlined.QrCode),
     Me(R.string.me, Icons.Outlined.PersonOutline)
 }
 
 sealed class HomeEvent {
+    object NavigateToScanCode : HomeEvent()
     object NavigateToCreateCourse : HomeEvent()
 }
 
@@ -70,11 +72,7 @@ fun Home(
     val (currentSection, setCurrentSection) = rememberSaveable {
         mutableStateOf(HomeSections.Courses)
     }
-    val navItems = if (isStudent) {
-        HomeSections.values().toList().filter { it != HomeSections.CreateCourse }
-    } else {
-        HomeSections.values().toList().filter { it != HomeSections.ScanCode }
-    }
+    val navItems = HomeSections.values().toList()
     Scaffold(
         bottomBar = {
             SignCloudBottomNav(
@@ -87,13 +85,7 @@ fun Home(
         val modifier = Modifier.padding(innerPadding)
         Crossfade(currentSection) { section ->
             when (section) {
-                HomeSections.Courses -> Courses(modifier, onEvent)
-                HomeSections.CreateCourse -> {
-
-                }
-                HomeSections.ScanCode -> {
-
-                }
+                HomeSections.Courses -> Courses(isStudent, modifier, onEvent)
                 HomeSections.Me -> {
 
                 }

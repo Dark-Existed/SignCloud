@@ -24,7 +24,10 @@ class CreateCourseFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
-                    CreateCourse { event ->
+                    CreateCourse(
+                        gradeItems = viewModel.gradeItems.value!!,
+                        semesterItems = viewModel.semesterItems.value!!
+                    ) { event ->
                         when (event) {
                             CreateCourseEvent.NavigateBack -> {
                                 activity?.onBackPressedDispatcher?.onBackPressed()

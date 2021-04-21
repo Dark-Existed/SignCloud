@@ -26,6 +26,8 @@ sealed class CreateCourseEvent {
 
 @Composable
 fun CreateCourse(
+    gradeItems: List<String>,
+    semesterItems: List<String>,
     modifier: Modifier = Modifier,
     onEvent: (CreateCourseEvent) -> Unit
 ) {
@@ -45,7 +47,11 @@ fun CreateCourse(
                             .fillMaxWidth()
                             .padding(horizontal = 20.dp)
                     ) {
-                        CreateCourseContent(onEvent = onEvent)
+                        CreateCourseContent(
+                            gradeItems = gradeItems,
+                            semesterItems = semesterItems,
+                            onEvent = onEvent
+                        )
                     }
                 }
             }
@@ -55,6 +61,8 @@ fun CreateCourse(
 
 @Composable
 fun CreateCourseContent(
+    gradeItems: List<String>,
+    semesterItems: List<String>,
     onEvent: (CreateCourseEvent) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -69,7 +77,7 @@ fun CreateCourseContent(
         val gradeSelectedState = remember { GenerateState() }
         SingleChoiceTextFieldDialog(
             label = stringResource(id = R.string.select_grade),
-            items = listOf("1", "2", "3"),
+            items = gradeItems,
             generateTextFieldState = gradeSelectedState
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -77,7 +85,7 @@ fun CreateCourseContent(
         val semesterSelectedState = remember { GenerateState() }
         SingleChoiceTextFieldDialog(
             label = stringResource(id = R.string.select_semester),
-            items = listOf("1", "2", "3"),
+            items = semesterItems,
             generateTextFieldState = semesterSelectedState
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -119,6 +127,9 @@ fun CreateCourseContent(
 @Composable
 fun CreateCoursePreview() {
     SignCloudTheme {
-        CreateCourse {}
+        CreateCourse(
+            listOf("1", "2", "3"),
+            listOf("1", "2", "3")
+        ) {}
     }
 }

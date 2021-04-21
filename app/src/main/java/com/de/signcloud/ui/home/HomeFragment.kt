@@ -29,10 +29,9 @@ class HomeFragment : Fragment() {
                         Home(
                             isStudent = false
                         ) { event ->
-                            when(event) {
-                                HomeEvent.NavigateToCreateCourse -> {
-                                    viewModel.navigateToCreateCourse()
-                                }
+                            when (event) {
+                                HomeEvent.NavigateToCreateCourse -> viewModel.navigateToCreateCourse()
+                                HomeEvent.NavigateToScanCode -> { }
                             }
                         }
                     }
