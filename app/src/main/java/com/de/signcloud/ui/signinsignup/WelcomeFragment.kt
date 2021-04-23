@@ -29,6 +29,7 @@ class WelcomeFragment : Fragment() {
                     WelcomeScreen { event ->
                         when (event) {
                             is WelcomeEvent.SignInSignUp -> viewModel.handleContinue(event.phone)
+                            is WelcomeEvent.SignInWithGitHub -> viewModel.navigateToSignInWithGithub()
                         }
                     }
                 }

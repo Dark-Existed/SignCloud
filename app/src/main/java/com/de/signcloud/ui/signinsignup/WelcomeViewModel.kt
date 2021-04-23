@@ -39,6 +39,9 @@ class WelcomeViewModel(private val userRepository: UserRepository) : ViewModel()
         _navigateTo.value = Event(SignIn)
     }
 
+    fun navigateToSignInWithGithub() {
+        _navigateTo.value = Event(SignInWithGithub)
+    }
 
 }
 

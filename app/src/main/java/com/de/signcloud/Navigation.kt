@@ -7,6 +7,7 @@ import java.security.InvalidParameterException
 enum class Screen {
     Welcome,
     SignIn,
+    SignInWithGithub,
     SignUp,
     ResetPassword,
     Home,
@@ -28,6 +29,9 @@ fun Fragment.navigate(to: Screen, from: Screen) {
         }
         Screen.SignIn -> {
             findNavController().navigate(R.id.sign_in_fragment)
+        }
+        Screen.SignInWithGithub -> {
+            findNavController().navigate(R.id.sign_in_with_github_fragment)
         }
         Screen.ResetPassword -> {
             findNavController().navigate(R.id.reset_password_fragment)

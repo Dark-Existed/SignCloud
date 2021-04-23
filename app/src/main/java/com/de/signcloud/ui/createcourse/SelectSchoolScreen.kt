@@ -6,7 +6,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.isFocused
@@ -35,10 +35,65 @@ fun SelectSchool(
             Spacer(modifier = Modifier.statusBarsPadding())
 
             SignCloudDivider()
+
+//            LaunchedEffect() {}
         }
     }
 }
 
+
+enum class SearchDisplay {
+    Categories, Suggestions, Results, NoResults
+}
+
+@Composable
+private fun rememberSearchState(
+    query: TextFieldValue = TextFieldValue(""),
+    focused: Boolean = false,
+    searching: Boolean = false,
+//    categories: List<SearchCategoryCollection> = SearchRepo.getCategories(),
+//    suggestions: List<SearchSuggestionGroup> = SearchRepo.getSuggestions(),
+//    filters: List<Filter> = SnackRepo.getFilters(),
+//    searchResults: List<Courses> = emptyList()
+): SearchState {
+    return remember {
+        SearchState(
+            query = query,
+            focused = focused,
+            searching = searching,
+//            categories = categories,
+//            suggestions = suggestions,
+//            filters = filters,
+//            searchResults = searchResults
+        )
+    }
+}
+
+@Stable
+class SearchState(
+    query: TextFieldValue,
+    focused: Boolean,
+    searching: Boolean,
+//    categories: List<SearchCategoryCollection>,
+//    suggestions: List<SearchSuggestionGroup>,
+//    filters: List<Filter>,
+//    searchResults: List<Snack>
+) {
+    var query by mutableStateOf(query)
+    var focused by mutableStateOf(focused)
+    var searching by mutableStateOf(searching)
+//    var categories by mutableStateOf(categories)
+//    var suggestions by mutableStateOf(suggestions)
+//    var filters by mutableStateOf(filters)
+//    var searchResults by mutableStateOf(searchResults)
+    val searchDisplay: SearchDisplay
+        get() = when {
+            !focused && query.text.isEmpty() -> SearchDisplay.Categories
+            focused && query.text.isEmpty() -> SearchDisplay.Suggestions
+//            searchResults.isEmpty() -> SearchDisplay.NoResults
+            else -> SearchDisplay.Results
+        }
+}
 
 @Composable
 private fun SearchBar(

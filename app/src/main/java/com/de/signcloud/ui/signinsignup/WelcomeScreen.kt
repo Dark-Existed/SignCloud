@@ -2,11 +2,14 @@ package com.de.signcloud.ui.signinsignup
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onSizeChanged
@@ -25,6 +28,7 @@ import com.de.signcloud.ui.theme.SignCloudTheme
 
 sealed class WelcomeEvent {
     data class SignInSignUp(val phone: String) : WelcomeEvent()
+    object SignInWithGitHub : WelcomeEvent()
 }
 
 @Composable
@@ -61,6 +65,11 @@ fun WelcomeScreen(onEvent: (WelcomeEvent) -> Unit) {
                             brandingBottom = it.boundsInParent().bottom
                         }
                     }
+            )
+            SignInWithOthers(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                onEvent = onEvent
             )
             SignInCreateAccount(
                 onEvent = onEvent,
@@ -122,6 +131,42 @@ private fun Logo(
     Image(
         painter = painterResource(id = assetId),
         modifier = modifier,
+        contentDescription = null
+    )
+}
+
+
+@Composable
+private fun SignInWithOthers(
+    modifier: Modifier = Modifier,
+    onEvent: (WelcomeEvent) -> Unit
+) {
+    Column(
+        modifier = modifier.wrapContentHeight(align = Alignment.CenterVertically)
+    ) {
+        GithubLogo(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+            onEvent(WelcomeEvent.SignInWithGitHub)
+        }
+    }
+}
+
+@Composable
+private fun GithubLogo(
+    modifier: Modifier = Modifier,
+    lightTheme: Boolean = MaterialTheme.colors.isLight,
+    onClick: () -> Unit,
+) {
+    val assetId = if (lightTheme) {
+        R.drawable.github_logo_light
+    } else {
+        R.drawable.github_logo_dark
+    }
+    Image(
+        painter = painterResource(id = assetId),
+        modifier = modifier
+            .size(48.dp)
+            .clip(shape = CircleShape)
+            .clickable(true, onClick = onClick),
         contentDescription = null
     )
 }
