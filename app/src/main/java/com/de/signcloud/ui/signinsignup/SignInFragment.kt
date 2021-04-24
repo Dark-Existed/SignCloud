@@ -28,6 +28,8 @@ class SignInFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val bundle = arguments
+        val phone = bundle?.getString("phone", "")
         setUpObserver()
         return ComposeView(requireContext()).apply {
             id = R.id.sign_in_fragment
@@ -38,8 +40,8 @@ class SignInFragment : Fragment() {
                     val validateButtonClickable by viewModel.isValidateButtonClickable.observeAsState(
                         true
                     )
-
                     SignIn(
+                        initPhone = phone!!,
                         validateButtonText = validateButtonText,
                         validateButtonClickable = validateButtonClickable
                     ) { event ->

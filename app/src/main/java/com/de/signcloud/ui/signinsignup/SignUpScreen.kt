@@ -24,12 +24,14 @@ sealed class SignUpEvent {
     data class GetValidate(val phone: String) : SignUpEvent()
     data class SignUp(val phone: String, val password: String, val validateCode: String) :
         SignUpEvent()
+
     object NavigateBack : SignUpEvent()
 }
 
 
 @Composable
 fun SignUp(
+    initPhone: String = "",
     topBarTitle: String = stringResource(id = R.string.create_account),
     validateButtonText: String = stringResource(id = R.string.get_validate_code),
     validateButtonClickable: Boolean = true,
@@ -46,6 +48,7 @@ fun SignUp(
             SignInSignUpLayout(modifier = Modifier.fillMaxWidth()) {
                 Column {
                     SignUpContent(
+                        initPhone = initPhone,
                         onGetValidateCode = { phone ->
                             onEvent(SignUpEvent.GetValidate(phone))
                         },
@@ -64,6 +67,7 @@ fun SignUp(
 
 @Composable
 fun SignUpContent(
+    initPhone: String = "",
     onSubmittedButtonText: String = stringResource(id = R.string.create_account),
     validateButtonText: String,
     validateButtonClickable: Boolean,
@@ -76,6 +80,7 @@ fun SignUpContent(
         val validateCodeFocusRequest = remember { FocusRequester() }
 
         val phoneState = remember { PhoneState() }
+        phoneState.text = initPhone
         Phone(phoneState, onImeAction = { passwordFocusRequest.requestFocus() })
         Spacer(modifier = Modifier.height(16.dp))
 
