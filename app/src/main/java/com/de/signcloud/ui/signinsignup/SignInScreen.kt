@@ -24,7 +24,7 @@ sealed class SignInEvent {
     data class SignInWithPassword(val phone: String, val password: String) : SignInEvent()
     data class GetValidate(val phone: String) : SignInEvent()
     data class SignInWithValidateCode(val phone: String, val validateCode: String) : SignInEvent()
-    object ResetPassword : SignInEvent()
+    data class ResetPassword(val phone: String) : SignInEvent()
     object NavigateBack : SignInEvent()
 }
 
@@ -85,7 +85,7 @@ fun SignIn(
                                 onEvent(SignInEvent.SignInWithPassword(phone, password))
                             },
                             onResetPassword = {
-                                onEvent(SignInEvent.ResetPassword)
+                                onEvent(SignInEvent.ResetPassword(it))
                             }
                         )
                         1 -> SignInWithValidateCodeContent(
@@ -117,12 +117,11 @@ fun SignIn(
 fun SignInWithPasswordContent(
     initPhone: String = "",
     onSignInSubmitted: (phone: String, password: String) -> Unit,
-    onResetPassword: () -> Unit
+    onResetPassword: (String) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val focusRequester = remember { FocusRequester() }
-        val phoneState = remember { PhoneState() }
-        phoneState.text = initPhone
+        val phoneState = remember { PhoneState(initPhone) }
         Phone(
             phoneState,
             onImeAction = { focusRequester.requestFocus() },
@@ -150,7 +149,7 @@ fun SignInWithPasswordContent(
         Spacer(modifier = Modifier.height(16.dp))
         TextButton(
             onClick = {
-                onResetPassword()
+                onResetPassword(phoneState.text)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -169,8 +168,7 @@ fun SignInWithValidateCodeContent(
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val focusRequester = remember { FocusRequester() }
-        val phoneState = remember { PhoneState() }
-        phoneState.text = initPhone
+        val phoneState = remember { PhoneState(initPhone) }
         Phone(phoneState, onImeAction = { focusRequester.requestFocus() })
         Spacer(modifier = Modifier.height(16.dp))
         val validateCodeState = remember { ValidateCodeState() }

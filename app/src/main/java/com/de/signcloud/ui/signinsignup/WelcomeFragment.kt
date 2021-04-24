@@ -55,10 +55,8 @@ class WelcomeFragment : Fragment() {
             if (result != null) {
                 if (result) {
                     navigateWithArgs(Screen.SignIn, Screen.Welcome, bundle)
-//                    viewModel.navigateToSignIn()
                 } else {
                     navigateWithArgs(Screen.SignUp, Screen.Welcome, bundle)
-//                    viewModel.navigateToSignUp()
                 }
             }
         }

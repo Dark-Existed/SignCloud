@@ -65,6 +65,9 @@ fun Fragment.navigateWithArgs(to: Screen, from: Screen, args: Bundle) {
         Screen.SignUp -> {
             findNavController().navigate(R.id.sign_up_fragment, args)
         }
+        Screen.ResetPassword -> {
+            findNavController().navigate(R.id.reset_password_fragment, args)
+        }
         Screen.BindPhone -> {
             findNavController().navigate(R.id.bind_phone_fragment, args)
         }

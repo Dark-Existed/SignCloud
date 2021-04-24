@@ -79,8 +79,7 @@ fun SignUpContent(
         val confirmationPasswordFocusRequest = remember { FocusRequester() }
         val validateCodeFocusRequest = remember { FocusRequester() }
 
-        val phoneState = remember { PhoneState() }
-        phoneState.text = initPhone
+        val phoneState = remember { PhoneState(initPhone) }
         Phone(phoneState, onImeAction = { passwordFocusRequest.requestFocus() })
         Spacer(modifier = Modifier.height(16.dp))
 

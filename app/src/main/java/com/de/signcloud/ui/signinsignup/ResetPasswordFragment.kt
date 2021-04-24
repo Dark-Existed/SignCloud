@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,6 +25,8 @@ class ResetPasswordFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val bundle = arguments
+        val phone = bundle?.getString("phone", "")
         setUpObserver()
         return ComposeView(requireContext()).apply {
             setContent {
@@ -33,8 +36,9 @@ class ResetPasswordFragment : Fragment() {
                     val validateButtonClickable by viewModel.isValidateButtonClickable.observeAsState(
                         true
                     )
-
+                    val phoneState = remember { phone }
                     ResetPassword(
+                        initPhone = phoneState!!,
                         validateButtonText = validateButtonText,
                         validateButtonClickable = validateButtonClickable
                     ) { event ->

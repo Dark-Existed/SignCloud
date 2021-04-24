@@ -14,6 +14,7 @@ import com.de.signcloud.R
 import com.de.signcloud.Screen
 import com.de.signcloud.bean.SignInResponse
 import com.de.signcloud.navigate
+import com.de.signcloud.navigateWithArgs
 import com.de.signcloud.ui.theme.SignCloudTheme
 import com.de.signcloud.utils.Result
 import com.de.signcloud.utils.getOrNull
@@ -56,7 +57,9 @@ class SignInFragment : Fragment() {
                                 viewModel.signInWithValidateCode(event)
                             }
                             is SignInEvent.ResetPassword -> {
-                                viewModel.navigateToResetPassword()
+                                val args = Bundle()
+                                args.putString("phone", event.phone)
+                                navigateWithArgs(Screen.ResetPassword, Screen.SignUp, args)
                             }
                             is SignInEvent.NavigateBack -> {
                                 activity?.onBackPressedDispatcher?.onBackPressed()

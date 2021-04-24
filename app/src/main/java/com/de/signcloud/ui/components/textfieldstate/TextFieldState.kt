@@ -5,10 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 open class TextFieldState(
+    private val initText: String = "",
     private val validator: (String) -> Boolean = { true },
     private val errorFor: (String) -> String = { "" }
 ) {
-    var text: String by mutableStateOf("")
+    var text: String by mutableStateOf(initText)
+
     // was the TextField ever focused
     var isFocusedDirty: Boolean by mutableStateOf(false)
     var isFocused: Boolean by mutableStateOf(false)

@@ -28,11 +28,13 @@ sealed class ResetPasswordEvent {
     data class GetValidate(val phone: String) : ResetPasswordEvent()
     data class ResetPassword(val phone: String, val password: String, val validateCode: String) :
         ResetPasswordEvent()
+
     object NavigateBack : ResetPasswordEvent()
 }
 
 @Composable
 fun ResetPassword(
+    initPhone: String = "",
     validateButtonText: String = stringResource(id = R.string.get_validate_code),
     validateButtonClickable: Boolean = true,
     onEvent: (ResetPasswordEvent) -> Unit,
@@ -48,6 +50,7 @@ fun ResetPassword(
             SignInSignUpLayout(modifier = Modifier.fillMaxWidth()) {
                 Column {
                     ResetPasswordContent(
+                        initPhone = initPhone,
                         validateButtonText = validateButtonText,
                         validateButtonClickable = validateButtonClickable,
                         onGetValidateCode = { phone ->
@@ -65,6 +68,7 @@ fun ResetPassword(
 
 @Composable
 fun ResetPasswordContent(
+    initPhone: String = "",
     validateButtonText: String,
     validateButtonClickable: Boolean,
     onGetValidateCode: (phone: String) -> Unit,
@@ -75,7 +79,7 @@ fun ResetPasswordContent(
         val confirmationPasswordFocusRequest = remember { FocusRequester() }
         val validateCodeFocusRequest = remember { FocusRequester() }
 
-        val phoneState = remember { PhoneState() }
+        val phoneState = remember { PhoneState(initPhone) }
         Phone(phoneState, onImeAction = { passwordFocusRequest.requestFocus() })
         Spacer(modifier = Modifier.height(16.dp))
 
