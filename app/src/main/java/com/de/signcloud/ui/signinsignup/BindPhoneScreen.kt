@@ -36,6 +36,7 @@ fun BindPhone(
             SignInSignUpLayout(modifier = Modifier.fillMaxWidth()) {
                 Column {
                     SignUpContent(
+                        onSubmittedButtonText = stringResource(id = R.string.bind_phone),
                         onGetValidateCode = { phone ->
                             onEvent(BindPhoneEvent.GetValidate(phone))
                         },

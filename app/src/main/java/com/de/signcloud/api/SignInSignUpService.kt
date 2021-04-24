@@ -2,7 +2,6 @@ package com.de.signcloud.api
 
 import com.de.signcloud.bean.IsPhoneExistResponse
 import com.de.signcloud.bean.SignInResponse
-import com.de.signcloud.bean.SignUpResponse
 import com.de.signcloud.bean.ValidateCodeResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -23,7 +22,7 @@ interface SignInSignUpService {
         @Query("phone") phone: String,
         @Query("password") password: String,
         @Query("verificationCode") validateCode: String
-    ): Call<SignUpResponse>
+    ): Call<SignInResponse>
 
     @POST("/api/loginByPwd")
     fun signInWithPassword(
@@ -49,7 +48,7 @@ interface SignInSignUpService {
         @Query("password") password: String,
         @Query("githubId") githubId: Int,
         @Query("verificationCode") validateCode: String,
-    )
+    ): Call<SignInResponse>
 
     @GET("/api/getCode")
     fun getValidateCode(

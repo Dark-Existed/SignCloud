@@ -53,8 +53,6 @@ fun WebView(
             settings.javaScriptEnabled = true
             webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(view: WebView?, url: String): Boolean {
-                    Log.d("WebViewTest", url)
-//                    return false
                     return handlerUrl(url)
                 }
             }

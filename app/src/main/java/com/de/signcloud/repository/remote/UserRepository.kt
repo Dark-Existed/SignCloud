@@ -1,5 +1,6 @@
 package com.de.signcloud.repository.remote
 
+import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.liveData
@@ -85,13 +86,24 @@ object UserRepository {
     }
 
 
-//    fun bindPhone()
+    fun bindPhone(phone: String, password: String, validateCode: String, githubId: Int) =
+        request(Dispatchers.IO) {
+            val bindResponse: SignInResponse =
+                SignCloudNetwork.bindPhone(phone, password, githubId, validateCode)
+            if (bindResponse.code == 200) {
+                updateUserInfo(bindResponse)
+                Result.Success(bindResponse)
+            } else {
+                Result.Failure(RuntimeException("bind phone response status is ${bindResponse.code}"))
+            }
+        }
 
     fun signUp(phone: String, password: String, validateCode: String) = request(Dispatchers.IO) {
-        val signUpResponse: SignUpResponse =
+        val signUpResponse: SignInResponse =
             SignCloudNetwork.signUp(phone, password, validateCode)
         if (signUpResponse.code == 200) {
 //                _user = User.LoggedInUser(phone)
+            updateUserInfo(signUpResponse)
             Result.Success(signUpResponse)
         } else {
             Result.Failure(RuntimeException("sign up response status is ${signUpResponse.code}"))
@@ -126,7 +138,7 @@ private fun <T> request(context: CoroutineContext, block: suspend () -> Result<T
         val result = try {
             block()
         } catch (e: Exception) {
-//            e.printStackTrace()
+            e.printStackTrace()
             Result.Failure(e)
         }
         emit(result)

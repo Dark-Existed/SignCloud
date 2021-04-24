@@ -66,6 +66,7 @@ fun SignUp(
 
 @Composable
 fun SignUpContent(
+    onSubmittedButtonText: String = stringResource(id = R.string.create_account),
     validateButtonText: String,
     validateButtonClickable: Boolean,
     onGetValidateCode: (phone: String) -> Unit,
@@ -140,7 +141,7 @@ fun SignUpContent(
                     confirmPasswordState.isValid &&
                     validateCodeState.isValid
         ) {
-            Text(text = stringResource(id = R.string.create_account))
+            Text(text = onSubmittedButtonText)
         }
     }
 }

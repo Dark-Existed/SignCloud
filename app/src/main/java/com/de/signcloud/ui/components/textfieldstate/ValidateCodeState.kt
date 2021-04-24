@@ -7,7 +7,7 @@ class ValidateCodeState : TextFieldState(
 )
 
 private fun validateCodeValidationError(validateCode: String): String {
-    return "Invalid phone: $validateCode"
+    return "Invalid Validate Code"
 }
 
 private fun isValidateCodeValid(validateCode: String): Boolean {

@@ -38,11 +38,11 @@ class SignUpFragment : Fragment() {
                         validateButtonClickable = validateButtonClickable
                     ) { event ->
                         when (event) {
-                            is SignUpEvent.SignUp -> {
-                                viewModel.signUp(event)
-                            }
                             is SignUpEvent.GetValidate -> {
                                 viewModel.getValidateCode(event.phone)
+                            }
+                            is SignUpEvent.SignUp -> {
+                                viewModel.signUp(event)
                             }
                             is SignUpEvent.SignIn -> {
 

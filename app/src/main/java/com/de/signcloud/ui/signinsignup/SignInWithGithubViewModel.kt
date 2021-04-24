@@ -37,10 +37,6 @@ class SignInWithGithubViewModel : ViewModel() {
         _navigateTo.value = Event(Screen.Home)
     }
 
-    fun navigateToBindPhone(githubId: Int) {
-
-    }
-
 }
 
 @Suppress("UNCHECKED_CAST")

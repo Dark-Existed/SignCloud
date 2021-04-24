@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
+import com.de.signcloud.navigateWithArgs
 import com.de.signcloud.ui.theme.SignCloudTheme
 import com.de.signcloud.utils.getOrNull
 
@@ -65,7 +66,9 @@ class SignInWithGithubFragment : Fragment() {
                         viewModel.navigateToHome()
                     }
                     406 -> {
-                        viewModel.navigateToBindPhone(result.data!!.githubId!!)
+                        val bundle = Bundle()
+                        bundle.putInt("githubId", result.data!!.githubId!!)
+                        navigateWithArgs(Screen.BindPhone, Screen.SignInWithGithub, bundle)
                     }
                 }
             }
