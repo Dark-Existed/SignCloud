@@ -21,11 +21,9 @@ import com.de.signcloud.ui.components.textfieldstate.ValidateCodeState
 import com.de.signcloud.ui.theme.SignCloudTheme
 
 sealed class SignUpEvent {
-    object SignIn : SignUpEvent()
     data class GetValidate(val phone: String) : SignUpEvent()
     data class SignUp(val phone: String, val password: String, val validateCode: String) :
         SignUpEvent()
-
     object NavigateBack : SignUpEvent()
 }
 

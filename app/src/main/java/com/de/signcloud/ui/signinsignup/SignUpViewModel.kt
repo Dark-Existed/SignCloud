@@ -66,6 +66,10 @@ class SignUpViewModel(
         }.start()
     }
 
+    fun navigateToHome() {
+        _navigateTo.value = Event(Screen.Home)
+    }
+
 }
 
 class SignUpViewModelFactory : ViewModelProvider.Factory {

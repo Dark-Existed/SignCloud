@@ -9,9 +9,11 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
 import com.de.signcloud.ui.theme.SignCloudTheme
+import com.de.signcloud.utils.getOrNull
 
 class ResetPasswordFragment : Fragment() {
 
@@ -41,7 +43,7 @@ class ResetPasswordFragment : Fragment() {
                                 viewModel.getValidateCode(event.phone)
                             }
                             is ResetPasswordEvent.ResetPassword -> {
-
+                                viewModel.resetPassword(event)
                             }
                             is ResetPasswordEvent.NavigateBack -> {
                                 activity?.onBackPressedDispatcher?.onBackPressed()
@@ -58,6 +60,16 @@ class ResetPasswordFragment : Fragment() {
         viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
             navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
                 navigate(navigateTo, Screen.ResetPassword)
+            }
+        }
+        viewModel.resetPasswordLiveData.observe(viewLifecycleOwner) {
+            val result = it.getOrNull()
+            if (result != null) {
+                when (result.code) {
+                    200 -> {
+                        findNavController().popBackStack()
+                    }
+                }
             }
         }
     }

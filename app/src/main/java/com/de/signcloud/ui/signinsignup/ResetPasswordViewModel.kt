@@ -17,6 +17,16 @@ class ResetPasswordViewModel(
         get() = _navigateTo
 
 
+    private val resetPassword = MutableLiveData<ResetPasswordEvent.ResetPassword>()
+
+    val resetPasswordLiveData = Transformations.switchMap(resetPassword) {
+        userRepository.resetPassword(it.phone, it.password, it.validateCode)
+    }
+
+    fun resetPassword(event: ResetPasswordEvent.ResetPassword) {
+        resetPassword.value = event
+    }
+
 
     private val _validateCodePhone = MutableLiveData<String>()
 

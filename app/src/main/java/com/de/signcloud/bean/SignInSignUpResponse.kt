@@ -25,4 +25,4 @@ class SignInResponse(val code: Int, val message: String, val data: Data?) {
 }
 
 
-class ResetPasswordResponse(val code: Int, val message: String, val data: String)
+class ResetPasswordResponse(val code: Int, val message: String, val data: String?)

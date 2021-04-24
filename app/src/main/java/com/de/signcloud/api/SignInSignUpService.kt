@@ -1,6 +1,7 @@
 package com.de.signcloud.api
 
 import com.de.signcloud.bean.IsPhoneExistResponse
+import com.de.signcloud.bean.ResetPasswordResponse
 import com.de.signcloud.bean.SignInResponse
 import com.de.signcloud.bean.ValidateCodeResponse
 import retrofit2.Call
@@ -60,6 +61,6 @@ interface SignInSignUpService {
         @Query("phone") phone: String,
         @Query("password") password: String,
         @Query("verificationCode") validateCode: String
-    )
+    ):Call<ResetPasswordResponse>
 
 }

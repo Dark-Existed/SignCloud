@@ -32,6 +32,9 @@ object SignCloudNetwork {
     suspend fun bindPhone(phone: String, password: String, githubId: Int, validateCode: String) =
         signInSignUpService.bindPhone(phone, password, githubId, validateCode).await()
 
+    suspend fun resetPassword(phone: String, password: String, validateCode: String) =
+        signInSignUpService.resetPassword(phone, password, validateCode).await()
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {

@@ -49,7 +49,7 @@ class BindPhoneFragment : Fragment() {
                                 viewModel.bindPhone(event, githubId)
                             }
                             is BindPhoneEvent.NavigateBack -> {
-
+                                activity?.onBackPressedDispatcher?.onBackPressed()
                             }
                         }
                     }

@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.liveData
 import com.de.signcloud.SignCloudApplication.Companion.context
 import com.de.signcloud.api.SignCloudNetwork
+import com.de.signcloud.bean.ResetPasswordResponse
 import com.de.signcloud.bean.SignInResponse
 import com.de.signcloud.bean.SignUpResponse
 import com.de.signcloud.bean.ValidateCodeResponse
@@ -109,6 +110,17 @@ object UserRepository {
             Result.Failure(RuntimeException("sign up response status is ${signUpResponse.code}"))
         }
     }
+
+    fun resetPassword(phone: String, password: String, validateCode: String) =
+        request(Dispatchers.IO) {
+            val resetPasswordResponse: ResetPasswordResponse =
+                SignCloudNetwork.resetPassword(phone, password, validateCode)
+            if (resetPasswordResponse.code == 200) {
+                Result.Success(resetPasswordResponse)
+            } else {
+                Result.Failure(RuntimeException("reset password response status is ${resetPasswordResponse.code}"))
+            }
+        }
 
     fun getValidate(phone: String) = request(Dispatchers.IO) {
         val validateCodeResponse: ValidateCodeResponse = SignCloudNetwork.getValidateCode(phone)

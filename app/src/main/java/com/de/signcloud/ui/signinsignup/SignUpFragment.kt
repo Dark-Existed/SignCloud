@@ -13,6 +13,7 @@ import com.de.signcloud.R
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
 import com.de.signcloud.ui.theme.SignCloudTheme
+import com.de.signcloud.utils.getOrNull
 
 class SignUpFragment : Fragment() {
 
@@ -31,7 +32,9 @@ class SignUpFragment : Fragment() {
                 SignCloudTheme {
                     viewModel.validateCodeLiveData.observeAsState()
                     val validateButtonText by viewModel.validateButtonText.observeAsState("")
-                    val validateButtonClickable by viewModel.isValidateButtonClickable.observeAsState(true)
+                    val validateButtonClickable by viewModel.isValidateButtonClickable.observeAsState(
+                        true
+                    )
 
                     SignUp(
                         validateButtonText = validateButtonText,
@@ -43,9 +46,6 @@ class SignUpFragment : Fragment() {
                             }
                             is SignUpEvent.SignUp -> {
                                 viewModel.signUp(event)
-                            }
-                            is SignUpEvent.SignIn -> {
-
                             }
                             is SignUpEvent.NavigateBack -> {
                                 activity?.onBackPressedDispatcher?.onBackPressed()
@@ -65,7 +65,12 @@ class SignUpFragment : Fragment() {
             }
         }
         viewModel.signUpLiveData.observe(viewLifecycleOwner) {
-
+            val result = it.getOrNull()
+            if (result != null) {
+                if (result.code == 200) {
+                    viewModel.navigateToHome()
+                }
+            }
         }
     }
 
