@@ -64,6 +64,9 @@ class SignUpFragment : Fragment() {
                 navigate(navigateTo, Screen.SignUp)
             }
         }
+        viewModel.signUpLiveData.observe(viewLifecycleOwner) {
+
+        }
     }
 
 }

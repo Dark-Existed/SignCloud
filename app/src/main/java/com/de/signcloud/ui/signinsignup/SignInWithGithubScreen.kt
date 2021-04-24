@@ -1,6 +1,7 @@
 package com.de.signcloud.ui.signinsignup
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -20,6 +21,7 @@ sealed class SignInWithGithubEvent {
 fun SignInWithGithub(
     loadUrl: String,
     modifier: Modifier = Modifier,
+    handlerUrl: (String) -> Boolean,
     onEvent: (SignInWithGithubEvent) -> Unit,
 ) {
     Scaffold(
@@ -30,7 +32,7 @@ fun SignInWithGithub(
             )
         },
         content = {
-            WebView(url = loadUrl)
+            WebView(url = loadUrl, handlerUrl = handlerUrl)
         }
     )
 }
@@ -38,15 +40,24 @@ fun SignInWithGithub(
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun WebView(url: String) {
+fun WebView(
+    url: String,
+    handlerUrl: (String) -> Boolean
+) {
     AndroidView(factory = {
         WebView(it).apply {
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
-            webViewClient = WebViewClient()
-            loadUrl(url)
+            settings.javaScriptEnabled = true
+            webViewClient = object : WebViewClient() {
+                override fun shouldOverrideUrlLoading(view: WebView?, url: String): Boolean {
+                    Log.d("WebViewTest", url)
+//                    return false
+                    return handlerUrl(url)
+                }
+            }
         }
     }, update = {
         it.loadUrl(url)

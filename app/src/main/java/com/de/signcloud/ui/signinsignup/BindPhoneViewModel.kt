@@ -1,9 +1,24 @@
 package com.de.signcloud.ui.signinsignup
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
+import com.de.signcloud.Screen
+import com.de.signcloud.utils.Event
 
 class BindPhoneViewModel() : ViewModel() {
+
+    private val _navigateTo = MutableLiveData<Event<Screen>>()
+    val navigateTo: LiveData<Event<Screen>>
+        get() = _navigateTo
+
+    private val bindPhoneEvent = MutableLiveData<BindPhoneEvent.OnBindPhone>()
+
+//    val bindPhoneLiveData = Transformations.switchMap(bindPhoneEvent) {
+//
+//    }
+
+    fun bindPhone(event: BindPhoneEvent.OnBindPhone) {
+        bindPhoneEvent.value = event
+    }
 
 }
 

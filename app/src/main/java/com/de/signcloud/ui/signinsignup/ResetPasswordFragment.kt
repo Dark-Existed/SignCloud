@@ -38,7 +38,7 @@ class ResetPasswordFragment : Fragment() {
                     ) { event ->
                         when (event) {
                             is ResetPasswordEvent.GetValidate -> {
-
+                                viewModel.getValidateCode(event.phone)
                             }
                             is ResetPasswordEvent.ResetPassword -> {
 

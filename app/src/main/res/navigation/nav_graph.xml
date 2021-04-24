@@ -16,6 +16,10 @@
         android:name="com.de.signcloud.ui.signinsignup.SignInWithGithubFragment"
         android:label="Sign In With Github"/>
     <fragment
+        android:id="@+id/bind_phone_fragment"
+        android:name="com.de.signcloud.ui.signinsignup.BindPhoneFragment"
+        android:label="Bind Phone"/>
+    <fragment
         android:id="@+id/sign_up_fragment"
         android:name="com.de.signcloud.ui.signinsignup.SignUpFragment"
         android:label="Sign Up"/>

@@ -10,8 +10,9 @@ class SignUpResponse(val code: Int, val message: String, val data: String?)
 
 class SignInResponse(val code: Int, val message: String, val data: Data?) {
     class Data(
-        val userInfo: UserInfo,
-        val token: String
+        val userInfo: UserInfo?,
+        val token: String?,
+        val githubId: Int?
     )
 
     class UserInfo(
@@ -23,4 +24,5 @@ class SignInResponse(val code: Int, val message: String, val data: Data?) {
     )
 }
 
-class ResetPasswordResponse()
+
+class ResetPasswordResponse(val code: Int, val message: String, val data: String)

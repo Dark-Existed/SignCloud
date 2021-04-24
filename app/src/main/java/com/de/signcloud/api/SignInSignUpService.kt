@@ -7,6 +7,7 @@ import com.de.signcloud.bean.ValidateCodeResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface SignInSignUpService {
@@ -35,6 +36,20 @@ interface SignInSignUpService {
         @Query("phone") phone: String,
         @Query("verificationCode") validateCode: String
     ): Call<SignInResponse>
+
+    @GET("api/callback")
+    fun signInWithGithubCode(
+        @Query("code") code: String,
+        @Query("state") state: String = "STATE"
+    ): Call<SignInResponse>
+
+    @PUT("/api/password-phone")
+    fun bindPhone(
+        @Query("phone") phone: String,
+        @Query("password") password: String,
+        @Query("githubId") githubId: Int,
+        @Query("verificationCode") validateCode: String,
+    )
 
     @GET("/api/getCode")
     fun getValidateCode(

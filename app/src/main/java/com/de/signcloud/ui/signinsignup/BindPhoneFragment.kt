@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.de.signcloud.ui.theme.SignCloudTheme
 
 class BindPhoneFragment : Fragment() {
 
@@ -16,7 +18,19 @@ class BindPhoneFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        setUpObserver()
+        return ComposeView(requireContext()).apply {
+            setContent {
+                SignCloudTheme {
+
+                }
+            }
+        }
+    }
+
+
+    private fun setUpObserver() {
+
     }
 
 }

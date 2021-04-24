@@ -32,6 +32,7 @@ sealed class SignUpEvent {
 
 @Composable
 fun SignUp(
+    topBarTitle: String = stringResource(id = R.string.create_account),
     validateButtonText: String = stringResource(id = R.string.get_validate_code),
     validateButtonClickable: Boolean = true,
     onEvent: (SignUpEvent) -> Unit,
@@ -39,7 +40,7 @@ fun SignUp(
     Scaffold(
         topBar = {
             SignCloudTopAppBarWithBack(
-                topAppBarText = stringResource(id = R.string.create_account),
+                topAppBarText = topBarTitle,
                 onBackPressed = { onEvent(SignUpEvent.NavigateBack) }
             )
         },

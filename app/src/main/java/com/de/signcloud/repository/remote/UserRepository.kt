@@ -72,6 +72,21 @@ object UserRepository {
         }
     }
 
+    fun signInWithGithubCode(code: String) = request(Dispatchers.IO) {
+        val signInResponse: SignInResponse = SignCloudNetwork.signInWithGithubCode(code)
+        when (signInResponse.code) {
+            200 -> {
+                updateUserInfo(signInResponse)
+                Result.Success(signInResponse)
+            }
+            406 -> Result.Success(signInResponse)
+            else -> Result.Failure(RuntimeException("sign in response status is ${signInResponse.code}"))
+        }
+    }
+
+
+//    fun bindPhone()
+
     fun signUp(phone: String, password: String, validateCode: String) = request(Dispatchers.IO) {
         val signUpResponse: SignUpResponse =
             SignCloudNetwork.signUp(phone, password, validateCode)
@@ -97,10 +112,10 @@ object UserRepository {
 
 private suspend fun updateUserInfo(signInResponse: SignInResponse) {
     context.userInfoDataStore.edit { userInfo ->
-        userInfo[UserInfoDataStoreKey.userNameKey] = signInResponse.data!!.userInfo.userName
-        userInfo[UserInfoDataStoreKey.phoneKey] = signInResponse.data.userInfo.phone
+        userInfo[UserInfoDataStoreKey.userNameKey] = signInResponse.data!!.userInfo!!.userName
+        userInfo[UserInfoDataStoreKey.phoneKey] = signInResponse.data.userInfo!!.phone
         userInfo[UserInfoDataStoreKey.defaultRoleKey] = signInResponse.data.userInfo.defaultRole
-        userInfo[UserInfoDataStoreKey.tokenKey] = signInResponse.data.token
+        userInfo[UserInfoDataStoreKey.tokenKey] = signInResponse.data.token!!
     }
     UserDao.signIn()
 }
@@ -111,6 +126,7 @@ private fun <T> request(context: CoroutineContext, block: suspend () -> Result<T
         val result = try {
             block()
         } catch (e: Exception) {
+//            e.printStackTrace()
             Result.Failure(e)
         }
         emit(result)

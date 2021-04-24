@@ -1,5 +1,6 @@
 package com.de.signcloud.api
 
+import com.de.signcloud.api.SignCloudNetwork.await
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,6 +26,9 @@ object SignCloudNetwork {
 
     suspend fun signInWithValidateCode(phone: String, validateCode: String) =
         signInSignUpService.signInWithValidateCode(phone, validateCode).await()
+
+    suspend fun signInWithGithubCode(code: String) =
+        signInSignUpService.signInWithGithubCode(code).await()
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->

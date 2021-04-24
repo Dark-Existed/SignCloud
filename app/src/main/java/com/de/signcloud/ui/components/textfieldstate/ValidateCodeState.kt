@@ -11,5 +11,5 @@ private fun validateCodeValidationError(validateCode: String): String {
 }
 
 private fun isValidateCodeValid(validateCode: String): Boolean {
-    return validateCode.length == 4
+    return validateCode.length == 6
 }
