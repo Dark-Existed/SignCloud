@@ -13,6 +13,10 @@
     <string name="invalid_phone">Invalid phone: </string>
     <string name="password_dont_match">Passwords don\'t match</string>
 
+    <string name="password_error">Password aError</string>
+    <string name="validate_code_error">Validate Code Error</string>
+    <string name="network_error">Network Error</string>
+
     <string name="back">Back</string>
     <string name="create_account">CREATE ACCOUNT</string>
     <string name="get_validate_code">GET VALIDATE</string>

@@ -54,11 +54,13 @@ object UserRepository {
     fun signInWithPassword(phone: String, password: String) = request(Dispatchers.IO) {
         val signInResponse: SignInResponse =
             SignCloudNetwork.signInWithPassword(phone, password)
-        if (signInResponse.code == 200) {
-            updateUserInfo(signInResponse)
-            Result.Success(signInResponse)
-        } else {
-            Result.Failure(RuntimeException("sign in response status is ${signInResponse.code}"))
+        when (signInResponse.code) {
+            200 -> {
+                updateUserInfo(signInResponse)
+                Result.Success(signInResponse)
+            }
+            400 -> Result.Success(signInResponse)
+            else -> Result.Failure(RuntimeException("sign in response status is ${signInResponse.code}"))
         }
     }
 
@@ -66,11 +68,13 @@ object UserRepository {
     fun signInWithValidateCode(phone: String, validateCode: String) = request(Dispatchers.IO) {
         val signInResponse: SignInResponse =
             SignCloudNetwork.signInWithValidateCode(phone, validateCode)
-        if (signInResponse.code == 200) {
-            updateUserInfo(signInResponse)
-            Result.Success(signInResponse)
-        } else {
-            Result.Failure(RuntimeException("sign in response status is ${signInResponse.code}"))
+        when (signInResponse.code) {
+            200 -> {
+                updateUserInfo(signInResponse)
+                Result.Success(signInResponse)
+            }
+            400 -> Result.Success(signInResponse)
+            else -> Result.Failure(RuntimeException("sign in response status is ${signInResponse.code}"))
         }
     }
 
@@ -102,12 +106,14 @@ object UserRepository {
     fun signUp(phone: String, password: String, validateCode: String) = request(Dispatchers.IO) {
         val signUpResponse: SignInResponse =
             SignCloudNetwork.signUp(phone, password, validateCode)
-        if (signUpResponse.code == 200) {
+        when (signUpResponse.code) {
+            200 -> {
 //                _user = User.LoggedInUser(phone)
-            updateUserInfo(signUpResponse)
-            Result.Success(signUpResponse)
-        } else {
-            Result.Failure(RuntimeException("sign up response status is ${signUpResponse.code}"))
+                updateUserInfo(signUpResponse)
+                Result.Success(signUpResponse)
+            }
+            400 -> Result.Success(signUpResponse)
+            else -> Result.Failure(RuntimeException("sign in response status is ${signUpResponse.code}"))
         }
     }
 

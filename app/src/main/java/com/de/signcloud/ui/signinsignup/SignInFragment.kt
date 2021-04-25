@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
@@ -24,16 +25,6 @@ import com.de.signcloud.utils.isSuccess
 class SignInFragment : Fragment() {
 
     private val viewModel: SignInViewModel by viewModels { SignInViewModelFactory() }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d("SignInFragment", "fragment create")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("SignInFragment", "fragment destroy")
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -98,13 +89,23 @@ class SignInFragment : Fragment() {
         viewModel.signInWithPasswordLiveData.observe(viewLifecycleOwner, {
             val result = it.getOrNull()
             if (result != null) {
-                viewModel.navigateToHome()
+                when (result.code) {
+                    200 -> viewModel.navigateToHome()
+                    400 -> Toast.makeText(context, context?.getString(R.string.password_error), Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(context, context?.getString(R.string.network_error), Toast.LENGTH_SHORT).show()
             }
         })
         viewModel.signInWithValidateCodeLivaData.observe(viewLifecycleOwner) {
             val result = it.getOrNull()
             if (result != null) {
-                viewModel.navigateToHome()
+                when (result.code) {
+                    200 -> viewModel.navigateToHome()
+                    400 -> Toast.makeText(context, context?.getString(R.string.validate_code_error), Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(context, context?.getString(R.string.network_error), Toast.LENGTH_SHORT).show()
             }
         }
     }

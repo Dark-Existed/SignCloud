@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
@@ -76,9 +77,12 @@ class SignUpFragment : Fragment() {
         viewModel.signUpLiveData.observe(viewLifecycleOwner) {
             val result = it.getOrNull()
             if (result != null) {
-                if (result.code == 200) {
-                    viewModel.navigateToHome()
+                when (result.code) {
+                    200 -> viewModel.navigateToHome()
+                    400 -> Toast.makeText(context, context?.getString(R.string.validate_code_error), Toast.LENGTH_SHORT).show()
                 }
+            } else {
+                Toast.makeText(context, context?.getString(R.string.network_error), Toast.LENGTH_SHORT).show()
             }
         }
     }
