@@ -31,6 +31,7 @@ sealed class SignInEvent {
 @Composable
 fun SignIn(
     initPhone: String = "",
+    onPhoneChange: (String) -> Unit = {},
     validateButtonText: String = stringResource(id = R.string.get_validate_code),
     validateButtonClickable: Boolean = true,
     onEvent: (SignInEvent) -> Unit
@@ -81,6 +82,7 @@ fun SignIn(
                     when (selectedState.value) {
                         0 -> SignInWithPasswordContent(
                             initPhone = initPhone,
+                            onPhoneChange = onPhoneChange,
                             onSignInSubmitted = { phone, password ->
                                 onEvent(SignInEvent.SignInWithPassword(phone, password))
                             },
@@ -90,6 +92,7 @@ fun SignIn(
                         )
                         1 -> SignInWithValidateCodeContent(
                             initPhone = initPhone,
+                            onPhoneChange = onPhoneChange,
                             validateButtonText = validateButtonText,
                             validateButtonClickable = validateButtonClickable,
                             onGetValidateCode = { phone ->
@@ -116,6 +119,7 @@ fun SignIn(
 @Composable
 fun SignInWithPasswordContent(
     initPhone: String = "",
+    onPhoneChange: (String) -> Unit = {},
     onSignInSubmitted: (phone: String, password: String) -> Unit,
     onResetPassword: (String) -> Unit
 ) {
@@ -125,6 +129,7 @@ fun SignInWithPasswordContent(
         Phone(
             phoneState,
             onImeAction = { focusRequester.requestFocus() },
+            onValueChange = onPhoneChange
         )
         Spacer(modifier = Modifier.height(16.dp))
         val passwordState = remember { PasswordState() }
@@ -163,13 +168,18 @@ fun SignInWithValidateCodeContent(
     validateButtonText: String,
     validateButtonClickable: Boolean,
     initPhone: String = "",
+    onPhoneChange: (String) -> Unit = {},
     onGetValidateCode: (phone: String) -> Unit,
     onSignInSubmitted: (phone: String, validateCode: String) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val focusRequester = remember { FocusRequester() }
         val phoneState = remember { PhoneState(initPhone) }
-        Phone(phoneState, onImeAction = { focusRequester.requestFocus() })
+        Phone(
+            phoneState,
+            onImeAction = { focusRequester.requestFocus() },
+            onValueChange = onPhoneChange
+        )
         Spacer(modifier = Modifier.height(16.dp))
         val validateCodeState = remember { ValidateCodeState() }
         ValidateCode(validateCodeState = validateCodeState)

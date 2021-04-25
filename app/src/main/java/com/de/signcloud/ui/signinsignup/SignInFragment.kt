@@ -10,6 +10,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.de.signcloud.R
 import com.de.signcloud.Screen
 import com.de.signcloud.bean.SignInResponse
@@ -24,27 +25,42 @@ class SignInFragment : Fragment() {
 
     private val viewModel: SignInViewModel by viewModels { SignInViewModelFactory() }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("SignInFragment", "fragment create")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("SignInFragment", "fragment destroy")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val bundle = arguments
-        val phone = bundle?.getString("phone", "")
+        val initPhone = bundle?.getString("phone", "")
+        viewModel.phone.value = initPhone
         setUpObserver()
         return ComposeView(requireContext()).apply {
             id = R.id.sign_in_fragment
             setContent {
                 SignCloudTheme {
                     viewModel.validateCodeLiveData.observeAsState()
+                    viewModel.phone.observeAsState()
                     val validateButtonText by viewModel.validateButtonText.observeAsState("")
                     val validateButtonClickable by viewModel.isValidateButtonClickable.observeAsState(
                         true
                     )
                     SignIn(
-                        initPhone = phone!!,
+                        initPhone = viewModel.phone.value!!,
                         validateButtonText = validateButtonText,
-                        validateButtonClickable = validateButtonClickable
+                        validateButtonClickable = validateButtonClickable,
+                        onPhoneChange = {
+                            viewModel.phone.value = it
+                        }
                     ) { event ->
                         when (event) {
                             is SignInEvent.SignInWithPassword -> {
@@ -62,7 +78,8 @@ class SignInFragment : Fragment() {
                                 navigateWithArgs(Screen.ResetPassword, Screen.SignUp, args)
                             }
                             is SignInEvent.NavigateBack -> {
-                                activity?.onBackPressedDispatcher?.onBackPressed()
+                                findNavController().popBackStack()
+                                navigate(Screen.Welcome, Screen.SignIn)
                             }
                         }
                     }

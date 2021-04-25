@@ -30,12 +30,14 @@ import com.de.signcloud.ui.theme.*
 fun Phone(
     phoneState: PhoneState = remember { PhoneState() },
     imeAction: ImeAction = ImeAction.Next,
-    onImeAction: () -> Unit = {}
+    onImeAction: () -> Unit = {},
+    onValueChange: (String) -> Unit = {}
 ) {
     OutlinedTextField(
         value = phoneState.text,
         onValueChange = {
             phoneState.text = it
+            onValueChange(it)
         },
         label = {
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {

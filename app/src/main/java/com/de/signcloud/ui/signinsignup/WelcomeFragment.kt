@@ -27,6 +27,7 @@ class WelcomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         setUpObserver()
+
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
@@ -54,8 +55,10 @@ class WelcomeFragment : Fragment() {
             val result = isPhoneExistResult.getOrNull()
             if (result != null) {
                 if (result) {
+                    findNavController().popBackStack()
                     navigateWithArgs(Screen.SignIn, Screen.Welcome, bundle)
                 } else {
+                    findNavController().popBackStack()
                     navigateWithArgs(Screen.SignUp, Screen.Welcome, bundle)
                 }
             }

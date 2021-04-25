@@ -16,6 +16,7 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
     val navigateTo: LiveData<Event<Screen>>
         get() = _navigateTo
 
+    val phone = MutableLiveData("")
 
     private val signInWithPasswordEvent = MutableLiveData<SignInEvent.SignInWithPassword>()
 

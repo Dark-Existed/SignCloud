@@ -17,6 +17,7 @@ class SignUpViewModel(
     val navigateTo: LiveData<Event<Screen>>
         get() = _navigateTo
 
+    val phone = MutableLiveData("")
 
     private val signUpEvent = MutableLiveData<SignUpEvent.SignUp>()
 

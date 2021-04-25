@@ -9,6 +9,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.de.signcloud.R
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
@@ -19,13 +20,18 @@ class SignUpFragment : Fragment() {
 
     private val viewModel: SignUpViewModel by viewModels { SignUpViewModelFactory() }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val bundle = arguments
+        val initPhone = bundle?.getString("phone", "")
+        viewModel.phone.value = initPhone
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val bundle = arguments
-        val phone = bundle?.getString("phone", "")
         setUpObserver()
         return ComposeView(requireContext()).apply {
             id = R.id.sign_up_fragment
@@ -37,7 +43,7 @@ class SignUpFragment : Fragment() {
                         true
                     )
                     SignUp(
-                        initPhone = phone!!,
+                        initPhone = viewModel.phone.value!!,
                         validateButtonText = validateButtonText,
                         validateButtonClickable = validateButtonClickable
                     ) { event ->
@@ -49,7 +55,9 @@ class SignUpFragment : Fragment() {
                                 viewModel.signUp(event)
                             }
                             is SignUpEvent.NavigateBack -> {
-                                activity?.onBackPressedDispatcher?.onBackPressed()
+//                                activity?.onBackPressedDispatcher?.onBackPressed()
+                                findNavController().popBackStack()
+                                navigate(Screen.Welcome, Screen.SignIn)
                             }
                         }
                     }
