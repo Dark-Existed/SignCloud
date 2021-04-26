@@ -8,7 +8,6 @@ import com.de.signcloud.SignCloudApplication.Companion.context
 import com.de.signcloud.api.SignCloudNetwork
 import com.de.signcloud.bean.ResetPasswordResponse
 import com.de.signcloud.bean.SignInResponse
-import com.de.signcloud.bean.SignUpResponse
 import com.de.signcloud.bean.ValidateCodeResponse
 import com.de.signcloud.repository.local.UserDao
 import com.de.signcloud.utils.UserInfoDataStoreKey
@@ -95,11 +94,16 @@ object UserRepository {
         request(Dispatchers.IO) {
             val bindResponse: SignInResponse =
                 SignCloudNetwork.bindPhone(phone, password, githubId, validateCode)
-            if (bindResponse.code == 200) {
-                updateUserInfo(bindResponse)
-                Result.Success(bindResponse)
-            } else {
-                Result.Failure(RuntimeException("bind phone response status is ${bindResponse.code}"))
+            Log.d("UserRepository", bindResponse.code.toString())
+            when (bindResponse.code) {
+                200 -> {
+                    updateUserInfo(bindResponse)
+                    Result.Success(bindResponse)
+                }
+                407, 409 -> {
+                    Result.Success(bindResponse)
+                }
+                else -> Result.Failure(RuntimeException("bind phone response status is ${bindResponse.code}"))
             }
         }
 

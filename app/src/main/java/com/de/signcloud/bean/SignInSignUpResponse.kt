@@ -6,8 +6,6 @@ class IsPhoneExistResponse(val code: Int, val message: String, val data: Boolean
 
 class ValidateCodeResponse(val code: Int, val message: String, val data: String)
 
-class SignUpResponse(val code: Int, val message: String, val data: String?)
-
 class SignInResponse(val code: Int, val message: String, val data: Data?) {
     class Data(
         val userInfo: UserInfo?,

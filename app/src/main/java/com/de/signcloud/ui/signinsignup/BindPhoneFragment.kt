@@ -5,11 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.de.signcloud.R
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
 import com.de.signcloud.ui.theme.SignCloudTheme
@@ -58,7 +60,6 @@ class BindPhoneFragment : Fragment() {
         }
     }
 
-
     private fun setUpObserver() {
         viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
             navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
@@ -72,7 +73,11 @@ class BindPhoneFragment : Fragment() {
                     200 -> {
                         viewModel.navigateToHome()
                     }
+                    407 -> Toast.makeText(context, context?.getString(R.string.validate_code_error), Toast.LENGTH_SHORT).show()
+                    409 -> Toast.makeText(context, context?.getString(R.string.phone_has_bound), Toast.LENGTH_SHORT).show()
                 }
+            } else {
+                Toast.makeText(context, context?.getString(R.string.network_error), Toast.LENGTH_SHORT).show()
             }
         }
     }
