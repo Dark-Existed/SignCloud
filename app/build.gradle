@@ -23,8 +23,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -40,10 +43,10 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.0-rc01'
     implementation 'com.google.android.material:material:1.3.0'
 
-    implementation "androidx.activity:activity-ktx:1.3.0-alpha06"
-    implementation 'androidx.activity:activity-compose:1.3.0-alpha06'
+    implementation "androidx.activity:activity-ktx:1.3.0-alpha07"
+    implementation 'androidx.activity:activity-compose:1.3.0-alpha07'
 
-    implementation "androidx.fragment:fragment-ktx:1.3.2"
+    implementation "androidx.fragment:fragment-ktx:1.3.3"
 
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.ui:ui-util:$compose_version"

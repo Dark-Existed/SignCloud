@@ -84,7 +84,7 @@ object UserRepository {
                 updateUserInfo(signInResponse)
                 Result.Success(signInResponse)
             }
-            406 -> Result.Success(signInResponse)
+//            406 -> Result.Success(signInResponse)
             else -> Result.Failure(RuntimeException("sign in response status is ${signInResponse.code}"))
         }
     }

@@ -65,11 +65,11 @@ class SignInWithGithubFragment : Fragment() {
                     200 -> {
                         viewModel.navigateToHome()
                     }
-                    406 -> {
-                        val bundle = Bundle()
-                        bundle.putInt("githubId", result.data!!.githubId!!)
-                        navigateWithArgs(Screen.BindPhone, Screen.SignInWithGithub, bundle)
-                    }
+//                    406 -> {
+//                        val bundle = Bundle()
+//                        bundle.putInt("githubId", result.data!!.githubId!!)
+//                        navigateWithArgs(Screen.BindPhone, Screen.SignInWithGithub, bundle)
+//                    }
                 }
             }
         }
