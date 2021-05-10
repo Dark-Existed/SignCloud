@@ -21,7 +21,9 @@ class SelectSchoolFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
+                    SelectSchool{
 
+                    }
                 }
             }
         }

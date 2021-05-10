@@ -41,10 +41,22 @@ fun Courses(
 
 @Composable
 fun StudentCourseList() {
+
 }
 
 @Composable
 fun TeacherCourseList() {
+
+}
+
+@Composable
+fun TeacherCourseCardView() {
+
+}
+
+@Composable
+fun StudentCourseCardView() {
+
 }
 
 

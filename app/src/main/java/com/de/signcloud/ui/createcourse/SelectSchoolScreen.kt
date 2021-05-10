@@ -27,24 +27,45 @@ sealed class SelectSchoolEvent {
 
 @Composable
 fun SelectSchool(
-    onSchoolClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
+    state: SearchState = rememberSearchState(),
+    onSchoolClick: (Long) -> Unit
 ) {
     SignCloudSurface(modifier = modifier.fillMaxSize()) {
         Column {
             Spacer(modifier = Modifier.statusBarsPadding())
-
+            SearchBar(
+                query = state.query,
+                onQueryChange = { state.query = it },
+                searchFocused = state.focused,
+                onSearchFocusChange = { state.focused = it },
+                onClearQuery = { state.query = TextFieldValue("") },
+                searching = state.searching
+            )
             SignCloudDivider()
 
-//            LaunchedEffect() {}
+            LaunchedEffect(state.query.text) {
+                state.searching = true
+
+                state.searching = false
+            }
+            when (state.searchDisplay) {
+                SearchDisplay.Suggestions -> {
+                }
+                SearchDisplay.Results -> {
+                }
+                SearchDisplay.NoResults -> {
+                }
+            }
         }
     }
 }
 
 
 enum class SearchDisplay {
-    Categories, Suggestions, Results, NoResults
+    Suggestions, Results, NoResults
 }
+
 
 @Composable
 private fun rememberSearchState(
@@ -54,7 +75,7 @@ private fun rememberSearchState(
 //    categories: List<SearchCategoryCollection> = SearchRepo.getCategories(),
 //    suggestions: List<SearchSuggestionGroup> = SearchRepo.getSuggestions(),
 //    filters: List<Filter> = SnackRepo.getFilters(),
-//    searchResults: List<Courses> = emptyList()
+    searchResults: List<String> = emptyList()
 ): SearchState {
     return remember {
         SearchState(
@@ -64,7 +85,7 @@ private fun rememberSearchState(
 //            categories = categories,
 //            suggestions = suggestions,
 //            filters = filters,
-//            searchResults = searchResults
+            searchResults = searchResults
         )
     }
 }
@@ -77,21 +98,22 @@ class SearchState(
 //    categories: List<SearchCategoryCollection>,
 //    suggestions: List<SearchSuggestionGroup>,
 //    filters: List<Filter>,
-//    searchResults: List<Snack>
+    searchResults: List<String>
 ) {
     var query by mutableStateOf(query)
     var focused by mutableStateOf(focused)
     var searching by mutableStateOf(searching)
-//    var categories by mutableStateOf(categories)
+
+    //    var categories by mutableStateOf(categories)
 //    var suggestions by mutableStateOf(suggestions)
 //    var filters by mutableStateOf(filters)
-//    var searchResults by mutableStateOf(searchResults)
+    var searchResults by mutableStateOf(searchResults)
     val searchDisplay: SearchDisplay
         get() = when {
-            !focused && query.text.isEmpty() -> SearchDisplay.Categories
-            focused && query.text.isEmpty() -> SearchDisplay.Suggestions
-//            searchResults.isEmpty() -> SearchDisplay.NoResults
-            else -> SearchDisplay.Results
+            !focused && query.text.isEmpty() -> SearchDisplay.Suggestions
+            focused && query.text.isNotEmpty() -> SearchDisplay.Results
+            searchResults.isEmpty() -> SearchDisplay.NoResults
+            else -> SearchDisplay.Suggestions
         }
 }
 
