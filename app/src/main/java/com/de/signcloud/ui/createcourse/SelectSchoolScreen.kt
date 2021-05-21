@@ -46,15 +46,18 @@ fun SelectSchool(
 
             LaunchedEffect(state.query.text) {
                 state.searching = true
-
+//                state.searchResults =
                 state.searching = false
             }
             when (state.searchDisplay) {
                 SearchDisplay.Suggestions -> {
+
                 }
                 SearchDisplay.Results -> {
+
                 }
                 SearchDisplay.NoResults -> {
+
                 }
             }
         }
