@@ -50,9 +50,8 @@ fun Phone(
         modifier = Modifier
             .fillMaxWidth()
             .onFocusChanged { focusState ->
-                val focused = focusState == FocusState.Active
-                phoneState.onFocusChange(focused)
-                if (!focused) {
+                phoneState.onFocusChange(focusState.isFocused)
+                if (!focusState.isFocused) {
                     phoneState.enableShowErrors()
                 }
             },
@@ -90,9 +89,8 @@ fun Password(
         modifier = modifier
             .fillMaxWidth()
             .onFocusChanged { focusState ->
-                val focused = focusState == FocusState.Active
-                passwordState.onFocusChange(focused)
-                if (!focused) {
+                passwordState.onFocusChange(focusState.isFocused)
+                if (!focusState.isFocused) {
                     passwordState.enableShowErrors()
                 }
             },
@@ -164,9 +162,8 @@ fun ValidateCode(
         modifier = modifier
             .fillMaxWidth()
             .onFocusChanged { focusState ->
-                val focused = focusState == FocusState.Active
-                validateCodeState.onFocusChange(focused)
-                if (!focused) {
+                validateCodeState.onFocusChange(focusState.isFocused)
+                if (!focusState.isFocused) {
                     validateCodeState.enableShowErrors()
                 }
             },
@@ -211,9 +208,8 @@ fun GeneralTextField(
         modifier = modifier
             .fillMaxWidth()
             .onFocusChanged { focusState ->
-                val focused = focusState == FocusState.Active
-                generalTextFieldState.onFocusChange(focused)
-                if (!focused) {
+                generalTextFieldState.onFocusChange(focusState.isFocused)
+                if (!focusState.isFocused) {
                     generalTextFieldState.enableShowErrors()
                 }
             },

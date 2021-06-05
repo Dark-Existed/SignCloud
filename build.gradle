@@ -1,14 +1,14 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        kotlin_version = '1.4.32'
-        compose_version = '1.0.0-beta07'
+        kotlin_version = '1.5.10'
+        compose_version = '1.0.0-beta08'
         coroutines_version = '1.4.3'
         navigation_version = '2.3.5'
         retrofit_version = '2.9.0'
         lifecycle_version = '2.4.0-alpha01'
         datastore_version = '1.0.0-beta01'
-        accompanist_version = '0.10.0'
+        accompanist_version = '0.11.0'
         vanpra_material_dialog_version = '0.3.3'
     }
     repositories {
@@ -16,7 +16,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0-beta02'
+        classpath 'com.android.tools.build:gradle:7.0.0-beta03'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong

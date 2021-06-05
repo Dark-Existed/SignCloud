@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.core.os.ConfigurationCompat
+import androidx.navigation.NavDestination
+import androidx.navigation.NavGraph
 import com.de.signcloud.R
 import com.de.signcloud.ui.components.SignCloudSurface
 import com.de.signcloud.ui.theme.SignCloudTheme
@@ -118,7 +120,7 @@ private fun SignCloudBottomNav(
             itemCount = items.size,
             indicator = { SignCloudBottomNavIndicator() },
             animSpec = springSpec,
-            modifier = Modifier.navigationBarsPadding(left = false, right = false)
+            modifier = Modifier.navigationBarsPadding(start = false, end = false)
         ) {
             items.forEach { section ->
                 val selected = section == currentSection
