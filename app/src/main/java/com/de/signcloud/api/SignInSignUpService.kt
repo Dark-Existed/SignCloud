@@ -12,12 +12,12 @@ import retrofit2.http.Query
 
 interface SignInSignUpService {
 
-    @GET("/api/phone-exist")
+    @GET("/api/users/phone-exist")
     fun isPhoneExist(
         @Query("phone") phone: String
     ): Call<IsPhoneExistResponse>
 
-    @POST("/api/mobileRegister")
+    @POST("/api/users/register/mobile")
     fun signUp(
         @Query("username") userName: String,
         @Query("phone") phone: String,
@@ -25,38 +25,38 @@ interface SignInSignUpService {
         @Query("verificationCode") validateCode: String
     ): Call<SignInResponse>
 
-    @POST("/api/loginByPwd")
+    @POST("/api/users/login/passwords")
     fun signInWithPassword(
         @Query("phone") phone: String,
         @Query("password") password: String
     ): Call<SignInResponse>
 
-    @POST("/api/loginByVerificationCode")
+    @POST("/api/users/login/codes")
     fun signInWithValidateCode(
         @Query("phone") phone: String,
         @Query("verificationCode") validateCode: String
     ): Call<SignInResponse>
 
-    @GET("api/callback")
+    @GET("/api/github/callback")
     fun signInWithGithubCode(
         @Query("code") code: String,
         @Query("state") state: String = "STATE"
     ): Call<SignInResponse>
 
-    @PUT("/api/password-phone")
+    @PUT("/api/github/bind-users")
     fun bindPhone(
         @Query("phone") phone: String,
         @Query("password") password: String,
-        @Query("githubId") githubId: Int,
+        @Query("userId") githubId: Int,
         @Query("verificationCode") validateCode: String,
     ): Call<SignInResponse>
 
-    @GET("/api/getCode")
+    @GET("/api/users/getCodes")
     fun getValidateCode(
         @Query("phone") phone: String
     ): Call<ValidateCodeResponse>
 
-    @POST("/api/forgetPassword")
+    @POST("/api/users/forgetPasswords")
     fun resetPassword(
         @Query("phone") phone: String,
         @Query("password") password: String,
