@@ -29,9 +29,10 @@ sealed class CreateCourseEvent {
 
 @Composable
 fun CreateCourse(
+    modifier: Modifier = Modifier,
     gradeItems: List<String>,
     semesterItems: List<String>,
-    modifier: Modifier = Modifier,
+    state: State = State(),
     onEvent: (CreateCourseEvent) -> Unit
 ) {
     Scaffold(
@@ -51,6 +52,7 @@ fun CreateCourse(
                             .padding(horizontal = 20.dp)
                     ) {
                         CreateCourseContent(
+                            state = state,
                             gradeItems = gradeItems,
                             semesterItems = semesterItems,
                             onEvent = onEvent
@@ -64,59 +66,60 @@ fun CreateCourse(
 
 @Composable
 fun CreateCourseContent(
+    state: State,
     gradeItems: List<String>,
     semesterItems: List<String>,
     onEvent: (CreateCourseEvent) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
 
-        val courseNameState = remember { GenerateNotNullState() }
-        GeneralTextField(generalTextFieldState = courseNameState,
+//        val courseNameState = remember { GenerateNotNullState() }
+        GeneralTextField(generalTextFieldState = state.courseNameState,
             hintText = stringResource(id = R.string.course_name),
             onImeAction = {}
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        val gradeSelectedState = remember { GenerateState() }
+//        val gradeSelectedState = remember { GenerateState() }
         SingleChoiceTextFieldDialog(
             label = stringResource(id = R.string.select_grade),
             items = gradeItems,
-            generateTextFieldState = gradeSelectedState
+            generateTextFieldState = state.gradeSelectedState
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        val semesterSelectedState = remember { GenerateState() }
+//        val semesterSelectedState = remember { GenerateState() }
         SingleChoiceTextFieldDialog(
             label = stringResource(id = R.string.select_semester),
             items = semesterItems,
-            generateTextFieldState = semesterSelectedState
+            generateTextFieldState = state.semesterSelectedState
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        val schoolSelectState = remember { GenerateState() }
+//        val schoolSelectState = remember { GenerateState() }
         ReadonlyTextField(
-            schoolSelectState,
+            state.schoolSelectState,
             label = { Text(text = stringResource(id = R.string.select_school)) },
             onClick = { onEvent(CreateCourseEvent.SelectSchool) }
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        val courseRequirementsState = remember { GenerateState() }
-        GeneralTextField(generalTextFieldState = courseRequirementsState,
+//        val courseRequirementsState = remember { GenerateState() }
+        GeneralTextField(generalTextFieldState = state.courseRequirementsState,
             hintText = stringResource(id = R.string.course_requirement),
             onImeAction = {}
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        val classScheduleState = remember { GenerateState() }
-        GeneralTextField(generalTextFieldState = classScheduleState,
+//        val classScheduleState = remember { GenerateState() }
+        GeneralTextField(generalTextFieldState = state.classScheduleState,
             hintText = stringResource(id = R.string.class_schedule),
             onImeAction = {}
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        val examArrangementState = remember { GenerateState() }
-        GeneralTextField(generalTextFieldState = examArrangementState,
+//        val examArrangementState = remember { GenerateState() }
+        GeneralTextField(generalTextFieldState = state.examArrangementState,
             hintText = stringResource(id = R.string.exam_arrangement),
             onImeAction = {}
         )
@@ -139,8 +142,8 @@ fun CreateCourseContent(
 fun CreateCoursePreview() {
     SignCloudTheme {
         CreateCourse(
-            listOf("1", "2", "3"),
-            listOf("1", "2", "3")
+            gradeItems = listOf("1", "2", "3"),
+            semesterItems = listOf("1", "2", "3"),
         ) {}
     }
 }

@@ -5,10 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.de.signcloud.Screen
+import com.de.signcloud.ui.components.textfieldstate.GenerateNotNullState
+import com.de.signcloud.ui.components.textfieldstate.GenerateState
 import com.de.signcloud.utils.Event
 import java.util.*
 
 class CreateCourseViewModel() : ViewModel() {
+
+    private val _state = State()
+    val state: State
+        get() = _state
 
     private val _navigateTo = MutableLiveData<Event<Screen>>()
     val navigateTo: LiveData<Event<Screen>>
@@ -46,6 +52,37 @@ class CreateCourseViewModel() : ViewModel() {
         }
     }
 
+}
+
+
+class State {
+    private val _courseNameState = GenerateNotNullState()
+    val courseNameState: GenerateNotNullState
+        get() = _courseNameState
+
+    private val _gradeSelectedState = GenerateNotNullState()
+    val gradeSelectedState: GenerateNotNullState
+        get() = _gradeSelectedState
+
+    private val _semesterSelectedState = GenerateNotNullState()
+    val semesterSelectedState: GenerateNotNullState
+        get() = _semesterSelectedState
+
+    private val _schoolSelectState = GenerateNotNullState()
+    val schoolSelectState: GenerateNotNullState
+        get() = _schoolSelectState
+
+    private val _courseRequirementsState = GenerateState()
+    val courseRequirementsState: GenerateState
+        get() = _courseRequirementsState
+
+    private val _classScheduleState = GenerateState()
+    val classScheduleState: GenerateState
+        get() = _classScheduleState
+
+    private val _examArrangementState = GenerateState()
+    val examArrangementState: GenerateState
+        get() = _examArrangementState
 }
 
 

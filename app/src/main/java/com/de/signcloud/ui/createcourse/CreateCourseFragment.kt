@@ -26,7 +26,8 @@ class CreateCourseFragment : Fragment() {
                 SignCloudTheme {
                     CreateCourse(
                         gradeItems = viewModel.gradeItems.value!!,
-                        semesterItems = viewModel.semesterItems.value!!
+                        semesterItems = viewModel.semesterItems.value!!,
+                        state = viewModel.state
                     ) { event ->
                         when (event) {
                             is CreateCourseEvent.SelectSchool -> {

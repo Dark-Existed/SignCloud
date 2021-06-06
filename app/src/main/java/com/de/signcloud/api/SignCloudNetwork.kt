@@ -35,6 +35,15 @@ object SignCloudNetwork {
     suspend fun resetPassword(phone: String, password: String, validateCode: String) =
         signInSignUpService.resetPassword(phone, password, validateCode).await()
 
+
+
+
+    private val courseService = ServiceCreator.create(CourseService::class.java)
+
+    suspend fun getSchools(pageNum: Int = 0, pageSize: Int = 999) =
+        courseService.getSchools(pageNum, pageSize).await()
+
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {
