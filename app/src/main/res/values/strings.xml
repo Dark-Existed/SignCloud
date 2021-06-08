@@ -46,4 +46,6 @@
     <string name="exam_arrangement">Exam Arrangement</string>
     <string name="search">Search</string>
     <string name="search_school">Search School</string>
+    <string name="search_no_matches">No matches for “%1s”</string>
+    <string name="search_no_matches_retry">Try broadening your search</string>
 </resources>

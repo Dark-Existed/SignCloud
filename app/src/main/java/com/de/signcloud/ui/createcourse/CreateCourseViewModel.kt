@@ -1,13 +1,15 @@
 package com.de.signcloud.ui.createcourse
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import android.util.Log
+import androidx.lifecycle.*
 import com.de.signcloud.Screen
+import com.de.signcloud.bean.SchoolResponse
+import com.de.signcloud.repository.remote.CourseRepository
 import com.de.signcloud.ui.components.textfieldstate.GenerateNotNullState
 import com.de.signcloud.ui.components.textfieldstate.GenerateState
 import com.de.signcloud.utils.Event
+import com.de.signcloud.utils.Result
+import com.de.signcloud.utils.getOrNull
 import java.util.*
 
 class CreateCourseViewModel() : ViewModel() {
@@ -15,6 +17,13 @@ class CreateCourseViewModel() : ViewModel() {
     private val _state = State()
     val state: State
         get() = _state
+
+    private val _schoolsSuggestions = CourseRepository.getSchoolsSuggestions()
+    val schoolsSuggestions = Transformations.map(_schoolsSuggestions) {
+        _schoolsSuggestions.value?.getOrNull()?.schools ?: emptyList()
+    }
+
+//    private val _schoolsSearchResult = CourseRepository.
 
     private val _navigateTo = MutableLiveData<Event<Screen>>()
     val navigateTo: LiveData<Event<Screen>>
@@ -83,6 +92,16 @@ class State {
     private val _examArrangementState = GenerateState()
     val examArrangementState: GenerateState
         get() = _examArrangementState
+
+    fun clearState() {
+        _courseNameState.text = ""
+        _gradeSelectedState.text = ""
+        _semesterSelectedState.text = ""
+        _schoolSelectState.text = ""
+        _courseRequirementsState.text = ""
+        _classScheduleState.text = ""
+        _examArrangementState.text = ""
+    }
 }
 
 

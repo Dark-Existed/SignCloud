@@ -73,14 +73,12 @@ fun CreateCourseContent(
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
 
-//        val courseNameState = remember { GenerateNotNullState() }
         GeneralTextField(generalTextFieldState = state.courseNameState,
             hintText = stringResource(id = R.string.course_name),
             onImeAction = {}
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-//        val gradeSelectedState = remember { GenerateState() }
         SingleChoiceTextFieldDialog(
             label = stringResource(id = R.string.select_grade),
             items = gradeItems,
@@ -88,7 +86,6 @@ fun CreateCourseContent(
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-//        val semesterSelectedState = remember { GenerateState() }
         SingleChoiceTextFieldDialog(
             label = stringResource(id = R.string.select_semester),
             items = semesterItems,
@@ -96,7 +93,6 @@ fun CreateCourseContent(
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-//        val schoolSelectState = remember { GenerateState() }
         ReadonlyTextField(
             state.schoolSelectState,
             label = { Text(text = stringResource(id = R.string.select_school)) },
@@ -104,21 +100,18 @@ fun CreateCourseContent(
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-//        val courseRequirementsState = remember { GenerateState() }
         GeneralTextField(generalTextFieldState = state.courseRequirementsState,
             hintText = stringResource(id = R.string.course_requirement),
             onImeAction = {}
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-//        val classScheduleState = remember { GenerateState() }
         GeneralTextField(generalTextFieldState = state.classScheduleState,
             hintText = stringResource(id = R.string.class_schedule),
             onImeAction = {}
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-//        val examArrangementState = remember { GenerateState() }
         GeneralTextField(generalTextFieldState = state.examArrangementState,
             hintText = stringResource(id = R.string.exam_arrangement),
             onImeAction = {}
