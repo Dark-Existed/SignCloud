@@ -12,6 +12,7 @@ class SchoolResponse(val code: Int, val message: String, val data: Data) {
             val hasChildren: Boolean,
             @SerializedName("children") val colleges: List<College>
         )
+
         class College(
             val id: Int,
             val name: String,
@@ -21,6 +22,6 @@ class SchoolResponse(val code: Int, val message: String, val data: Data) {
 }
 
 
-class CreateCourseResponse() {
+class CreateCourseResponse(val code: Int, val message: String) {
 
 }

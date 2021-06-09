@@ -22,10 +22,10 @@ import kotlin.coroutines.CoroutineContext
 class User(
     val id: Int,
     val name: String,
-    phone: String,
-    avatar: String,
-    defaultRole: String,
-    token: String
+    val phone: String,
+    val avatar: String,
+    val defaultRole: String,
+    val token: String
 )
 
 object UserRepository {

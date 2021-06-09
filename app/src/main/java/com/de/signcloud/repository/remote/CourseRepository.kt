@@ -22,7 +22,26 @@ object CourseRepository {
     }
 
 //    fun createCourse(state: State) = request(Dispatchers.IO) {
-//        val result = SignCloudNetwork.createCourse()
+//        val splitList = state.schoolSelectState.text.split("-")
+//        val schoolName = splitList[0]
+//        val collegeName = splitList[1]
+//        val result = SignCloudNetwork.createCourse(
+//            UserRepository.user.id.toString(),
+//            UserRepository.user.name,
+//            state.courseNameState.text,
+//            schoolName,
+//            collegeName,
+//            state.gradeSelectedState.text,
+//            state.semesterSelectedState.text,
+//            state.courseRequirementsState.text,
+//            state.examArrangementState.text,
+//            state.classScheduleState.text
+//        )
+//        if(result.code==200){
+//
+//        } else {
+//
+//        }
 //    }
 
 }

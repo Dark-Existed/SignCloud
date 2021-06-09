@@ -1,16 +1,17 @@
 package com.de.signcloud.utils
 
+import com.de.signcloud.repository.remote.UserRepository
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class ApiTokenInterceptor : Interceptor {
+class RequestHeaderInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val token: String = "get token"
+        val token: String = UserRepository.user.token
         return chain.run {
             proceed(
                 request()
                     .newBuilder()
-                    .addHeader("token", token)
+                    .addHeader("Authorization", "Bearer $token")
                     .build()
             )
         }
