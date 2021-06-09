@@ -1,6 +1,7 @@
 package com.de.signcloud.ui.createcourse
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
+import com.de.signcloud.repository.remote.User
+import com.de.signcloud.repository.remote.UserRepository
 import com.de.signcloud.ui.theme.SignCloudTheme
 
 class CreateCourseFragment : Fragment() {

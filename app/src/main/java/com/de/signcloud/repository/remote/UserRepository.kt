@@ -1,9 +1,7 @@
 package com.de.signcloud.repository.remote
 
 import android.util.Log
-import androidx.compose.runtime.Immutable
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.liveData
 import com.de.signcloud.SignCloudApplication.Companion.context
 import com.de.signcloud.api.SignCloudNetwork
@@ -15,7 +13,9 @@ import com.de.signcloud.utils.UserInfoDataStoreKey
 import com.de.signcloud.utils.userInfoDataStore
 import com.de.signcloud.utils.Result
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import kotlin.coroutines.CoroutineContext
 
 
@@ -36,14 +36,17 @@ object UserRepository {
         get() = _user
 
     fun readUser() {
-        context.userInfoDataStore.data.map {
-            val userId = it[UserInfoDataStoreKey.userIdKey] ?: -1
-            val userName = it[UserInfoDataStoreKey.userNameKey] ?: ""
-            val phone = it[UserInfoDataStoreKey.phoneKey] ?: ""
-            val avatar = it[UserInfoDataStoreKey.avatar] ?: ""
-            val defaultRole = it[UserInfoDataStoreKey.defaultRoleKey] ?: ""
-            val token = it[UserInfoDataStoreKey.tokenKey] ?: ""
-            _user = User(userId, userName, phone, avatar, defaultRole, token)
+        runBlocking {
+            context.userInfoDataStore.data.first {
+                val userId = it[UserInfoDataStoreKey.userIdKey] ?: -1
+                val userName = it[UserInfoDataStoreKey.userNameKey] ?: ""
+                val phone = it[UserInfoDataStoreKey.phoneKey] ?: ""
+                val avatar = it[UserInfoDataStoreKey.avatar] ?: ""
+                val defaultRole = it[UserInfoDataStoreKey.defaultRoleKey] ?: ""
+                val token = it[UserInfoDataStoreKey.tokenKey] ?: ""
+                _user = User(userId, userName, phone, avatar, defaultRole, token)
+                true
+            }
         }
     }
 
