@@ -36,7 +36,7 @@ import com.de.signcloud.ui.theme.SignCloudTheme
 import com.google.accompanist.insets.statusBarsPadding
 
 sealed class SelectSchoolEvent {
-
+    data class OnItemSelected(val schoolName: String, val collegeName: String) : SelectSchoolEvent()
 }
 
 @Composable
@@ -44,7 +44,7 @@ fun SelectSchool(
     modifier: Modifier = Modifier,
     allSchools: List<SchoolResponse.Data.School> = emptyList(),
     state: SearchState = rememberSearchState(suggestions = allSchools),
-    onItemClick: (String, String) -> Unit
+    onEvent: (SelectSchoolEvent) -> Unit
 ) {
     SignCloudSurface(modifier = modifier.fillMaxSize()) {
         Column {
@@ -67,8 +67,8 @@ fun SelectSchool(
                 state.searching = false
             }
             when (state.searchDisplay) {
-                SearchDisplay.Suggestions -> SuggestionsContent(state.suggestions, onItemClick)
-                SearchDisplay.Results -> ResultsContent(state, onItemClick)
+                SearchDisplay.Suggestions -> SuggestionsContent(state.suggestions, onEvent)
+                SearchDisplay.Results -> ResultsContent(state, onEvent = onEvent)
                 SearchDisplay.NoResults -> NoResultsContent(query = state.query.text)
             }
         }
@@ -222,7 +222,7 @@ private fun SearchHint() {
 @Composable
 fun SuggestionsContent(
     schools: List<SchoolResponse.Data.School>,
-    onItemClick: (String, String) -> Unit
+    onEvent: (SelectSchoolEvent) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -230,7 +230,7 @@ fun SuggestionsContent(
             .wrapContentSize()
             .padding(16.dp)
     ) {
-        SchoolsList(schools = schools, onItemClick = onItemClick)
+        SchoolsList(schools = schools, onEvent = onEvent)
     }
 
 }
@@ -238,7 +238,7 @@ fun SuggestionsContent(
 @Composable
 fun ResultsContent(
     state: SearchState = rememberSearchState(),
-    onItemClick: (String, String) -> Unit
+    onEvent: (SelectSchoolEvent) -> Unit
 ) {
     val schools = state.suggestions.filter {
         it.name.contains(state.query.text)
@@ -249,7 +249,7 @@ fun ResultsContent(
             .wrapContentSize()
             .padding(16.dp)
     ) {
-        SchoolsList(schools = schools, onItemClick = onItemClick)
+        SchoolsList(schools = schools, onEvent = onEvent)
     }
 
 }
@@ -258,7 +258,7 @@ fun ResultsContent(
 fun SchoolsList(
     modifier: Modifier = Modifier,
     schools: List<SchoolResponse.Data.School>,
-    onItemClick: (String, String) -> Unit
+    onEvent: (SelectSchoolEvent) -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.Top,
@@ -267,7 +267,7 @@ fun SchoolsList(
             .wrapContentSize()
     ) {
         val schoolSelected = remember { mutableStateOf(0) }
-        val collegeSelected = remember { mutableStateOf(0) }
+        val collegeSelected = remember { mutableStateOf(-1) }
         val schoolsState = remember { mutableStateOf(schools) }
         val collegesState = remember { mutableStateOf(emptyList<SchoolResponse.Data.College>()) }
         Box(
@@ -302,7 +302,6 @@ fun SchoolsList(
                 .fillMaxHeight()
                 .width(1.dp)
         )
-
         collegesState.value =
             schoolsState.value.getOrNull(schoolSelected.value)?.colleges ?: emptyList()
         Box(
@@ -315,17 +314,26 @@ fun SchoolsList(
                 itemsIndexed(collegesState.value) { index, college ->
                     Spacer(modifier.height(8.dp))
                     if (collegeSelected.value == index) {
-                        Text(text = college.name, fontSize = 17.sp)
-                    } else {
+                        Text(
+                            text = college.name,
+                            fontSize = 17.sp,
+                            color = SignCloudTheme.colors.primary,
+                        )
+                    } else
                         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                             Text(
                                 text = college.name,
                                 fontSize = 17.sp,
                                 modifier = modifier.clickable {
                                     collegeSelected.value = index
+                                    onEvent(
+                                        SelectSchoolEvent.OnItemSelected(
+                                            schoolsState.value[schoolSelected.value].name,
+                                            collegesState.value[collegeSelected.value].name
+                                        )
+                                    )
                                 })
                         }
-                    }
                 }
             }
         }

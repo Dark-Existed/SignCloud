@@ -36,12 +36,35 @@ object SignCloudNetwork {
         signInSignUpService.resetPassword(phone, password, validateCode).await()
 
 
-
-
     private val courseService = ServiceCreator.create(CourseService::class.java)
 
     suspend fun getSchools(pageNum: Int = 0, pageSize: Int = 999) =
         courseService.getSchools(pageNum, pageSize).await()
+
+    suspend fun createCourse(
+        userId: String,
+        teacherName: String,
+        courseName: String,
+        schoolName: String,
+        collegeName: String,
+        grade: String,
+        semester: String,
+        courseRequirement: String,
+        examArrangement: String,
+        classSchedule: String,
+    ) = courseService.createCourse(
+        userId,
+        teacherName,
+        schoolName,
+        collegeName,
+        grade,
+        semester,
+        courseName,
+        courseRequirement,
+        examArrangement,
+        classSchedule,
+        null
+    )
 
 
     private suspend fun <T> Call<T>.await(): T {

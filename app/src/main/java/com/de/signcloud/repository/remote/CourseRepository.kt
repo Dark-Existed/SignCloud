@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.liveData
 import com.de.signcloud.api.CourseService
 import com.de.signcloud.api.SignCloudNetwork
+import com.de.signcloud.ui.createcourse.State
 import com.de.signcloud.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
@@ -19,6 +20,10 @@ object CourseRepository {
             Result.Failure(RuntimeException("response status code is ${result.code}"))
         }
     }
+
+//    fun createCourse(state: State) = request(Dispatchers.IO) {
+//        val result = SignCloudNetwork.createCourse()
+//    }
 
 }
 

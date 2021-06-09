@@ -12,6 +12,7 @@
     <string name="confirm_password">Confirm password</string>
     <string name="user_continue">CONTINUE</string>
     <string name="invalid_phone">Invalid phone: </string>
+    <string name="text_should_not_be_null">Text should not be null</string>
     <string name="password_dont_match">Passwords don\'t match</string>
 
     <string name="password_error">Password aError</string>

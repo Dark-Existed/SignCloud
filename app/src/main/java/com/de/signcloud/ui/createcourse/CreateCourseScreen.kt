@@ -22,7 +22,7 @@ import com.de.signcloud.ui.components.textfieldstate.GenerateState
 import com.de.signcloud.ui.theme.SignCloudTheme
 
 sealed class CreateCourseEvent {
-    data class OnCourseCreate(val courseName: String) : CreateCourseEvent()
+    object OnCourseCreate : CreateCourseEvent()
     object SelectSchool : CreateCourseEvent()
     object NavigateBack : CreateCourseEvent()
 }
@@ -119,9 +119,15 @@ fun CreateCourseContent(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = {},
             modifier = Modifier
                 .fillMaxWidth(),
+            enabled = state.courseNameState.isValid &&
+                    state.gradeSelectedState.isValid &&
+                    state.semesterSelectedState.isValid &&
+                    state.schoolSelectState.isValid,
+            onClick = {
+                onEvent(CreateCourseEvent.OnCourseCreate)
+            },
         ) {
             Text(text = stringResource(id = R.string.create_course))
         }

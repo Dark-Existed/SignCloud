@@ -1,5 +1,8 @@
 package com.de.signcloud.ui.components.textfieldstate
 
+import com.de.signcloud.R
+import com.de.signcloud.SignCloudApplication
+
 
 class GenerateNotNullState :
     TextFieldState(validator = ::isTextValid, errorFor = ::generateNotNullValidationError)
@@ -9,7 +12,7 @@ private fun isTextValid(text: String): Boolean {
 }
 
 private fun generateNotNullValidationError(text: String): String {
-    return "Text should not be null"
+    return SignCloudApplication.context.getString(R.string.text_should_not_be_null)
 }
 
 

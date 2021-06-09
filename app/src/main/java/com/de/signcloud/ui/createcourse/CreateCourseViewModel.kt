@@ -37,6 +37,7 @@ class CreateCourseViewModel() : ViewModel() {
     val semesterItems: LiveData<List<String>>
         get() = _semesterItems
 
+//    private val _createCourse
 
     fun navigateToSelectSchool() {
         _navigateTo.value = Event(Screen.SelectSchool)

@@ -3,6 +3,7 @@ package com.de.signcloud.repository.remote
 import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.liveData
 import com.de.signcloud.SignCloudApplication.Companion.context
 import com.de.signcloud.api.SignCloudNetwork
@@ -14,27 +15,37 @@ import com.de.signcloud.utils.UserInfoDataStoreKey
 import com.de.signcloud.utils.userInfoDataStore
 import com.de.signcloud.utils.Result
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlin.coroutines.CoroutineContext
 
 
-sealed class User {
-    @Immutable
-    data class LoggedInUser(val phone: String) : User()
-    object NoUserLoggedIn : User()
-}
-
+class User(
+    val id: Int,
+    val name: String,
+    phone: String,
+    avatar: String,
+    defaultRole: String,
+    token: String
+)
 
 object UserRepository {
 
-    private var _user: User = User.NoUserLoggedIn
+    private lateinit var _user: User
 
-    // TODO: 2021/4/6 is local user exist ?
     val user: User
         get() = _user
 
-//    fun signInWithPassword(phone: String, password: String) {
-//        _user = User.LoggedInUser(phone)
-//    }
+    fun readUser() {
+        context.userInfoDataStore.data.map {
+            val userId = it[UserInfoDataStoreKey.userIdKey] ?: -1
+            val userName = it[UserInfoDataStoreKey.userNameKey] ?: ""
+            val phone = it[UserInfoDataStoreKey.phoneKey] ?: ""
+            val avatar = it[UserInfoDataStoreKey.avatar] ?: ""
+            val defaultRole = it[UserInfoDataStoreKey.defaultRoleKey] ?: ""
+            val token = it[UserInfoDataStoreKey.tokenKey] ?: ""
+            _user = User(userId, userName, phone, avatar, defaultRole, token)
+        }
+    }
 
     fun isPhoneExist(phone: String) = request(Dispatchers.IO) {
         val result = SignCloudNetwork.isPhoneExist(phone)
@@ -45,10 +56,6 @@ object UserRepository {
         }
     }
 
-    fun isKnownUserPhone(phone: String): Boolean {
-        // if the phone contains "sign up" we consider it unknown
-        return !phone.contains("1360")
-    }
 
     fun signInWithPassword(phone: String, password: String) = request(Dispatchers.IO) {
         val signInResponse: SignInResponse =
@@ -141,17 +148,26 @@ object UserRepository {
         }
     }
 
-}
 
-
-private suspend fun updateUserInfo(signInResponse: SignInResponse) {
-    context.userInfoDataStore.edit { userInfo ->
-        userInfo[UserInfoDataStoreKey.userNameKey] = signInResponse.data!!.userInfo!!.userName
-        userInfo[UserInfoDataStoreKey.phoneKey] = signInResponse.data.userInfo!!.phone
-        userInfo[UserInfoDataStoreKey.defaultRoleKey] = signInResponse.data.userInfo.defaultRole
-        userInfo[UserInfoDataStoreKey.tokenKey] = signInResponse.data.token!!
+    private suspend fun updateUserInfo(signInResponse: SignInResponse) {
+        val userId = signInResponse.data!!.userInfo!!.id
+        val userName = signInResponse.data.userInfo!!.userName
+        val phone = signInResponse.data.userInfo.phone
+        val avatar = signInResponse.data.userInfo.avatar
+        val defaultRole = signInResponse.data.userInfo.defaultRole
+        val token = signInResponse.data.token!!
+        context.userInfoDataStore.edit { userInfo ->
+            userInfo[UserInfoDataStoreKey.userIdKey] = userId
+            userInfo[UserInfoDataStoreKey.userNameKey] = userName
+            userInfo[UserInfoDataStoreKey.phoneKey] = phone
+            userInfo[UserInfoDataStoreKey.avatar] = avatar
+            userInfo[UserInfoDataStoreKey.defaultRoleKey] = defaultRole
+            userInfo[UserInfoDataStoreKey.tokenKey] = token
+        }
+        _user = User(userId, userName, phone, avatar, defaultRole, token)
+        UserDao.signIn()
     }
-    UserDao.signIn()
+
 }
 
 

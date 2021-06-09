@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.de.signcloud.repository.local.UserDao
+import com.de.signcloud.repository.remote.UserRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -12,6 +13,11 @@ class MainViewModel : ViewModel() {
     fun isUserSignIn(): Boolean {
         return UserDao.isUserSignIn()
     }
+
+    fun readUserInfo() {
+        UserRepository.readUser()
+    }
+
 }
 
 
