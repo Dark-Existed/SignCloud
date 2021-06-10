@@ -5,16 +5,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import com.de.signcloud.R
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
 import com.de.signcloud.repository.remote.User
 import com.de.signcloud.repository.remote.UserRepository
 import com.de.signcloud.ui.theme.SignCloudTheme
+import com.de.signcloud.utils.getOrNull
 
 class CreateCourseFragment : Fragment() {
 
@@ -39,7 +42,7 @@ class CreateCourseFragment : Fragment() {
                                 viewModel.navigateToSelectSchool()
                             }
                             is CreateCourseEvent.OnCourseCreate -> {
-
+                                viewModel.createCourse(event.state)
                             }
                             is CreateCourseEvent.NavigateBack -> {
                                 activity?.onBackPressedDispatcher?.onBackPressed()
@@ -55,6 +58,18 @@ class CreateCourseFragment : Fragment() {
         viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
             navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
                 navigate(navigateTo, Screen.CreateCourse)
+            }
+        }
+        viewModel.createCourseLiveData.observe(viewLifecycleOwner) { createCourseResult ->
+            val result = createCourseResult.getOrNull()
+            if (result != null) {
+                if (result.code == 200) {
+
+                } else {
+                    Toast.makeText(context, context?.getString(R.string.create_course_fail), Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(context, context?.getString(R.string.network_error), Toast.LENGTH_SHORT).show()
             }
         }
     }

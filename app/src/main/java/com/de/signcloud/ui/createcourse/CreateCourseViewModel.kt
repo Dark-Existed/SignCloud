@@ -23,7 +23,6 @@ class CreateCourseViewModel() : ViewModel() {
         _schoolsSuggestions.value?.getOrNull()?.schools ?: emptyList()
     }
 
-//    private val _schoolsSearchResult = CourseRepository.
 
     private val _navigateTo = MutableLiveData<Event<Screen>>()
     val navigateTo: LiveData<Event<Screen>>
@@ -37,7 +36,15 @@ class CreateCourseViewModel() : ViewModel() {
     val semesterItems: LiveData<List<String>>
         get() = _semesterItems
 
-//    private val _createCourse
+    private val _createState = MutableLiveData<State>()
+
+    val createCourseLiveData = Transformations.switchMap(_createState) {
+        CourseRepository.createCourse(it)
+    }
+
+    fun createCourse(state: State) {
+        _createState.value = state
+    }
 
     fun navigateToSelectSchool() {
         _navigateTo.value = Event(Screen.SelectSchool)

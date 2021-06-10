@@ -49,4 +49,6 @@
     <string name="search_school">Search School</string>
     <string name="search_no_matches">No matches for “%1s”</string>
     <string name="search_no_matches_retry">Try broadening your search</string>
+    <string name="create_course_fail">Create course fail</string>
+
 </resources>

@@ -43,7 +43,6 @@ object SignCloudNetwork {
         courseService.getSchools(pageNum, pageSize).await()
 
     suspend fun createCourse(
-        userId: String,
         teacherName: String,
         courseName: String,
         schoolName: String,
@@ -54,7 +53,6 @@ object SignCloudNetwork {
         examArrangement: String?,
         classSchedule: String?,
     ) = courseService.createCourse(
-        userId,
         teacherName,
         schoolName,
         collegeName,
@@ -65,7 +63,7 @@ object SignCloudNetwork {
         examArrangement,
         classSchedule,
         null
-    )
+    ).await()
 
 
     private suspend fun <T> Call<T>.await(): T {

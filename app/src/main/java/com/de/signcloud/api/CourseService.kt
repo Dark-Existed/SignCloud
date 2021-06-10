@@ -1,5 +1,6 @@
 package com.de.signcloud.api
 
+import com.de.signcloud.bean.CreateCourseResponse
 import com.de.signcloud.bean.SchoolResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -15,7 +16,6 @@ interface CourseService {
 
     @POST("/api/classes/courses")
     fun createCourse(
-        @Query("creator") userId: String,
         @Query("teacher") teacherName: String,
         @Query("school") schoolName: String,
         @Query("college") collegeName: String,
@@ -26,7 +26,7 @@ interface CourseService {
         @Query("examArrange") examArrangement: String?,
         @Query("teachProgress") classSchedule: String?,
         @Part("cover") cover: MultipartBody.Part?,
-    )
+    ): Call<CreateCourseResponse>
 
     @GET("/api/classes/courses/uid/{userId}")
     fun getCoursesCreate(

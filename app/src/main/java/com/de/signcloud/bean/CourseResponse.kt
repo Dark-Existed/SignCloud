@@ -22,6 +22,6 @@ class SchoolResponse(val code: Int, val message: String, val data: Data) {
 }
 
 
-class CreateCourseResponse(val code: Int, val message: String) {
-
+class CreateCourseResponse(val code: Int, val message: String, val data: Data?) {
+    class Data(val code: String, val imageUrl: String)
 }
