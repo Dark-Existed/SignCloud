@@ -11,9 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import com.de.signcloud.R
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
+import com.de.signcloud.navigateWithArgs
 import com.de.signcloud.repository.remote.User
 import com.de.signcloud.repository.remote.UserRepository
 import com.de.signcloud.ui.theme.SignCloudTheme
@@ -27,7 +29,7 @@ class CreateCourseFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         setUpObserver()
         return ComposeView(requireContext()).apply {
             setContent {
@@ -64,7 +66,11 @@ class CreateCourseFragment : Fragment() {
             val result = createCourseResult.getOrNull()
             if (result != null) {
                 if (result.code == 200) {
-
+                    val args = Bundle()
+                    args.putString("courseCode", result.data?.code)
+                    args.putString("imageUrl", result.data?.imageUrl)
+                    findNavController().popBackStack()
+                    navigateWithArgs(Screen.CreateCourse, Screen.CreateCourseResult, args)
                 } else {
                     Toast.makeText(context, context?.getString(R.string.create_course_fail), Toast.LENGTH_SHORT).show()
                 }

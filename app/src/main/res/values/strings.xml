@@ -15,7 +15,7 @@
     <string name="text_should_not_be_null">Text should not be null</string>
     <string name="password_dont_match">Passwords don\'t match</string>
 
-    <string name="password_error">Password aError</string>
+    <string name="password_error">Password Error</string>
     <string name="validate_code_error">Validate Code Error</string>
     <string name="network_error">Network Error</string>
 
@@ -50,5 +50,7 @@
     <string name="search_no_matches">No matches for “%1s”</string>
     <string name="search_no_matches_retry">Try broadening your search</string>
     <string name="create_course_fail">Create course fail</string>
+    <string name="create_result">Create Result</string>
+    <string name="course_code">Course Code</string>
 
 </resources>

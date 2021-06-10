@@ -49,4 +49,6 @@
     <string name="search_no_matches">未查找到: “%1s”</string>
     <string name="search_no_matches_retry">尝试扩大搜索范围</string>
     <string name="create_course_fail">创建课程失败</string>
+    <string name="create_result">创建结果</string>
+    <string name="course_code">课程编码</string>
 </resources>
