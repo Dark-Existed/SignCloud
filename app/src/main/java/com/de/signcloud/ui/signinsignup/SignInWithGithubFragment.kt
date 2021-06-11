@@ -1,7 +1,6 @@
 package com.de.signcloud.ui.signinsignup
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
-import com.de.signcloud.navigateWithArgs
 import com.de.signcloud.ui.theme.SignCloudTheme
 import com.de.signcloud.utils.getOrNull
 

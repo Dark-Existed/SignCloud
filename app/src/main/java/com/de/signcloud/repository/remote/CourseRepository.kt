@@ -36,7 +36,7 @@ object CourseRepository {
             state.examArrangementState.text,
             state.classScheduleState.text
         )
-        if(result.code==200){
+        if (result.code == 200) {
             Result.Success(result)
         } else {
             Result.Failure(RuntimeException("response status code is ${result.code}"))

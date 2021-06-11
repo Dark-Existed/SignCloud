@@ -1,7 +1,6 @@
 package com.de.signcloud.ui.signinsignup
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.de.signcloud.R
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
-import com.de.signcloud.navigateWithArgs
 import com.de.signcloud.ui.theme.SignCloudTheme
 import com.de.signcloud.utils.getOrNull
 
@@ -58,10 +56,10 @@ class WelcomeFragment : Fragment() {
             if (result != null) {
                 if (result) {
                     findNavController().popBackStack()
-                    navigateWithArgs(Screen.SignIn, Screen.Welcome, bundle)
+                    navigate(Screen.SignIn, Screen.Welcome, bundle)
                 } else {
                     findNavController().popBackStack()
-                    navigateWithArgs(Screen.SignUp, Screen.Welcome, bundle)
+                    navigate(Screen.SignUp, Screen.Welcome, bundle)
                 }
             } else {
                 Toast.makeText(context, context?.getString(R.string.network_error), Toast.LENGTH_SHORT).show()

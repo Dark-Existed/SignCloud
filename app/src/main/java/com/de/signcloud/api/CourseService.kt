@@ -25,7 +25,6 @@ interface CourseService {
         @Query("learnRequire") courseRequirements: String?,
         @Query("examArrange") examArrangement: String?,
         @Query("teachProgress") classSchedule: String?,
-        @Part("cover") cover: MultipartBody.Part?,
     ): Call<CreateCourseResponse>
 
     @GET("/api/classes/courses/uid/{userId}")

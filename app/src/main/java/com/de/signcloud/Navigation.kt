@@ -58,22 +58,37 @@ fun Fragment.navigate(to: Screen, from: Screen) {
 
 }
 
-fun Fragment.navigateWithArgs(to: Screen, from: Screen, args: Bundle) {
+fun Fragment.navigate(to: Screen, from: Screen, args: Bundle) {
     if (to == from) {
         throw InvalidParameterException("Can't navigate to $to")
     }
     when (to) {
-        Screen.SignIn -> {
-            findNavController().navigate(R.id.sign_in_fragment, args)
+        Screen.Welcome -> {
+            findNavController().navigate(R.id.welcome_fragment, args)
         }
         Screen.SignUp -> {
             findNavController().navigate(R.id.sign_up_fragment, args)
         }
-        Screen.ResetPassword -> {
-            findNavController().navigate(R.id.reset_password_fragment, args)
+        Screen.SignIn -> {
+            findNavController().navigate(R.id.sign_in_fragment, args)
+        }
+        Screen.SignInWithGithub -> {
+            findNavController().navigate(R.id.sign_in_with_github_fragment, args)
         }
         Screen.BindPhone -> {
             findNavController().navigate(R.id.bind_phone_fragment, args)
+        }
+        Screen.ResetPassword -> {
+            findNavController().navigate(R.id.reset_password_fragment, args)
+        }
+        Screen.Home -> {
+            findNavController().navigate(R.id.home_fragment, args)
+        }
+        Screen.CreateCourse -> {
+            findNavController().navigate(R.id.create_course_fragment, args)
+        }
+        Screen.SelectSchool -> {
+            findNavController().navigate(R.id.select_school_fragment, args)
         }
         Screen.CreateCourseResult -> {
             findNavController().navigate(R.id.create_course_result_fragment, args)

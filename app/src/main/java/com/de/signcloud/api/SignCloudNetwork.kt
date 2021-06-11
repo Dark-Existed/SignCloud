@@ -62,7 +62,7 @@ object SignCloudNetwork {
         courseRequirement,
         examArrangement,
         classSchedule,
-        null
+//        null
     ).await()
 
 

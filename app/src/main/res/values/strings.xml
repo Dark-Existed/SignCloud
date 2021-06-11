@@ -52,5 +52,6 @@
     <string name="create_course_fail">Create course fail</string>
     <string name="create_result">Create Result</string>
     <string name="course_code">Course Code</string>
+    <string name="finish">Finish</string>
 
 </resources>

@@ -23,5 +23,5 @@ class SchoolResponse(val code: Int, val message: String, val data: Data) {
 
 
 class CreateCourseResponse(val code: Int, val message: String, val data: Data?) {
-    class Data(val code: String, val imageUrl: String)
+    class Data(val code: String,@SerializedName("imgUrl") val imageUrl: String)
 }

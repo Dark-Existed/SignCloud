@@ -2,6 +2,8 @@ package com.de.signcloud.ui.createcourse
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -43,6 +45,8 @@ fun CreateResult(
                 ) {
                     CreateResultContent(
                         modifier = modifier,
+                        courseCode = courseCode,
+                        imageUrl = imageUrl,
                         onEvent = onEvent,
                     )
                 }
@@ -79,6 +83,17 @@ fun CreateResultContent(
             contentDescription = null,
             modifier = modifier.size(180.dp)
         )
+        Spacer(modifier = modifier.height(24.dp))
+        Button(modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 28.dp),
+            onClick = { onEvent(CreateResultEvent.NavigateBack) }
+        ) {
+            Text(
+                text = stringResource(id = R.string.finish),
+                style = MaterialTheme.typography.subtitle2
+            )
+        }
     }
 }
 
