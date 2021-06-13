@@ -37,6 +37,7 @@ object SignCloudNetwork {
 
 
 
+
     private val courseService = ServiceCreator.createWithToken(CourseService::class.java)
 
     suspend fun getSchools(pageNum: Int = 0, pageSize: Int = 999) =
@@ -64,6 +65,10 @@ object SignCloudNetwork {
         classSchedule,
 //        null
     ).await()
+
+    suspend fun getCourseCreate(pageNum: Int = 0, pageSize: Int = 999) =
+        courseService.getCoursesCreate(pageNum, pageSize).await()
+
 
 
     private suspend fun <T> Call<T>.await(): T {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,18 +21,22 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         setUpObserver()
         return ComposeView(requireContext()).apply {
             setContent {
+                val schoolSuggestions = viewModel.courseCreateList.observeAsState()
                 ProvideWindowInsets {
                     SignCloudTheme {
                         Home(
-                            isStudent = false
+                            isStudent = false,
+//                            isStudent = viewModel.isStudent,
+                            courseCreateList = schoolSuggestions.value?: emptyList()
                         ) { event ->
                             when (event) {
                                 HomeEvent.NavigateToCreateCourse -> viewModel.navigateToCreateCourse()
-                                HomeEvent.NavigateToScanCode -> { }
+                                HomeEvent.NavigateToScanCode -> {
+                                }
                             }
                         }
                     }

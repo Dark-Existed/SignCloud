@@ -36,6 +36,7 @@ import androidx.core.os.ConfigurationCompat
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import com.de.signcloud.R
+import com.de.signcloud.bean.GetCoursesCreateResponse
 import com.de.signcloud.ui.components.SignCloudSurface
 import com.de.signcloud.ui.theme.SignCloudTheme
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -69,6 +70,7 @@ sealed class HomeEvent {
 @Composable
 fun Home(
     isStudent: Boolean = false,
+    courseCreateList: List<GetCoursesCreateResponse.Course>,
     onEvent: (HomeEvent) -> Unit,
 ) {
     val (currentSection, setCurrentSection) = rememberSaveable {
@@ -87,7 +89,7 @@ fun Home(
         val modifier = Modifier.padding(innerPadding)
         Crossfade(currentSection) { section ->
             when (section) {
-                HomeSections.Courses -> Courses(isStudent, modifier, onEvent)
+                HomeSections.Courses -> Courses(modifier, isStudent, courseCreateList, onEvent)
                 HomeSections.Me -> {
 
                 }

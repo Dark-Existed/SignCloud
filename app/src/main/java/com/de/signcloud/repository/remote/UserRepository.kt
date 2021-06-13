@@ -35,6 +35,10 @@ object UserRepository {
     val user: User
         get() = _user
 
+    fun isUserStudent(): Boolean {
+        return _user.defaultRole == "student"
+    }
+
     fun readUser() {
         runBlocking {
             context.userInfoDataStore.data.first {

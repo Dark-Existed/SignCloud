@@ -43,6 +43,15 @@ object CourseRepository {
         }
     }
 
+    fun getCourseCreate() = request(Dispatchers.IO) {
+        val result = SignCloudNetwork.getCourseCreate()
+        if (result.code == 200) {
+            Result.Success(result.data)
+        } else {
+            Result.Failure(RuntimeException("response status code is ${result.code}"))
+        }
+    }
+
 }
 
 

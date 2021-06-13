@@ -3,12 +3,10 @@ package com.de.signcloud.ui.createcourse
 import android.util.Log
 import androidx.lifecycle.*
 import com.de.signcloud.Screen
-import com.de.signcloud.bean.SchoolResponse
 import com.de.signcloud.repository.remote.CourseRepository
 import com.de.signcloud.ui.components.textfieldstate.GenerateNotNullState
 import com.de.signcloud.ui.components.textfieldstate.GenerateState
 import com.de.signcloud.utils.Event
-import com.de.signcloud.utils.Result
 import com.de.signcloud.utils.getOrNull
 import java.util.*
 
@@ -20,7 +18,7 @@ class CreateCourseViewModel() : ViewModel() {
 
     private val _schoolsSuggestions = CourseRepository.getSchoolsSuggestions()
     val schoolsSuggestions = Transformations.map(_schoolsSuggestions) {
-        _schoolsSuggestions.value?.getOrNull()?.schools ?: emptyList()
+        it?.getOrNull()?.schools ?: emptyList()
     }
 
 

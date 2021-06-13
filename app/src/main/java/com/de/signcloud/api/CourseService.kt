@@ -1,6 +1,7 @@
 package com.de.signcloud.api
 
 import com.de.signcloud.bean.CreateCourseResponse
+import com.de.signcloud.bean.GetCoursesCreateResponse
 import com.de.signcloud.bean.SchoolResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -27,12 +28,11 @@ interface CourseService {
         @Query("teachProgress") classSchedule: String?,
     ): Call<CreateCourseResponse>
 
-    @GET("/api/classes/courses/uid/{userId}")
+    @GET("/api/classes/courses/uid")
     fun getCoursesCreate(
-        @Path("userId") userId: Int,
         @Query("pageNum") pageNum: Int,
         @Query("pageSize") pageSize: Int
-    )
+    ): Call<GetCoursesCreateResponse>
 
     @POST("/api/classes/students/courses")
     fun attendCourse()

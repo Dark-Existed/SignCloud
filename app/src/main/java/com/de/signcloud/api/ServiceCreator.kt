@@ -17,7 +17,7 @@ object ServiceCreator {
 
     fun <T> create(serviceClass: Class<T>): T = retrofit.create(serviceClass)
 
-    private val clientWithToken = OkHttpClient.Builder()
+    val clientWithToken: OkHttpClient = OkHttpClient.Builder()
         .addNetworkInterceptor(RequestHeaderInterceptor())
         .build()
 

@@ -7,16 +7,23 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.ImageLoader
 import com.de.signcloud.R
+import com.de.signcloud.SignCloudApplication
+import com.de.signcloud.ui.components.LoadNetworkImageWithToken
 import com.de.signcloud.ui.components.SignCloudTopAppBarWithBack
 import com.de.signcloud.ui.theme.SignCloudTheme
+import com.de.signcloud.utils.RequestHeaderInterceptor
 import com.google.accompanist.coil.rememberCoilPainter
+import okhttp3.OkHttpClient
 
 sealed class CreateResultEvent {
     object NavigateBack : CreateCourseEvent()
@@ -78,11 +85,7 @@ fun CreateResultContent(
             fontSize = 18.sp
         )
         Spacer(modifier = modifier.height(24.dp))
-        Image(
-            painter = rememberCoilPainter(request = imageUrl),
-            contentDescription = null,
-            modifier = modifier.size(180.dp)
-        )
+        LoadNetworkImageWithToken(imageUrl = imageUrl, modifier = modifier.size(180.dp))
         Spacer(modifier = modifier.height(24.dp))
         Button(modifier = Modifier
             .fillMaxWidth()
