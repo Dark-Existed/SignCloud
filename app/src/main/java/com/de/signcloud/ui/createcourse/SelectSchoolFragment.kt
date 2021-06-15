@@ -24,8 +24,8 @@ class SelectSchoolFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
+                val schoolSuggestions = viewModel.schoolsSuggestions.observeAsState()
                 SignCloudTheme {
-                    val schoolSuggestions = viewModel.schoolsSuggestions.observeAsState()
                     schoolSuggestions.value?.let {
                         SelectSchool(allSchools = it) { event ->
                             when (event) {

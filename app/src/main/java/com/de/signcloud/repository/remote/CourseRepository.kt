@@ -52,6 +52,10 @@ object CourseRepository {
         }
     }
 
+//    fun attendCourse() = request(Dispatchers.IO) {}
+
+//    fun getCourseAttend() = request(Dispatchers.IO) {}
+
 }
 
 

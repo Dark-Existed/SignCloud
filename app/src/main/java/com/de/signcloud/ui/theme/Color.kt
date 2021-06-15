@@ -3,6 +3,7 @@ package com.de.signcloud.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val Purple200 = Color(0xFFBB86FC)
+
 //val Purple500 = Color(0xFF6200EE)
 //val Purple700 = Color(0xFF3700B3)
 val Teal50 = Color(0xFFE0F2F1)
@@ -13,6 +14,8 @@ val Teal400 = Color(0xFF26A69A)
 val Teal500 = Color(0xFF009688)
 val Teal600 = Color(0xFF00897B)
 val Teal700 = Color(0xFF00796B)
+val Teal800 = Color(0xFF00695C)
+val Teal900 = Color(0xFF004D40)
 
 val Neutral8 = Color(0xff121212)
 val Neutral7 = Color(0xef000000)
@@ -26,3 +29,43 @@ val Neutral0 = Color(0xffffffff)
 
 val FunctionalGrey = Color(0xfff6f6f6)
 val FunctionalDarkGrey = Color(0xff2e2e2e)
+
+
+val Rose11 = Color(0xff7f0054)
+val Rose10 = Color(0xff97005c)
+val Rose9 = Color(0xffaf0060)
+val Rose8 = Color(0xffc30060)
+val Rose7 = Color(0xffd4005d)
+val Rose6 = Color(0xffe21365)
+val Rose5 = Color(0xffec3074)
+val Rose4 = Color(0xfff4568b)
+val Rose3 = Color(0xfff985aa)
+val Rose2 = Color(0xfffdbbcf)
+val Rose1 = Color(0xfffed6e2)
+val Rose0 = Color(0xfffff2f6)
+
+val Lavender11 = Color(0xff170085)
+val Lavender10 = Color(0xff23009e)
+val Lavender9 = Color(0xff3300b3)
+val Lavender8 = Color(0xff4400c7)
+val Lavender7 = Color(0xff5500d7)
+val Lavender6 = Color(0xff6f13e4)
+val Lavender5 = Color(0xff8a30ed)
+val Lavender4 = Color(0xffa557f5)
+val Lavender3 = Color(0xffc186fa)
+val Lavender2 = Color(0xffdebbfd)
+val Lavender1 = Color(0xffebd6fe)
+val Lavender0 = Color(0xfff9f2ff)
+
+val Lime50 = Color(0xFFF9FbE7)
+val Lime100 = Color(0xFFF0F4C3)
+val Lime200 = Color(0xFFE6EE9C)
+val Lime300 = Color(0xFFDCE775)
+val Lime400 = Color(0xFFD4E157)
+val Lime500 = Color(0xFFCDDC39)
+val Lime600 = Color(0xFFC0CA33)
+val Lime700 = Color(0xFFAFB42B)
+val Lime800 = Color(0xFF9E9D24)
+val Lime900 = Color(0xFF827717)
+
+

@@ -35,7 +35,9 @@ interface CourseService {
     ): Call<GetCoursesCreateResponse>
 
     @POST("/api/classes/students/courses")
-    fun attendCourse()
+    fun attendCourse(
+        @Query("code") code: String
+    )
 
     @GET("/api/classes/students/courses")
     fun getCoursesAttend()

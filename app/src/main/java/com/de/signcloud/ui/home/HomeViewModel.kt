@@ -23,18 +23,24 @@ class HomeViewModel() : ViewModel() {
         _navigateTo.value = Event(CreateCourse)
     }
 
+    fun navigateToAttendCourse() {
+        
+    }
+
     val isStudent: Boolean
         get() = UserRepository.isUserStudent()
 
 
-    private var _courseCreateList = CourseRepository.getCourseCreate()
-    val courseCreateList = Transformations.map(_courseCreateList) {
-        it?.getOrNull()?.courses ?: emptyList()
+    private val _courseCreateList = MutableLiveData<String>()
+
+    val courseCreateList = Transformations.switchMap(_courseCreateList) {
+        CourseRepository.getCourseCreate()
     }
 
     fun updateCourseList() {
-        _courseCreateList = CourseRepository.getCourseCreate()
+        _courseCreateList.value = "update"
     }
+
 
 }
 

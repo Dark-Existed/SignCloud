@@ -33,7 +33,9 @@ val LightColorPalette = SignCloudColors(
     iconSecondary = Neutral7,
     iconInteractive = Neutral0,
     iconInteractiveInactive = Neutral1,
-    isDark = false
+    isDark = false,
+
+    gradient3_2 = listOf(Teal600, Teal700),
 )
 
 val DarkColorPalette = SignCloudColors(
@@ -59,8 +61,9 @@ val DarkColorPalette = SignCloudColors(
     iconSecondary = Teal50,
     iconInteractive = Neutral7,
     iconInteractiveInactive = Neutral6,
-    isDark = true
-)
+    isDark = true,
+
+    gradient3_2 = listOf(Rose8, Lavender7, Rose11),)
 
 
 @Composable
@@ -116,8 +119,13 @@ class SignCloudColors(
     iconInteractiveInactive: Color,
     textSecondary: Color,
     textHelp: Color,
-    isDark: Boolean
+    isDark: Boolean,
+    gradient3_2: List<Color>,
 ) {
+
+    var gradient3_2 by mutableStateOf(gradient3_2)
+        private set
+
     var primary by mutableStateOf(primary)
         private set
     var primaryVariant by mutableStateOf(primaryVariant)
@@ -167,7 +175,10 @@ class SignCloudColors(
     var textHelp by mutableStateOf(textHelp)
         private set
 
+
+
     fun update(other: SignCloudColors) {
+        gradient3_2 = other.gradient3_2
         primary = other.primary
         primaryVariant = other.primaryVariant
         secondary = other.secondary
