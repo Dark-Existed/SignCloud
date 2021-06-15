@@ -46,3 +46,5 @@ class GetCoursesCreateResponse(val code: Int, val message: String, val data: Dat
         val qrCode: String,
     )
 }
+
+class JoinCourseResponse()

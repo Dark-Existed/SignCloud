@@ -62,7 +62,7 @@ enum class HomeSections(
 }
 
 sealed class HomeEvent {
-    object NavigateToScanCode : HomeEvent()
+    object NavigateToJoinCourse : HomeEvent()
     object NavigateToCreateCourse : HomeEvent()
 }
 

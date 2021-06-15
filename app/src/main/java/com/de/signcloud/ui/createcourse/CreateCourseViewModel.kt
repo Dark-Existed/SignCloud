@@ -62,9 +62,14 @@ class CreateCourseViewModel() : ViewModel() {
             generateSequence(year - 1) { it + 1 }.map { it.toString() }.take(itemSize).toList()
         val endYears =
             generateSequence(year) { it + 1 }.map { it.toString() }.take(itemSize).toList()
-        return beginYears.zip(endYears) { begin, end ->
+        val generateYears = beginYears.zip(endYears) { begin, end ->
             "$begin-$end"
         }
+        val finalResult = mutableListOf<String>()
+        for (generateYear in generateYears)
+            for (i in 1..2)
+                finalResult.add("$generateYear-$i")
+        return finalResult.toList()
     }
 
 }
@@ -87,6 +92,10 @@ class State {
     val schoolSelectState: GenerateNotNullState
         get() = _schoolSelectState
 
+    private val _classNameState = GenerateNotNullState()
+    val classNameState: GenerateNotNullState
+        get() = _classNameState
+
     private val _courseRequirementsState = GenerateState()
     val courseRequirementsState: GenerateState
         get() = _courseRequirementsState
@@ -99,8 +108,24 @@ class State {
     val examArrangementState: GenerateState
         get() = _examArrangementState
 
+    init {
+        initSemesterSelectedText()
+    }
+
+    fun initSemesterSelectedText() {
+        val calendar: Calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        _semesterSelectedState.text = if (month <= 8) {
+            "${year - 1}-$year-2"
+        } else {
+            "$year-${year + 1}-1"
+        }
+    }
+
     fun clearState() {
         _courseNameState.text = ""
+        _classNameState.text = ""
         _gradeSelectedState.text = ""
         _semesterSelectedState.text = ""
         _schoolSelectState.text = ""

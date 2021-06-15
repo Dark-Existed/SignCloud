@@ -37,6 +37,7 @@
     <string name="me">Me</string>
 
     <string name="course_name">Course Name</string>
+    <string name="class_name">Class Name</string>
     <string name="select_grade">Select Grade</string>
     <string name="select_semester">Select Semester</string>
     <string name="select_school">Select School</string>
@@ -53,5 +54,7 @@
     <string name="create_result">Create Result</string>
     <string name="course_code">Course Code</string>
     <string name="finish">Finish</string>
+
+    <string name="join_course">Join Course</string>
 
 </resources>

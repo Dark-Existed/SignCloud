@@ -20,6 +20,11 @@ class CreateCourseFragment : Fragment() {
 
     private val viewModel: CreateCourseViewModel by activityViewModels { CreateCourseViewModelFactory() }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.state.initSemesterSelectedText()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

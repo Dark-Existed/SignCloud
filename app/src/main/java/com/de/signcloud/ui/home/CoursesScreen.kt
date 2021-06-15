@@ -3,6 +3,7 @@ package com.de.signcloud.ui.home
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
@@ -48,7 +49,7 @@ fun Courses(
                 actionIcon = if (isStudent) Icons.Filled.AddCircleOutline else Icons.Filled.Add,
                 onActionPressed = {
                     if (isStudent) {
-                        onEvent(HomeEvent.NavigateToScanCode)
+                        onEvent(HomeEvent.NavigateToJoinCourse)
                     } else {
                         onEvent(HomeEvent.NavigateToCreateCourse)
                     }
@@ -81,7 +82,7 @@ fun TeacherCourseList(
         item {
             Spacer(Modifier.statusBarsHeight())
         }
-        itemsIndexed(courses) { index, course ->
+        items(courses) { course ->
             Spacer(modifier = modifier.height(12.dp))
             TeacherCourseCardViewItem(
                 modifier = Modifier.height(96.dp),

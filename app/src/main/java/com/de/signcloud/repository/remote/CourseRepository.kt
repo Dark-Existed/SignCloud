@@ -28,6 +28,7 @@ object CourseRepository {
         val result = SignCloudNetwork.createCourse(
             UserRepository.user.name,
             state.courseNameState.text,
+            state.classNameState.text,
             schoolName,
             collegeName,
             state.gradeSelectedState.text,

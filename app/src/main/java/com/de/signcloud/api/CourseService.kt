@@ -19,6 +19,7 @@ interface CourseService {
     fun createCourse(
         @Query("teacher") teacherName: String,
         @Query("school") schoolName: String,
+        @Query("className") className: String,
         @Query("college") collegeName: String,
         @Query("grade") grade: String,
         @Query("semester") semester: String,

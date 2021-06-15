@@ -79,6 +79,12 @@ fun CreateCourseContent(
         )
         Spacer(modifier = Modifier.height(16.dp))
 
+        GeneralTextField(generalTextFieldState = state.classNameState,
+            hintText = stringResource(id = R.string.class_name),
+            onImeAction = {}
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+
         SingleChoiceTextFieldDialog(
             label = stringResource(id = R.string.select_grade),
             items = gradeItems,
@@ -122,6 +128,7 @@ fun CreateCourseContent(
             modifier = Modifier
                 .fillMaxWidth(),
             enabled = state.courseNameState.isValid &&
+                    state.classNameState.isValid &&
                     state.gradeSelectedState.isValid &&
                     state.semesterSelectedState.isValid &&
                     state.schoolSelectState.isValid,
@@ -131,6 +138,7 @@ fun CreateCourseContent(
         ) {
             Text(text = stringResource(id = R.string.create_course))
         }
+        Spacer(modifier = Modifier.height(16.dp))
 
     }
 }

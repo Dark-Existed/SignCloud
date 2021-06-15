@@ -16,6 +16,7 @@ enum class Screen {
     CreateCourse,
     SelectSchool,
     CreateCourseResult,
+    JoinCourse,
 }
 
 fun Fragment.navigate(to: Screen, from: Screen) {
@@ -53,6 +54,9 @@ fun Fragment.navigate(to: Screen, from: Screen) {
         }
         Screen.CreateCourseResult -> {
             findNavController().navigate(R.id.create_course_result_fragment)
+        }
+        Screen.JoinCourse -> {
+            findNavController().navigate(R.id.join_course_fragment)
         }
     }
 
@@ -92,6 +96,9 @@ fun Fragment.navigate(to: Screen, from: Screen, args: Bundle) {
         }
         Screen.CreateCourseResult -> {
             findNavController().navigate(R.id.create_course_result_fragment, args)
+        }
+        Screen.JoinCourse -> {
+            findNavController().navigate(R.id.join_course_fragment, args)
         }
     }
 }

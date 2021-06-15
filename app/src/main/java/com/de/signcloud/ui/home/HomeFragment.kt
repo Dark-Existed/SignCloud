@@ -36,13 +36,14 @@ class HomeFragment : Fragment() {
                 ProvideWindowInsets {
                     SignCloudTheme {
                         Home(
-//                            isStudent = false,
-                            isStudent = viewModel.isStudent,
-                            courseCreateList = courseCreateList.value?.getOrNull()?.courses ?: emptyList()
+                            isStudent = false,
+//                            isStudent = viewModel.isStudent,
+                            courseCreateList = courseCreateList.value?.getOrNull()?.courses
+                                ?: emptyList()
                         ) { event ->
                             when (event) {
                                 HomeEvent.NavigateToCreateCourse -> viewModel.navigateToCreateCourse()
-                                HomeEvent.NavigateToScanCode -> { }
+                                HomeEvent.NavigateToJoinCourse -> viewModel.navigateToJoinCourse()
                             }
                         }
                     }

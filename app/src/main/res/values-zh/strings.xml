@@ -36,6 +36,7 @@
     <string name="me">我</string>
 
     <string name="course_name">课程名</string>
+    <string name="class_name">班级名称</string>
     <string name="select_grade">选择年级</string>
     <string name="select_semester">选择学期</string>
     <string name="select_school">选择学校</string>
@@ -52,4 +53,6 @@
     <string name="create_result">创建结果</string>
     <string name="course_code">课程编码</string>
     <string name="finish">完成</string>
+
+    <string name="join_course">加入课程</string>
 </resources>
