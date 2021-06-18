@@ -44,7 +44,11 @@
         android:name="com.de.signcloud.ui.createcourse.CreateCourseResultFragment"
         android:label="Create Course Result"/>
     <fragment
-        android:id="@+id/join_course_fragment"
-        android:name="com.de.signcloud.ui.createcourse.JoinCourseFragment"
-        android:label="Join Course"/>
+        android:id="@+id/search_course_fragment"
+        android:name="com.de.signcloud.ui.createcourse.SearchCourseFragment"
+        android:label="Search Course"/>
+    <fragment
+        android:id="@+id/search_course_result_fragment"
+        android:name="com.de.signcloud.ui.createcourse.SearchCourseResultFragment"
+        android:label="Search Course Result"/>
 </navigation>

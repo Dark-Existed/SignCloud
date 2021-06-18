@@ -69,7 +69,11 @@ object SignCloudNetwork {
     suspend fun getCourseCreate(pageNum: Int = 0, pageSize: Int = 999) =
         courseService.getCoursesCreate(pageNum, pageSize).await()
 
-//    suspend fun
+    suspend fun getCourseByCode(code: String) = courseService.getCourseByCode(code).await()
+
+    suspend fun joinCourse(code: String) = courseService.joinCourse(code).await()
+
+    suspend fun getJoinedCourse() = courseService.getCoursesJoined().await()
 
 
     private suspend fun <T> Call<T>.await(): T {

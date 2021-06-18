@@ -36,8 +36,8 @@ class HomeFragment : Fragment() {
                 ProvideWindowInsets {
                     SignCloudTheme {
                         Home(
-                            isStudent = false,
-//                            isStudent = viewModel.isStudent,
+//                            isStudent = false,
+                            isStudent = viewModel.isStudent,
                             courseCreateList = courseCreateList.value?.getOrNull()?.courses
                                 ?: emptyList()
                         ) { event ->

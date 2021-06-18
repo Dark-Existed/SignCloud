@@ -55,6 +55,8 @@
     <string name="course_code">Course Code</string>
     <string name="finish">Finish</string>
 
+    <string name="search_course">Search Course</string>
+    <string name="search_result">Search Result</string>
     <string name="join_course">Join Course</string>
 
 </resources>

@@ -11,10 +11,11 @@ import androidx.navigation.fragment.findNavController
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
 import com.de.signcloud.ui.theme.SignCloudTheme
+import com.de.signcloud.utils.getOrNull
 
-class JoinCourseFragment : Fragment() {
+class SearchCourseFragment : Fragment() {
 
-    private val viewModel: JoinCourseViewModel by viewModels { JoinCourseViewModelFactory() }
+    private val viewModel: SearchCourseViewModel by viewModels { SearchCourseViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,10 +26,13 @@ class JoinCourseFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
-                    JoinCourse { event ->
+                    SearchCourse { event ->
                         when (event) {
-                            is JoinCourseEvent.NavigateBack -> {
+                            is SearchCourseEvent.NavigateBack -> {
                                 findNavController().popBackStack()
+                            }
+                            is SearchCourseEvent.OnSearchCourse -> {
+                                viewModel.getCourse(event.code)
                             }
                         }
                     }
@@ -41,7 +45,16 @@ class JoinCourseFragment : Fragment() {
     private fun setUpObserver() {
         viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
             navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
-                navigate(navigateTo, Screen.JoinCourse)
+                navigate(navigateTo, Screen.SearchCourse)
+            }
+        }
+        viewModel.course.observe(viewLifecycleOwner) { searchCourseResult ->
+            val result = searchCourseResult.getOrNull()
+            if (result != null) {
+                findNavController().popBackStack()
+                val bundle = Bundle()
+                bundle.putSerializable("course", result)
+                navigate(Screen.SearchCourseResult, Screen.SearchCourse, bundle)
             }
         }
     }

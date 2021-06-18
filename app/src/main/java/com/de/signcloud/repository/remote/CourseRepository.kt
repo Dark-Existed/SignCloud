@@ -53,9 +53,32 @@ object CourseRepository {
         }
     }
 
-//    fun attendCourse() = request(Dispatchers.IO) {}
+    fun getCourseByCode(code: String) = request(Dispatchers.IO) {
+        val result = SignCloudNetwork.getCourseByCode(code)
+        if (result.code == 200) {
+            Result.Success(result.course)
+        } else {
+            Result.Failure(RuntimeException("response status code is ${result.code}"))
+        }
+    }
 
-//    fun getCourseAttend() = request(Dispatchers.IO) {}
+    fun joinCourse(code: String) = request(Dispatchers.IO) {
+        val result = SignCloudNetwork.joinCourse(code)
+        if (result.code == 200) {
+            Result.Success(result)
+        } else {
+            Result.Failure(RuntimeException("response status code is ${result.code}"))
+        }
+    }
+
+    fun getCourseJoined() = request(Dispatchers.IO) {
+        val result = SignCloudNetwork.getJoinedCourse()
+        if (result.code == 200) {
+            Result.Success(result.courses)
+        } else {
+            Result.Failure(RuntimeException("response status code is ${result.code}"))
+        }
+    }
 
 }
 

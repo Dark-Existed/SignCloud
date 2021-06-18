@@ -54,5 +54,7 @@
     <string name="course_code">课程编码</string>
     <string name="finish">完成</string>
 
+    <string name="search_course">搜索课程</string>
+    <string name="search_result">搜索结果</string>
     <string name="join_course">加入课程</string>
 </resources>

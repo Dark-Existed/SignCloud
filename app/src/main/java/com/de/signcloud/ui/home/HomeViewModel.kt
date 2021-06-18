@@ -1,16 +1,12 @@
 package com.de.signcloud.ui.home
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.de.signcloud.Screen
 import com.de.signcloud.Screen.CreateCourse
-import com.de.signcloud.Screen.JoinCourse
-import com.de.signcloud.bean.GetCoursesCreateResponse
+import com.de.signcloud.Screen.SearchCourse
 import com.de.signcloud.repository.remote.CourseRepository
 import com.de.signcloud.repository.remote.UserRepository
 import com.de.signcloud.utils.Event
-import com.de.signcloud.utils.Result
-import com.de.signcloud.utils.getOrNull
 
 class HomeViewModel() : ViewModel() {
 
@@ -25,7 +21,7 @@ class HomeViewModel() : ViewModel() {
     }
 
     fun navigateToJoinCourse() {
-        _navigateTo.value = Event(JoinCourse)
+        _navigateTo.value = Event(SearchCourse)
     }
 
     val isStudent: Boolean

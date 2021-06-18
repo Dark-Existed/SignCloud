@@ -116,7 +116,8 @@ class State {
         val calendar: Calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
-        _semesterSelectedState.text = if (month <= 8) {
+        Log.d("CreateCourseViewModel", month.toString())
+        _semesterSelectedState.text = if (month <= 6) {
             "${year - 1}-$year-2"
         } else {
             "$year-${year + 1}-1"
