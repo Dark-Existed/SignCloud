@@ -20,6 +20,25 @@ import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
 
 @Composable
+fun SignCloudTopAppBar(topAppBarText: String) {
+    TopAppBar(
+        title = {
+            Text(
+                text = topAppBarText,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .wrapContentSize(
+                        Alignment.Center
+                    )
+            )
+        },
+        backgroundColor = MaterialTheme.colors.surface,
+        elevation = 0.dp,
+    )
+}
+
+
+@Composable
 fun SignCloudTopAppBarWithBack(topAppBarText: String, onBackPressed: () -> Unit) {
     TopAppBar(
         title = {

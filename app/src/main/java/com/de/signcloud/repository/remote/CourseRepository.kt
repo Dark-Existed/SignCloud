@@ -65,7 +65,7 @@ object CourseRepository {
     fun joinCourse(code: String) = request(Dispatchers.IO) {
         val result = SignCloudNetwork.joinCourse(code)
         if (result.code == 200) {
-            Result.Success(result)
+            Result.Success(true)
         } else {
             Result.Failure(RuntimeException("response status code is ${result.code}"))
         }

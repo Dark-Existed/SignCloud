@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
 import com.de.signcloud.bean.GetCoursesCreateResponse
+import com.de.signcloud.bean.GetJoinedCourseResponse
 import com.de.signcloud.ui.components.LoadNetworkImageWithToken
 import com.de.signcloud.ui.components.SignCloudTopAppBarWithAction
 import com.de.signcloud.ui.theme.SignCloudTheme
@@ -40,6 +41,7 @@ fun Courses(
     modifier: Modifier = Modifier,
     isStudent: Boolean = false,
     courseCreateList: List<GetCoursesCreateResponse.Course> = emptyList(),
+    courseJoinedList: List<GetJoinedCourseResponse.Course> = emptyList(),
     onEvent: (HomeEvent) -> Unit
 ) {
     Scaffold(
@@ -58,7 +60,7 @@ fun Courses(
         },
         content = {
             if (isStudent) {
-
+                StudentCourseList(courses = courseJoinedList)
             } else {
                 TeacherCourseList(courses = courseCreateList)
             }
@@ -68,9 +70,20 @@ fun Courses(
 
 @Composable
 fun StudentCourseList(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    courses: List<GetJoinedCourseResponse.Course>
 ) {
-
+    LazyColumn(modifier = modifier.padding(12.dp, 0.dp)) {
+        item { Spacer(modifier = modifier.statusBarsHeight()) }
+        items(courses) { course->
+            Spacer(modifier = modifier.height(12.dp))
+            StudentCourseCardViewItem(
+                modifier = Modifier.height(96.dp),
+                course = course,
+                shape = RoundedCornerShape(topStart = 24.dp)
+            )
+        }
+    }
 }
 
 @Composable
@@ -78,7 +91,7 @@ fun TeacherCourseList(
     modifier: Modifier = Modifier,
     courses: List<GetCoursesCreateResponse.Course>
 ) {
-    LazyColumn(modifier = modifier.padding(12.dp, 0.dp, 12.dp, 0.dp)) {
+    LazyColumn(modifier = modifier.padding(12.dp, 0.dp)) {
         item {
             Spacer(Modifier.statusBarsHeight())
         }
@@ -158,9 +171,64 @@ fun TeacherCourseCardViewItem(
 
 @Composable
 fun StudentCourseCardViewItem(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    course: GetJoinedCourseResponse.Course,
+    shape: Shape = RectangleShape,
+    gradient: List<Color> = SignCloudTheme.colors.gradient3_2,
+    elevation: Dp = 0.dp,
+    titleStyle: TextStyle = MaterialTheme.typography.subtitle1,
 ) {
-
+    Surface(
+        elevation = elevation,
+        shape = shape,
+        modifier = modifier
+    ) {
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .background(Brush.horizontalGradient(gradient))
+        ) {
+            LoadNetworkImageWithToken(imageUrl = course.cover, modifier = Modifier.aspectRatio(1f))
+            Column(
+                modifier = Modifier.padding(
+                    start = 16.dp,
+                    top = 16.dp,
+                    end = 16.dp,
+                    bottom = 8.dp
+                )
+            ) {
+                Text(
+                    text = course.name,
+                    style = titleStyle,
+                    maxLines = 2,
+                    color = Color.White,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(bottom = 4.dp)
+                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = course.school + '-' + course.college,
+                        style = MaterialTheme.typography.caption,
+                        color = Color.White,
+                        modifier = Modifier
+                            .weight(1f)
+                            .wrapContentWidth(Alignment.Start)
+                    )
+                    Text(
+                        text = course.teacher,
+                        style = MaterialTheme.typography.caption,
+                        color = Color.White,
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                            .weight(1f)
+                            .wrapContentWidth(Alignment.Start)
+                    )
+                }
+            }
+        }
+    }
 }
 
 

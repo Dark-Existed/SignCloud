@@ -16,5 +16,11 @@ object UserDao {
         return pref.getBoolean("isSignIn", false)
     }
 
+    fun signOut() {
+        val editor = context.getSharedPreferences("user_info", Context.MODE_PRIVATE).edit()
+        editor.clear()
+        editor.apply()
+    }
+
 
 }

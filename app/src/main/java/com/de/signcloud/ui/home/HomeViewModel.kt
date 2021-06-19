@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.de.signcloud.Screen
 import com.de.signcloud.Screen.CreateCourse
 import com.de.signcloud.Screen.SearchCourse
+import com.de.signcloud.repository.local.UserDao
 import com.de.signcloud.repository.remote.CourseRepository
 import com.de.signcloud.repository.remote.UserRepository
 import com.de.signcloud.utils.Event
@@ -34,8 +35,23 @@ class HomeViewModel() : ViewModel() {
         CourseRepository.getCourseCreate()
     }
 
-    fun updateCourseList() {
+    fun updateCreateCourseList() {
         _courseCreateList.value = "update"
+    }
+
+
+    private val _courseJoinedList = MutableLiveData<String>()
+    val courseJoinedList = Transformations.switchMap(_courseJoinedList) {
+        CourseRepository.getCourseJoined()
+    }
+
+    fun updateJoinedCourseList() {
+        _courseJoinedList.value = "update"
+    }
+
+
+    fun signOut() {
+        UserDao.signOut()
     }
 
 

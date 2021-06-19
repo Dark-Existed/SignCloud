@@ -1,7 +1,6 @@
 package com.de.signcloud.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
 import com.de.signcloud.ui.theme.SignCloudTheme
@@ -21,7 +21,11 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.updateCourseList()
+        if (viewModel.isStudent) {
+            viewModel.updateJoinedCourseList()
+        } else {
+            viewModel.updateCreateCourseList()
+        }
     }
 
     override fun onCreateView(
@@ -33,17 +37,22 @@ class HomeFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 val courseCreateList = viewModel.courseCreateList.observeAsState()
+                val courseJoinedList = viewModel.courseJoinedList.observeAsState()
                 ProvideWindowInsets {
                     SignCloudTheme {
                         Home(
-//                            isStudent = false,
                             isStudent = viewModel.isStudent,
                             courseCreateList = courseCreateList.value?.getOrNull()?.courses
-                                ?: emptyList()
+                                ?: emptyList(),
+                            courseJoinedList = courseJoinedList.value?.getOrNull() ?: emptyList()
                         ) { event ->
                             when (event) {
                                 HomeEvent.NavigateToCreateCourse -> viewModel.navigateToCreateCourse()
                                 HomeEvent.NavigateToJoinCourse -> viewModel.navigateToJoinCourse()
+                                HomeEvent.SignOut -> {
+                                    viewModel.signOut()
+                                    activity?.finish()
+                                }
                             }
                         }
                     }

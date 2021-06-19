@@ -37,6 +37,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import com.de.signcloud.R
 import com.de.signcloud.bean.GetCoursesCreateResponse
+import com.de.signcloud.bean.GetJoinedCourseResponse
 import com.de.signcloud.ui.components.SignCloudSurface
 import com.de.signcloud.ui.theme.SignCloudTheme
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -64,6 +65,7 @@ enum class HomeSections(
 sealed class HomeEvent {
     object NavigateToJoinCourse : HomeEvent()
     object NavigateToCreateCourse : HomeEvent()
+    object SignOut : HomeEvent()
 }
 
 
@@ -71,6 +73,7 @@ sealed class HomeEvent {
 fun Home(
     isStudent: Boolean = false,
     courseCreateList: List<GetCoursesCreateResponse.Course>,
+    courseJoinedList: List<GetJoinedCourseResponse.Course>,
     onEvent: (HomeEvent) -> Unit,
 ) {
     val (currentSection, setCurrentSection) = rememberSaveable {
@@ -89,9 +92,15 @@ fun Home(
         val modifier = Modifier.padding(innerPadding)
         Crossfade(currentSection) { section ->
             when (section) {
-                HomeSections.Courses -> Courses(modifier, isStudent, courseCreateList, onEvent)
+                HomeSections.Courses -> Courses(
+                    modifier,
+                    isStudent,
+                    courseCreateList,
+                    courseJoinedList,
+                    onEvent
+                )
                 HomeSections.Me -> {
-
+                    Me(modifier, onEvent)
                 }
             }
         }
@@ -143,7 +152,7 @@ private fun SignCloudBottomNav(
                     },
                     text = {
                         Text(
-                            text = stringResource(section.title).toUpperCase(
+                            text = stringResource(section.title).uppercase(
                                 ConfigurationCompat.getLocales(
                                     LocalConfiguration.current
                                 ).get(0)

@@ -51,4 +51,8 @@
         android:id="@+id/search_course_result_fragment"
         android:name="com.de.signcloud.ui.createcourse.SearchCourseResultFragment"
         android:label="Search Course Result"/>
+    <fragment
+        android:id="@+id/change_role_fragment"
+        android:name="com.de.signcloud.ui.setting.ChangeRoleFragment"
+        android:label="Change Role"/>
 </navigation>

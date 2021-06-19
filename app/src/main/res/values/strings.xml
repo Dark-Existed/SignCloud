@@ -58,5 +58,8 @@
     <string name="search_course">Search Course</string>
     <string name="search_result">Search Result</string>
     <string name="join_course">Join Course</string>
+    <string name="join_success">Join Success</string>
 
+    <string name="change_role">Change Role</string>
+    <string name="sign_out">Sign Out</string>
 </resources>
