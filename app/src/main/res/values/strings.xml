@@ -62,4 +62,10 @@
 
     <string name="change_role">Change Role</string>
     <string name="sign_out">Sign Out</string>
+    <string name="confirm">Confirm</string>
+
+    <string name="student">Student</string>
+    <string name="teacher">Teacher</string>
+    <string name="success">Success</string>
+    <string name="fail">Fail</string>
 </resources>

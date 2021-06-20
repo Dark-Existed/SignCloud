@@ -49,6 +49,7 @@ class HomeFragment : Fragment() {
                             when (event) {
                                 HomeEvent.NavigateToCreateCourse -> viewModel.navigateToCreateCourse()
                                 HomeEvent.NavigateToJoinCourse -> viewModel.navigateToJoinCourse()
+                                HomeEvent.NavigateToChangeRole -> viewModel.navigateToChangeRole()
                                 HomeEvent.SignOut -> {
                                     viewModel.signOut()
                                     activity?.finish()

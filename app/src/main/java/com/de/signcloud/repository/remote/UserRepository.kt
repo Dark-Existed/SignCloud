@@ -24,7 +24,7 @@ class User(
     val name: String,
     val phone: String,
     val avatar: String,
-    val defaultRole: String,
+    var defaultRole: String,
     val token: String
 )
 
@@ -176,6 +176,16 @@ object UserRepository {
     }
 
 
+    fun setUserDefaultRole(role: String) = request(Dispatchers.IO) {
+        val result = SignCloudNetwork.changeRole(role)
+        if (result.code == 200) {
+            UserDao.changeDefaultRole(role)
+            _user.defaultRole = role
+            Result.Success(result)
+        } else {
+            Result.Failure(RuntimeException("response status is ${result.code}"))
+        }
+    }
 
 
 }

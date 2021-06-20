@@ -66,6 +66,7 @@ sealed class HomeEvent {
     object NavigateToJoinCourse : HomeEvent()
     object NavigateToCreateCourse : HomeEvent()
     object SignOut : HomeEvent()
+    object NavigateToChangeRole : HomeEvent()
 }
 
 

@@ -76,6 +76,11 @@ object SignCloudNetwork {
     suspend fun getJoinedCourse() = courseService.getCoursesJoined().await()
 
 
+    private val userSettingService = ServiceCreator.createWithToken(UserSettingService::class.java)
+
+    suspend fun changeRole(role: String) = userSettingService.setUserDefaultRole(role).await()
+
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {
