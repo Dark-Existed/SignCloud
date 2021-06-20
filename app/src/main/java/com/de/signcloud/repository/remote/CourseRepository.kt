@@ -1,10 +1,8 @@
 package com.de.signcloud.repository.remote
 
-import android.util.Log
 import androidx.lifecycle.liveData
-import com.de.signcloud.api.CourseService
 import com.de.signcloud.api.SignCloudNetwork
-import com.de.signcloud.ui.createcourse.State
+import com.de.signcloud.ui.course.State
 import com.de.signcloud.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext

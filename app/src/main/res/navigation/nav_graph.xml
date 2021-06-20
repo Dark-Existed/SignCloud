@@ -33,23 +33,23 @@
         android:label="Home"/>
     <fragment
         android:id="@+id/create_course_fragment"
-        android:name="com.de.signcloud.ui.createcourse.CreateCourseFragment"
+        android:name="com.de.signcloud.ui.course.CreateCourseFragment"
         android:label="Create Course"/>
     <fragment
         android:id="@+id/select_school_fragment"
-        android:name="com.de.signcloud.ui.createcourse.SelectSchoolFragment"
+        android:name="com.de.signcloud.ui.course.SelectSchoolFragment"
         android:label="Select School"/>
     <fragment
         android:id="@+id/create_course_result_fragment"
-        android:name="com.de.signcloud.ui.createcourse.CreateCourseResultFragment"
+        android:name="com.de.signcloud.ui.course.CreateCourseResultFragment"
         android:label="Create Course Result"/>
     <fragment
         android:id="@+id/search_course_fragment"
-        android:name="com.de.signcloud.ui.createcourse.SearchCourseFragment"
+        android:name="com.de.signcloud.ui.course.SearchCourseFragment"
         android:label="Search Course"/>
     <fragment
         android:id="@+id/search_course_result_fragment"
-        android:name="com.de.signcloud.ui.createcourse.SearchCourseResultFragment"
+        android:name="com.de.signcloud.ui.course.SearchCourseResultFragment"
         android:label="Search Course Result"/>
     <fragment
         android:id="@+id/change_role_fragment"

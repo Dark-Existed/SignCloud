@@ -1,8 +1,7 @@
-package com.de.signcloud.ui.createcourse
+package com.de.signcloud.ui.course
 
 import androidx.lifecycle.*
 import com.de.signcloud.Screen
-import com.de.signcloud.bean.GetCourseByCodeResponse
 import com.de.signcloud.repository.remote.CourseRepository
 import com.de.signcloud.utils.Event
 

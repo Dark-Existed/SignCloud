@@ -1,4 +1,4 @@
-package com.de.signcloud.ui.createcourse
+package com.de.signcloud.ui.course
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button

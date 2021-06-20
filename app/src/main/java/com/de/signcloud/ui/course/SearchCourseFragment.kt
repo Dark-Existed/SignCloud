@@ -1,4 +1,4 @@
-package com.de.signcloud.ui.createcourse
+package com.de.signcloud.ui.course
 
 import android.os.Bundle
 import android.view.LayoutInflater

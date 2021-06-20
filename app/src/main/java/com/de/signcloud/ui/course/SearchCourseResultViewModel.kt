@@ -1,4 +1,4 @@
-package com.de.signcloud.ui.createcourse
+package com.de.signcloud.ui.course
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations

@@ -1,4 +1,4 @@
-package com.de.signcloud.ui.createcourse
+package com.de.signcloud.ui.course
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -6,7 +6,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,9 +15,6 @@ import com.de.signcloud.ui.components.GeneralTextField
 import com.de.signcloud.ui.components.ReadonlyTextField
 import com.de.signcloud.ui.components.SignCloudTopAppBarWithBack
 import com.de.signcloud.ui.components.SingleChoiceTextFieldDialog
-import com.de.signcloud.ui.components.textfieldstate.BigButton
-import com.de.signcloud.ui.components.textfieldstate.GenerateNotNullState
-import com.de.signcloud.ui.components.textfieldstate.GenerateState
 import com.de.signcloud.ui.theme.SignCloudTheme
 
 sealed class CreateCourseEvent {
