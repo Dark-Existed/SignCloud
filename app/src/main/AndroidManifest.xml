@@ -3,6 +3,9 @@
     package="com.de.signcloud">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera.any" />
+
 
     <application
         android:name=".SignCloudApplication"
@@ -20,7 +23,6 @@
             android:theme="@style/Theme.SignCloud.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

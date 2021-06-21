@@ -65,8 +65,9 @@ enum class HomeSections(
 sealed class HomeEvent {
     object NavigateToJoinCourse : HomeEvent()
     object NavigateToCreateCourse : HomeEvent()
-    object SignOut : HomeEvent()
     object NavigateToChangeRole : HomeEvent()
+    object NavigateToScanCode : HomeEvent()
+    object SignOut : HomeEvent()
 }
 
 

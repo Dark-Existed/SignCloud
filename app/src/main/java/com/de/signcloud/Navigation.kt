@@ -17,6 +17,7 @@ enum class Screen {
     SelectSchool,
     CreateCourseResult,
     SearchCourse,
+    ScanCode,
     SearchCourseResult,
     ChangeRole,
 }
@@ -59,6 +60,9 @@ fun Fragment.navigate(to: Screen, from: Screen) {
         }
         Screen.SearchCourse -> {
             findNavController().navigate(R.id.search_course_fragment)
+        }
+        Screen.ScanCode -> {
+            findNavController().navigate(R.id.scan_code_fragment)
         }
         Screen.SearchCourseResult -> {
             findNavController().navigate(R.id.search_course_result_fragment)
@@ -107,6 +111,9 @@ fun Fragment.navigate(to: Screen, from: Screen, args: Bundle) {
         }
         Screen.SearchCourse -> {
             findNavController().navigate(R.id.search_course_fragment, args)
+        }
+        Screen.ScanCode -> {
+            findNavController().navigate(R.id.scan_code_fragment, args)
         }
         Screen.SearchCourseResult -> {
             findNavController().navigate(R.id.search_course_result_fragment, args)

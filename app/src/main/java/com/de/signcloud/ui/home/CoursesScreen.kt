@@ -1,36 +1,43 @@
 package com.de.signcloud.ui.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircleOutline
 import androidx.compose.material.icons.filled.FilterCenterFocus
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.de.signcloud.R
 import com.de.signcloud.bean.GetCoursesCreateResponse
 import com.de.signcloud.bean.GetJoinedCourseResponse
 import com.de.signcloud.ui.components.LoadNetworkImageWithToken
+import com.de.signcloud.ui.components.SignCloudTopAppBar
 import com.de.signcloud.ui.components.SignCloudTopAppBarWithAction
 import com.de.signcloud.ui.theme.SignCloudTheme
 import com.google.accompanist.insets.statusBarsHeight
@@ -46,17 +53,32 @@ fun Courses(
 ) {
     Scaffold(
         topBar = {
-            SignCloudTopAppBarWithAction(
-                topAppBarText = stringResource(id = R.string.courses),
-                actionIcon = if (isStudent) Icons.Filled.AddCircleOutline else Icons.Filled.Add,
-                onActionPressed = {
-                    if (isStudent) {
-                        onEvent(HomeEvent.NavigateToJoinCourse)
-                    } else {
-                        onEvent(HomeEvent.NavigateToCreateCourse)
-                    }
+            TopAppBar(
+                modifier = Modifier.padding(12.dp, 0.dp),
+                backgroundColor = MaterialTheme.colors.surface,
+                elevation = 0.dp
+            ) {
+                Text(
+                    text = stringResource(id = R.string.courses),
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .wrapContentSize(Alignment.CenterStart)
+                        .weight(10F),
+                    fontSize = 19.sp
+                )
+                if (isStudent) {
+                    Menu(modifier.weight(1F), onEvent)
+                } else {
+                    Icon(
+                        Icons.Filled.Add,
+                        contentDescription = null,
+                        modifier = Modifier.clickable {
+                            onEvent(HomeEvent.NavigateToCreateCourse)
+                        }
+                    )
                 }
-            )
+            }
         },
         content = {
             if (isStudent) {
@@ -68,6 +90,34 @@ fun Courses(
     )
 }
 
+
+@Composable
+fun Menu(
+    modifier: Modifier = Modifier,
+    onEvent: (HomeEvent) -> Unit
+) {
+    val expanded = remember { mutableStateOf(false) }
+    Box(
+        modifier = Modifier
+            .wrapContentSize(Alignment.TopStart)
+    ) {
+        IconButton(onClick = { expanded.value = true }) {
+            Icon(Icons.Default.MoreVert, contentDescription = null)
+        }
+        DropdownMenu(
+            expanded = expanded.value,
+            onDismissRequest = { expanded.value = false }
+        ) {
+            DropdownMenuItem(onClick = { onEvent(HomeEvent.NavigateToScanCode) }) {
+                Text(stringResource(id = R.string.scan_code))
+            }
+            DropdownMenuItem(onClick = { onEvent(HomeEvent.NavigateToJoinCourse) }) {
+                Text(stringResource(id = R.string.search_course))
+            }
+        }
+    }
+}
+
 @Composable
 fun StudentCourseList(
     modifier: Modifier = Modifier,
@@ -75,7 +125,7 @@ fun StudentCourseList(
 ) {
     LazyColumn(modifier = modifier.padding(12.dp, 0.dp)) {
         item { Spacer(modifier = modifier.statusBarsHeight()) }
-        items(courses) { course->
+        items(courses) { course ->
             Spacer(modifier = modifier.height(12.dp))
             StudentCourseCardViewItem(
                 modifier = Modifier.height(96.dp),

@@ -48,6 +48,10 @@
         android:name="com.de.signcloud.ui.course.SearchCourseFragment"
         android:label="Search Course"/>
     <fragment
+        android:id="@+id/scan_code_fragment"
+        android:name="com.de.signcloud.ui.course.ScanCodeFragment"
+        android:label="Scan Code"/>
+    <fragment
         android:id="@+id/search_course_result_fragment"
         android:name="com.de.signcloud.ui.course.SearchCourseResultFragment"
         android:label="Search Course Result"/>
