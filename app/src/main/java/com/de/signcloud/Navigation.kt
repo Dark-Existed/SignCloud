@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import java.security.InvalidParameterException
+import java.security.SecureRandom
 
 enum class Screen {
     Welcome,
@@ -20,6 +21,8 @@ enum class Screen {
     ScanCode,
     SearchCourseResult,
     ChangeRole,
+    CourseOperation,
+    CourseDetail
 }
 
 fun Fragment.navigate(to: Screen, from: Screen) {
@@ -69,6 +72,12 @@ fun Fragment.navigate(to: Screen, from: Screen) {
         }
         Screen.ChangeRole -> {
             findNavController().navigate(R.id.change_role_fragment)
+        }
+        Screen.CourseOperation -> {
+            findNavController().navigate(R.id.course_operation_fragment)
+        }
+        Screen.CourseDetail -> {
+            findNavController().navigate(R.id.course_detail_fragment)
         }
     }
 
@@ -120,6 +129,12 @@ fun Fragment.navigate(to: Screen, from: Screen, args: Bundle) {
         }
         Screen.ChangeRole -> {
             findNavController().navigate(R.id.change_role_fragment, args)
+        }
+        Screen.CourseOperation -> {
+            findNavController().navigate(R.id.course_operation_fragment, args)
+        }
+        Screen.CourseDetail -> {
+            findNavController().navigate(R.id.course_detail_fragment, args)
         }
     }
 }

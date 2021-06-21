@@ -59,4 +59,12 @@
         android:id="@+id/change_role_fragment"
         android:name="com.de.signcloud.ui.setting.ChangeRoleFragment"
         android:label="Change Role"/>
+    <fragment
+        android:id="@+id/course_operation_fragment"
+        android:name="com.de.signcloud.ui.course.CourseOperationFragment"
+        android:label="Course Operation"/>
+    <fragment
+        android:id="@+id/course_detail_fragment"
+        android:name="com.de.signcloud.ui.course.CourseDetailFragment"
+        android:label="Course Detail"/>
 </navigation>

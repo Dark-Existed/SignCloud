@@ -1,7 +1,6 @@
 package com.de.signcloud.ui.course
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -13,29 +12,32 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.de.signcloud.R
 import com.de.signcloud.bean.Course
-import com.de.signcloud.bean.GetCourseByCodeResponse
 import com.de.signcloud.ui.components.LoadNetworkImageWithToken
+import com.de.signcloud.ui.components.SignCloudTopAppBar
 import com.de.signcloud.ui.components.SignCloudTopAppBarWithBack
 
-sealed class SearchCourseResultEvent() {
-    object NavigateBack : SearchCourseResultEvent()
-    data class OnJoinCourse(val code: String) : SearchCourseResultEvent()
+
+sealed class CourseDetailEvent() {
+    object NavigateBack : CourseDetailEvent()
 }
 
+
 @Composable
-fun SearchCourseResult(
+fun CourseDetail(
     modifier: Modifier = Modifier,
     course: Course,
-    onEvent: (SearchCourseResultEvent) -> Unit
+    onEvent: (CourseDetailEvent) -> Unit
 ) {
     Scaffold(
         topBar = {
-            SignCloudTopAppBarWithBack(topAppBarText = stringResource(id = R.string.search_result),
-                onBackPressed = { onEvent(SearchCourseResultEvent.NavigateBack) }
-            )
+            SignCloudTopAppBarWithBack(
+                topAppBarText = stringResource(id = R.string.course_detail),
+                onBackPressed = {
+                    onEvent(CourseDetailEvent.NavigateBack)
+                })
         },
         content = {
-            SearchCourseResultContent(
+            CourseDetailContent(
                 modifier = modifier,
                 course = course,
                 onEvent = onEvent
@@ -45,11 +47,12 @@ fun SearchCourseResult(
 }
 
 @Composable
-fun SearchCourseResultContent(
-    modifier: Modifier = Modifier,
+fun CourseDetailContent(
+    modifier: Modifier,
     course: Course,
-    onEvent: (SearchCourseResultEvent) -> Unit
+    onEvent: (CourseDetailEvent) -> Unit
 ) {
+
     Column(
         modifier = modifier.padding(12.dp, 0.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -82,7 +85,11 @@ fun SearchCourseResultContent(
 
         LoadNetworkImageWithToken(modifier.size(64.dp), imageUrl = course.cover)
         Spacer(modifier = modifier.height(8.dp))
+
         Text(text = "${stringResource(id = R.string.course_code)}: ${course.code}")
+        Spacer(modifier = modifier.height(16.dp))
+
+        LoadNetworkImageWithToken(modifier.size(96.dp), imageUrl = course.qrCode)
         Spacer(modifier = modifier.height(16.dp))
 
         Text(
@@ -102,15 +109,6 @@ fun SearchCourseResultContent(
             text = "${stringResource(id = R.string.exam_arrangement)}: ${course.examArrangement}"
         )
         Spacer(modifier = modifier.height(16.dp))
-
-        Button(
-            modifier = Modifier
-                .fillMaxWidth(),
-            onClick = {
-                onEvent(SearchCourseResultEvent.OnJoinCourse(course.code))
-            },
-        ) {
-            Text(text = stringResource(id = R.string.join_course))
-        }
     }
+
 }

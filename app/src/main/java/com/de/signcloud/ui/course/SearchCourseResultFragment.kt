@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.de.signcloud.R
+import com.de.signcloud.bean.Course
 import com.de.signcloud.bean.GetCourseByCodeResponse
 import com.de.signcloud.ui.theme.SignCloudTheme
 import com.de.signcloud.utils.getOrNull
@@ -25,7 +26,7 @@ class SearchCourseResultFragment : Fragment() {
     ): View {
         setUpObserver()
         val bundle = arguments
-        val course = bundle?.getSerializable("course") as GetCourseByCodeResponse.Course
+        val course = bundle?.getSerializable("course") as Course
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {

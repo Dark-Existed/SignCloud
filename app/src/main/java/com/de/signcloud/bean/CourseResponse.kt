@@ -29,47 +29,13 @@ class CreateCourseResponse(val code: Int, val message: String, val data: Data?) 
 
 class GetCoursesCreateResponse(val code: Int, val message: String, val data: Data?) {
     class Data(@SerializedName("content") val courses: List<Course>)
-
-    class Course(
-        val id: Int,
-        val code: String,
-        val name: String,
-        val grade: String,
-        val semester: String,
-        val school: String,
-        val college: String,
-        val major: String,
-        val teacher: String,
-        @SerializedName("learnRequire") val courseRequirement: String,
-        @SerializedName("teachProgress") val classSchedule: String,
-        @SerializedName("examArrange") val examArrangement: String,
-        val cover: String,
-        val qrCode: String,
-    )
 }
 
 class GetCourseByCodeResponse(
     val code: Int,
     val message: String,
     @SerializedName("data") val course: Course
-) {
-    class Course(
-        val id: Int,
-        val name: String,
-        val className: String,
-        val code: String,
-        val grade: String,
-        val semester: String,
-        val school: String,
-        val college: String,
-        val teacher: String,
-        @SerializedName("learnRequire") val courseRequirement: String,
-        @SerializedName("teachProgress") val classSchedule: String,
-        @SerializedName("examArrange") val examArrangement: String,
-        val cover: String,
-        val qrCode: String,
-    ) : Serializable
-}
+)
 
 class JoinCourseResponse(val code: Int, val message: String)
 
@@ -77,21 +43,21 @@ class GetJoinedCourseResponse(
     val code: Int,
     val message: String,
     @SerializedName("data") val courses: List<Course>
-) {
-    class Course(
-        val id: Int,
-        val name: String,
-        val className: String,
-        val code: String,
-        val grade: String,
-        val semester: String,
-        val school: String,
-        val college: String,
-        val teacher: String,
-        @SerializedName("learnRequire") val courseRequirement: String,
-        @SerializedName("teachProgress") val classSchedule: String,
-        @SerializedName("examArrange") val examArrangement: String,
-        val cover: String,
-        val qrCode: String,
-    )
-}
+)
+
+class Course(
+    val id: Int,
+    val name: String,
+    val className: String,
+    val code: String,
+    val grade: String,
+    val semester: String,
+    val school: String,
+    val college: String,
+    val teacher: String,
+    @SerializedName("learnRequire") val courseRequirement: String,
+    @SerializedName("teachProgress") val classSchedule: String,
+    @SerializedName("examArrange") val examArrangement: String,
+    val cover: String,
+    val qrCode: String,
+) : Serializable

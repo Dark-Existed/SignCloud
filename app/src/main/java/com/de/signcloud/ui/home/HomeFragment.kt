@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.de.signcloud.R
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
 import com.de.signcloud.ui.theme.SignCloudTheme
@@ -47,11 +48,16 @@ class HomeFragment : Fragment() {
                             courseJoinedList = courseJoinedList.value?.getOrNull() ?: emptyList()
                         ) { event ->
                             when (event) {
-                                HomeEvent.NavigateToCreateCourse -> viewModel.navigateToCreateCourse()
-                                HomeEvent.NavigateToJoinCourse -> viewModel.navigateToJoinCourse()
-                                HomeEvent.NavigateToChangeRole -> viewModel.navigateToChangeRole()
-                                HomeEvent.NavigateToScanCode -> viewModel.navigateToScanCode()
-                                HomeEvent.SignOut -> {
+                                is HomeEvent.NavigateToCreateCourse -> viewModel.navigateToCreateCourse()
+                                is HomeEvent.NavigateToJoinCourse -> viewModel.navigateToJoinCourse()
+                                is HomeEvent.NavigateToChangeRole -> viewModel.navigateToChangeRole()
+                                is HomeEvent.NavigateToScanCode -> viewModel.navigateToScanCode()
+                                is HomeEvent.NavigateToCourseDetail -> {
+                                    val bundle = Bundle()
+                                    bundle.putSerializable("course", event.course)
+                                    findNavController().navigate(R.id.course_detail_fragment, bundle)
+                                }
+                                is HomeEvent.SignOut -> {
                                     viewModel.signOut()
                                     activity?.finish()
                                 }

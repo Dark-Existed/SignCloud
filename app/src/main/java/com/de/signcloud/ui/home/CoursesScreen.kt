@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.de.signcloud.R
+import com.de.signcloud.bean.Course
 import com.de.signcloud.bean.GetCoursesCreateResponse
 import com.de.signcloud.bean.GetJoinedCourseResponse
 import com.de.signcloud.ui.components.LoadNetworkImageWithToken
@@ -47,8 +48,8 @@ import com.google.accompanist.insets.statusBarsHeight
 fun Courses(
     modifier: Modifier = Modifier,
     isStudent: Boolean = false,
-    courseCreateList: List<GetCoursesCreateResponse.Course> = emptyList(),
-    courseJoinedList: List<GetJoinedCourseResponse.Course> = emptyList(),
+    courseCreateList: List<Course> = emptyList(),
+    courseJoinedList: List<Course> = emptyList(),
     onEvent: (HomeEvent) -> Unit
 ) {
     Scaffold(
@@ -65,7 +66,7 @@ fun Courses(
                         .fillMaxSize()
                         .wrapContentSize(Alignment.CenterStart)
                         .weight(10F),
-                    fontSize = 19.sp
+                    fontSize = 20.sp
                 )
                 if (isStudent) {
                     Menu(modifier.weight(1F), onEvent)
@@ -82,9 +83,9 @@ fun Courses(
         },
         content = {
             if (isStudent) {
-                StudentCourseList(courses = courseJoinedList)
+                StudentCourseList(courses = courseJoinedList, onEvent = onEvent)
             } else {
-                TeacherCourseList(courses = courseCreateList)
+                TeacherCourseList(courses = courseCreateList, onEvent = onEvent)
             }
         }
     )
@@ -121,14 +122,19 @@ fun Menu(
 @Composable
 fun StudentCourseList(
     modifier: Modifier = Modifier,
-    courses: List<GetJoinedCourseResponse.Course>
+    courses: List<Course>,
+    onEvent: (HomeEvent) -> Unit
 ) {
     LazyColumn(modifier = modifier.padding(12.dp, 0.dp)) {
         item { Spacer(modifier = modifier.statusBarsHeight()) }
         items(courses) { course ->
             Spacer(modifier = modifier.height(12.dp))
             StudentCourseCardViewItem(
-                modifier = Modifier.height(96.dp),
+                modifier = Modifier
+                    .height(96.dp)
+                    .clickable {
+                        onEvent(HomeEvent.NavigateToCourseDetail(course))
+                    },
                 course = course,
                 shape = RoundedCornerShape(topStart = 24.dp)
             )
@@ -139,7 +145,8 @@ fun StudentCourseList(
 @Composable
 fun TeacherCourseList(
     modifier: Modifier = Modifier,
-    courses: List<GetCoursesCreateResponse.Course>
+    courses: List<Course>,
+    onEvent: (HomeEvent) -> Unit
 ) {
     LazyColumn(modifier = modifier.padding(12.dp, 0.dp)) {
         item {
@@ -148,7 +155,11 @@ fun TeacherCourseList(
         items(courses) { course ->
             Spacer(modifier = modifier.height(12.dp))
             TeacherCourseCardViewItem(
-                modifier = Modifier.height(96.dp),
+                modifier = Modifier
+                    .height(96.dp)
+                    .clickable {
+                        onEvent(HomeEvent.NavigateToCourseDetail(course))
+                    },
                 course = course,
                 shape = RoundedCornerShape(topStart = 24.dp)
             )
@@ -159,7 +170,7 @@ fun TeacherCourseList(
 @Composable
 fun TeacherCourseCardViewItem(
     modifier: Modifier = Modifier,
-    course: GetCoursesCreateResponse.Course,
+    course: Course,
     shape: Shape = RectangleShape,
     gradient: List<Color> = SignCloudTheme.colors.gradient3_2,
     elevation: Dp = 0.dp,
@@ -222,7 +233,7 @@ fun TeacherCourseCardViewItem(
 @Composable
 fun StudentCourseCardViewItem(
     modifier: Modifier = Modifier,
-    course: GetJoinedCourseResponse.Course,
+    course: Course,
     shape: Shape = RectangleShape,
     gradient: List<Color> = SignCloudTheme.colors.gradient3_2,
     elevation: Dp = 0.dp,

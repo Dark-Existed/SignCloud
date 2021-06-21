@@ -36,6 +36,7 @@ import androidx.core.os.ConfigurationCompat
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import com.de.signcloud.R
+import com.de.signcloud.bean.Course
 import com.de.signcloud.bean.GetCoursesCreateResponse
 import com.de.signcloud.bean.GetJoinedCourseResponse
 import com.de.signcloud.ui.components.SignCloudSurface
@@ -56,10 +57,9 @@ enum class HomeSections(
     val icon: ImageVector,
 ) {
     Courses(R.string.courses, Icons.Outlined.EventNote),
-
-    //    CreateCourse(R.string.create_course, Icons.Outlined.AddCircleOutline),
-//    ScanCode(R.string.scan_code, Icons.Outlined.QrCode),
     Me(R.string.me, Icons.Outlined.PersonOutline)
+//    CreateCourse(R.string.create_course, Icons.Outlined.AddCircleOutline),
+//    ScanCode(R.string.scan_code, Icons.Outlined.QrCode),
 }
 
 sealed class HomeEvent {
@@ -68,14 +68,15 @@ sealed class HomeEvent {
     object NavigateToChangeRole : HomeEvent()
     object NavigateToScanCode : HomeEvent()
     object SignOut : HomeEvent()
+    data class NavigateToCourseDetail(val course: Course) : HomeEvent()
 }
 
 
 @Composable
 fun Home(
     isStudent: Boolean = false,
-    courseCreateList: List<GetCoursesCreateResponse.Course>,
-    courseJoinedList: List<GetJoinedCourseResponse.Course>,
+    courseCreateList: List<Course>,
+    courseJoinedList: List<Course>,
     onEvent: (HomeEvent) -> Unit,
 ) {
     val (currentSection, setCurrentSection) = rememberSaveable {
