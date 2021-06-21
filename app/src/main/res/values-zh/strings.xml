@@ -67,4 +67,6 @@
     <string name="teacher">教师</string>
     <string name="success">成功</string>
     <string name="fail">失败</string>
+
+    <string name="no_camera_permission">没有相机权限</string>
 </resources>

@@ -68,4 +68,6 @@
     <string name="teacher">Teacher</string>
     <string name="success">Success</string>
     <string name="fail">Fail</string>
+
+    <string name="no_camera_permission">No Camera Permission</string>
 </resources>
