@@ -74,4 +74,10 @@
     <string name="course_detail">Course Detail</string>
 
     <string name="course_operation">Course Operation</string>
+
+    <string name="create_check_in">Create Check In</string>
+    <string name="check_in">Check In</string>
+    <string name="one_step">One Step</string>
+    <string name="time_limited">Time Limit</string>
+    <string name="minutes">Minutes</string>
 </resources>

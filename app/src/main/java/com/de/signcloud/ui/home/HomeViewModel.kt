@@ -32,6 +32,10 @@ class HomeViewModel() : ViewModel() {
         _navigateTo.value = Event(ScanCode)
     }
 
+    fun navigateToCourseOperation() {
+        _navigateTo.value = Event(CourseOperation)
+    }
+
     val isStudent: Boolean
         get() = UserRepository.isUserStudent()
 

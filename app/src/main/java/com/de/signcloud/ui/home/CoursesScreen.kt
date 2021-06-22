@@ -10,10 +10,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.AddCircleOutline
-import androidx.compose.material.icons.filled.FilterCenterFocus
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -136,7 +133,8 @@ fun StudentCourseList(
                         onEvent(HomeEvent.NavigateToCourseDetail(course))
                     },
                 course = course,
-                shape = RoundedCornerShape(topStart = 24.dp)
+                shape = RoundedCornerShape(topStart = 24.dp),
+                onEvent = onEvent
             )
         }
     }
@@ -161,7 +159,8 @@ fun TeacherCourseList(
                         onEvent(HomeEvent.NavigateToCourseDetail(course))
                     },
                 course = course,
-                shape = RoundedCornerShape(topStart = 24.dp)
+                shape = RoundedCornerShape(topStart = 24.dp),
+                onEvent = onEvent
             )
         }
     }
@@ -175,7 +174,7 @@ fun TeacherCourseCardViewItem(
     gradient: List<Color> = SignCloudTheme.colors.gradient3_2,
     elevation: Dp = 0.dp,
     titleStyle: TextStyle = MaterialTheme.typography.subtitle1,
-    iconSize: Dp = 16.dp
+    onEvent: (HomeEvent) -> Unit
 ) {
     Surface(
         elevation = elevation,
@@ -185,32 +184,37 @@ fun TeacherCourseCardViewItem(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .background(Brush.horizontalGradient(gradient))
+                .background(Brush.horizontalGradient(gradient)),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            LoadNetworkImageWithToken(imageUrl = course.cover, modifier = Modifier.aspectRatio(1f))
-            Column(
-                modifier = Modifier.padding(
-                    start = 16.dp,
-                    top = 16.dp,
-                    end = 16.dp,
-                    bottom = 8.dp
+            Row {
+                LoadNetworkImageWithToken(
+                    imageUrl = course.cover,
+                    modifier = Modifier.aspectRatio(1f)
                 )
-            ) {
-                Text(
-                    text = course.name,
-                    style = titleStyle,
-                    maxLines = 2,
-                    color = Color.White,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(bottom = 4.dp)
-                )
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(
+                    modifier = Modifier.padding(
+                        start = 16.dp,
+                        top = 16.dp,
+                        end = 16.dp,
+                        bottom = 8.dp
+                    )
+                ) {
+                    Text(
+                        text = course.name,
+                        style = titleStyle,
+                        maxLines = 1,
+                        color = Color.White,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(bottom = 4.dp)
+                    )
                     Text(
                         text = course.school + '-' + course.college,
                         style = MaterialTheme.typography.caption,
                         color = Color.White,
+                        maxLines = 2,
                         modifier = Modifier
                             .weight(1f)
                             .wrapContentWidth(Alignment.Start)
@@ -219,13 +223,21 @@ fun TeacherCourseCardViewItem(
                         text = course.teacher,
                         style = MaterialTheme.typography.caption,
                         color = Color.White,
+                        maxLines = 1,
                         modifier = Modifier
-                            .padding(start = 8.dp)
                             .weight(1f)
                             .wrapContentWidth(Alignment.Start)
                     )
                 }
             }
+            Icon(
+                Icons.Filled.Menu,
+                contentDescription = null,
+                modifier = modifier
+                    .clickable { onEvent(HomeEvent.NavigateToCourseOperation(course.code)) }
+                    .padding(12.dp, 0.dp)
+                    .size(32.dp)
+            )
         }
     }
 }
@@ -238,6 +250,7 @@ fun StudentCourseCardViewItem(
     gradient: List<Color> = SignCloudTheme.colors.gradient3_2,
     elevation: Dp = 0.dp,
     titleStyle: TextStyle = MaterialTheme.typography.subtitle1,
+    onEvent: (HomeEvent) -> Unit
 ) {
     Surface(
         elevation = elevation,
@@ -247,32 +260,37 @@ fun StudentCourseCardViewItem(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .background(Brush.horizontalGradient(gradient))
+                .background(Brush.horizontalGradient(gradient)),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            LoadNetworkImageWithToken(imageUrl = course.cover, modifier = Modifier.aspectRatio(1f))
-            Column(
-                modifier = Modifier.padding(
-                    start = 16.dp,
-                    top = 16.dp,
-                    end = 16.dp,
-                    bottom = 8.dp
+            Row {
+                LoadNetworkImageWithToken(
+                    imageUrl = course.cover,
+                    modifier = Modifier.aspectRatio(1f)
                 )
-            ) {
-                Text(
-                    text = course.name,
-                    style = titleStyle,
-                    maxLines = 2,
-                    color = Color.White,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(bottom = 4.dp)
-                )
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(
+                    modifier = Modifier.padding(
+                        start = 16.dp,
+                        top = 16.dp,
+                        end = 16.dp,
+                        bottom = 8.dp
+                    )
+                ) {
+                    Text(
+                        text = course.name,
+                        style = titleStyle,
+                        maxLines = 1,
+                        color = Color.White,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(bottom = 4.dp)
+                    )
                     Text(
                         text = course.school + '-' + course.college,
                         style = MaterialTheme.typography.caption,
                         color = Color.White,
+                        maxLines = 2,
                         modifier = Modifier
                             .weight(1f)
                             .wrapContentWidth(Alignment.Start)
@@ -281,13 +299,21 @@ fun StudentCourseCardViewItem(
                         text = course.teacher,
                         style = MaterialTheme.typography.caption,
                         color = Color.White,
+                        maxLines = 1,
                         modifier = Modifier
-                            .padding(start = 8.dp)
                             .weight(1f)
                             .wrapContentWidth(Alignment.Start)
                     )
                 }
             }
+            Icon(
+                Icons.Filled.Menu,
+                contentDescription = null,
+                modifier = modifier
+                    .clickable { onEvent(HomeEvent.NavigateToCourseOperation(course.code)) }
+                    .padding(12.dp, 0.dp)
+                    .size(32.dp)
+            )
         }
     }
 }

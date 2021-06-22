@@ -1,8 +1,8 @@
 package com.de.signcloud.ui.course
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -15,9 +15,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
 import com.de.signcloud.ui.components.SignCloudTopAppBarWithBack
+import com.de.signcloud.ui.theme.Teal200
 
 sealed class CourseOperationEvent() {
     object NavigateBack : CourseOperationEvent()
+    object NavigateToCreateCheckIn : CourseOperationEvent()
+    object NavigateToCheckIn : CourseOperationEvent()
 }
 
 @Composable
@@ -56,7 +59,14 @@ fun StudentCourseOperation(
     modifier: Modifier,
     onEvent: (CourseOperationEvent) -> Unit
 ) {
-
+    Column(modifier.padding(12.dp, 0.dp)) {
+        CardItem(
+            modifier = modifier.clickable {
+                onEvent(CourseOperationEvent.NavigateToCheckIn)
+            }.background(Teal200),
+            text = stringResource(id = R.string.check_in)
+        )
+    }
 }
 
 @Composable
@@ -64,7 +74,14 @@ fun TeacherCourseOperation(
     modifier: Modifier,
     onEvent: (CourseOperationEvent) -> Unit
 ) {
-
+    Column(modifier.padding(12.dp, 0.dp)) {
+        CardItem(
+            modifier = modifier.clickable {
+                onEvent(CourseOperationEvent.NavigateToCreateCheckIn)
+            }.background(Teal200),
+            text = stringResource(id = R.string.create_check_in)
+        )
+    }
 }
 
 
@@ -75,7 +92,7 @@ fun CardItem(
 ) {
     Card(shape = RoundedCornerShape(8.dp)) {
         Column(
-            modifier = Modifier.height(180.dp),
+            modifier = modifier.height(180.dp).fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

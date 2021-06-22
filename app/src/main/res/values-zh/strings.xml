@@ -72,4 +72,10 @@
 
     <string name="course_detail">课程详情</string>
     <string name="course_operation">课程操作</string>
+
+    <string name="create_check_in">创建签到</string>
+    <string name="check_in">签到</string>
+    <string name="one_step">一键签到</string>
+    <string name="time_limited">限时签到</string>
+    <string name="minutes">分钟数</string>
 </resources>

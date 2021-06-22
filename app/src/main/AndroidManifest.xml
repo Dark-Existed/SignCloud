@@ -4,8 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-feature android:name="android.hardware.camera.any" />
-
 
     <application
         android:name=".SignCloudApplication"
@@ -16,6 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SignCloud"
         android:networkSecurityConfig="@xml/network_config">
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="fYLEH1lzGqMz1Hz1GPPtNTs6WgcgP8pc" >
+        </meta-data>
+        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -67,6 +67,7 @@ sealed class HomeEvent {
     object NavigateToCreateCourse : HomeEvent()
     object NavigateToChangeRole : HomeEvent()
     object NavigateToScanCode : HomeEvent()
+    data class NavigateToCourseOperation(val code: String) : HomeEvent()
     object SignOut : HomeEvent()
     data class NavigateToCourseDetail(val course: Course) : HomeEvent()
 }
@@ -302,7 +303,6 @@ private fun SignCloudBottomNavItemLayout(
     ) { measurables, constraints ->
         val iconPlaceable = measurables.first { it.layoutId == "icon" }.measure(constraints)
         val textPlaceable = measurables.first { it.layoutId == "text" }.measure(constraints)
-
         placeTextAndIcon(
             textPlaceable,
             iconPlaceable,

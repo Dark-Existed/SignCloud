@@ -4,6 +4,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.RuntimeException
+import java.math.BigDecimal
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -80,6 +81,16 @@ object SignCloudNetwork {
 
     suspend fun changeRole(role: String) = userSettingService.setUserDefaultRole(role).await()
 
+
+    private val checkInService = ServiceCreator.createWithToken(CheckInService::class.java)
+
+    suspend fun createCheckIn(
+        code: String,
+        mode: String,
+        minutes: String,
+        latitude: BigDecimal,
+        longitude: BigDecimal
+    ) = checkInService.createCheckIn(code, mode, minutes, latitude, longitude)
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
