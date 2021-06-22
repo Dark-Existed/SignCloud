@@ -68,7 +68,8 @@
     <string name="success">成功</string>
     <string name="fail">失败</string>
 
-    <string name="no_camera_permission">没有相机权限</string>
+    <string name="no_camera_permission">获取相机权限失败</string>
 
     <string name="course_detail">课程详情</string>
+    <string name="course_operation">课程操作</string>
 </resources>

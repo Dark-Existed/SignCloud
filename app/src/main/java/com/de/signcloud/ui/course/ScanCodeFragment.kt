@@ -15,9 +15,13 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.de.signcloud.R
+import com.de.signcloud.Screen
 import com.de.signcloud.databinding.FragmentScancodeBinding
+import com.de.signcloud.navigate
 import com.de.signcloud.utils.BarcodeAnalyzer
+import com.de.signcloud.utils.getOrNull
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
@@ -50,6 +54,15 @@ class ScanCodeFragment : Fragment() {
         _binding = FragmentScancodeBinding.inflate(inflater, container, false)
         viewModel.progressState.observe(viewLifecycleOwner) {
             binding.scanCodeProgressBar.visibility = if (it) View.VISIBLE else View.GONE
+        }
+        viewModel.course.observe(viewLifecycleOwner) { searchCourseResult ->
+            val result = searchCourseResult.getOrNull()
+            if (result != null) {
+                findNavController().popBackStack()
+                val bundle = Bundle()
+                bundle.putSerializable("course", result)
+                navigate(Screen.SearchCourseResult, Screen.SearchCourse, bundle)
+            }
         }
         return binding.root
     }

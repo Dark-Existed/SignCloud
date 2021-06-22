@@ -72,4 +72,6 @@
     <string name="no_camera_permission">No Camera Permission</string>
 
     <string name="course_detail">Course Detail</string>
+
+    <string name="course_operation">Course Operation</string>
 </resources>

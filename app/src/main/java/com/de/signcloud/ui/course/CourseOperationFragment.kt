@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.de.signcloud.ui.theme.SignCloudTheme
 
 class CourseOperationFragment : Fragment() {
@@ -23,7 +24,9 @@ class CourseOperationFragment : Fragment() {
                 SignCloudTheme {
                     CourseOperation(isStudent = viewModel.isStudent) {
                         when (it) {
-                            
+                            is CourseOperationEvent.NavigateBack -> {
+                                findNavController().popBackStack()
+                            }
                         }
                     }
                 }

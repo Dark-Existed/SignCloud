@@ -59,5 +59,5 @@ class Course(
     @SerializedName("teachProgress") val classSchedule: String,
     @SerializedName("examArrange") val examArrangement: String,
     val cover: String,
-    val qrCode: String,
+    @SerializedName("qrcode") val qrCode: String,
 ) : Serializable
