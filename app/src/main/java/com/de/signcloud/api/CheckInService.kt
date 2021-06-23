@@ -1,5 +1,7 @@
 package com.de.signcloud.api
 
+import com.de.signcloud.bean.CreateCheckInResponse
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -12,10 +14,10 @@ interface CheckInService {
     fun createCheckIn(
         @Query("code") code: String,
         @Query("mode") mode: String,
-        @Query("value") minutes: String,
-        @Query("latitude ") latitude: BigDecimal,
+        @Query("value") minutes: Int,
+        @Query("latitude") latitude: BigDecimal,
         @Query("longitude") longitude: BigDecimal
-    )
+    ): Call<CreateCheckInResponse>
 
     @PUT("/api/signIn/end")
     fun finishCheckIn(

@@ -70,6 +70,7 @@
     <string name="fail">Fail</string>
 
     <string name="no_camera_permission">No Camera Permission</string>
+    <string name="no_location_permission">No Location Permission</string>
 
     <string name="course_detail">Course Detail</string>
 
@@ -80,4 +81,6 @@
     <string name="one_step">One Step</string>
     <string name="time_limited">Time Limit</string>
     <string name="minutes">Minutes</string>
+    <string name="create_success">Create Success</string>
+    <string name="create_fail">Create Fail</string>
 </resources>

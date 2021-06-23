@@ -87,10 +87,10 @@ object SignCloudNetwork {
     suspend fun createCheckIn(
         code: String,
         mode: String,
-        minutes: String,
+        minutes: Int,
         latitude: BigDecimal,
         longitude: BigDecimal
-    ) = checkInService.createCheckIn(code, mode, minutes, latitude, longitude)
+    ) = checkInService.createCheckIn(code, mode, minutes, latitude, longitude).await()
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->

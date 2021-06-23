@@ -12,6 +12,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -230,14 +231,16 @@ fun TeacherCourseCardViewItem(
                     )
                 }
             }
-            Icon(
-                Icons.Filled.Menu,
-                contentDescription = null,
-                modifier = modifier
-                    .clickable { onEvent(HomeEvent.NavigateToCourseOperation(course.code)) }
-                    .padding(12.dp, 0.dp)
-                    .size(32.dp)
-            )
+            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                Icon(
+                    Icons.Filled.Menu,
+                    contentDescription = null,
+                    modifier = modifier
+                        .clickable { onEvent(HomeEvent.NavigateToCourseOperation(course.code)) }
+                        .padding(12.dp, 0.dp)
+                        .size(32.dp)
+                )
+            }
         }
     }
 }
@@ -306,14 +309,17 @@ fun StudentCourseCardViewItem(
                     )
                 }
             }
-            Icon(
-                Icons.Filled.Menu,
-                contentDescription = null,
-                modifier = modifier
-                    .clickable { onEvent(HomeEvent.NavigateToCourseOperation(course.code)) }
-                    .padding(12.dp, 0.dp)
-                    .size(32.dp)
-            )
+            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                Icon(
+                    Icons.Filled.Menu,
+                    contentDescription = null,
+                    modifier = modifier
+                        .clickable { onEvent(HomeEvent.NavigateToCourseOperation(course.code)) }
+                        .padding(12.dp, 0.dp)
+                        .size(32.dp)
+                )
+            }
+
         }
     }
 }

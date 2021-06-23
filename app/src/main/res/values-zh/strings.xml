@@ -69,6 +69,7 @@
     <string name="fail">失败</string>
 
     <string name="no_camera_permission">获取相机权限失败</string>
+    <string name="no_location_permission">获取定位权限失败</string>
 
     <string name="course_detail">课程详情</string>
     <string name="course_operation">课程操作</string>
@@ -78,4 +79,7 @@
     <string name="one_step">一键签到</string>
     <string name="time_limited">限时签到</string>
     <string name="minutes">分钟数</string>
+    <string name="create_success">创建成功</string>
+    <string name="create_fail">创建失败</string>
+
 </resources>

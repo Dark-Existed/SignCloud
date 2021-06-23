@@ -1,12 +1,18 @@
 package com.de.signcloud.ui.checkin
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.LocationOn
+import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -21,22 +27,28 @@ import com.de.signcloud.ui.theme.LightColorPalette
 sealed class CreateCheckInEvent() {
     object NavigateBack : CreateCheckInEvent()
     object CreateOneStepCheckIn : CreateCheckInEvent()
+    object RefreshLocation : CreateCheckInEvent()
     data class CreateTimeLimitCheckIn(val minutes: String) : CreateCheckInEvent()
 }
 
 @Composable
 fun CreateCheckIn(
     modifier: Modifier = Modifier,
+    locationName: String = "",
     onEvent: (CreateCheckInEvent) -> Unit
 ) {
     Scaffold(
         topBar = {
             SignCloudTopAppBarWithBack(
                 topAppBarText = stringResource(id = R.string.create_check_in),
-                onBackPressed = {})
+                onBackPressed = { onEvent(CreateCheckInEvent.NavigateBack) })
         },
         content = {
-            CreateCheckInContent(modifier = modifier, onEvent = onEvent)
+            CreateCheckInContent(
+                modifier = modifier,
+                locationName = locationName,
+                onEvent = onEvent
+            )
         }
     )
 }
@@ -45,6 +57,7 @@ fun CreateCheckIn(
 @Composable
 fun CreateCheckInContent(
     modifier: Modifier = Modifier,
+    locationName: String = "",
     onEvent: (CreateCheckInEvent) -> Unit
 ) {
     Column(modifier = modifier.padding(12.dp, 0.dp)) {
@@ -81,10 +94,10 @@ fun CreateCheckInContent(
             Spacer(modifier = Modifier.height(16.dp))
             when (selectedState.value) {
                 0 -> {
-                    OneStepContent(onEvent = onEvent)
+                    OneStepContent(onEvent = onEvent, locationName = locationName)
                 }
                 1 -> {
-                    TimeLimitContent(onEvent = onEvent)
+                    TimeLimitContent(onEvent = onEvent, locationName = locationName)
                 }
             }
         }
@@ -99,11 +112,14 @@ fun OneStepContent(
     locationName: String = "",
     onEvent: (CreateCheckInEvent) -> Unit
 ) {
-    Column(modifier.padding(12.dp, 0.dp)) {
+    Column(modifier.padding(12.dp, 0.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Location(locationName = locationName, onEvent = onEvent)
         Button(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 28.dp), onClick = { /*TODO*/ }
+                .padding(vertical = 28.dp),
+            onClick = { onEvent(CreateCheckInEvent.CreateOneStepCheckIn) },
+            enabled = locationName.isNotBlank()
         ) {
             Text(
                 text = stringResource(id = R.string.create_check_in),
@@ -119,7 +135,8 @@ fun TimeLimitContent(
     locationName: String = "",
     onEvent: (CreateCheckInEvent) -> Unit
 ) {
-    Column(modifier.padding(12.dp, 0.dp)) {
+    Column(modifier.padding(12.dp, 0.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+
 
         val minutesState = remember { GenerateNotNullState() }
         GeneralTextField(
@@ -128,12 +145,13 @@ fun TimeLimitContent(
             onImeAction = {}
         )
         Spacer(modifier = Modifier.height(16.dp))
+        Location(locationName = locationName, onEvent = onEvent)
         Button(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 28.dp),
-            onClick = { /*TODO*/ },
-            enabled = minutesState.isValid
+            onClick = { onEvent(CreateCheckInEvent.CreateTimeLimitCheckIn(minutesState.text)) },
+            enabled = minutesState.isValid && locationName.isNotBlank()
         ) {
             Text(
                 text = stringResource(id = R.string.create_check_in),
@@ -150,6 +168,27 @@ fun Location(
     onEvent: (CreateCheckInEvent) -> Unit
 ) {
     Card(shape = RoundedCornerShape(16.dp)) {
-
+        Row(
+            modifier = Modifier.height(25.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                Icon(
+                    Icons.Outlined.LocationOn,
+                    contentDescription = null,
+                    modifier.padding(start = 4.dp)
+                )
+                Text(text = locationName)
+                Icon(
+                    Icons.Outlined.Refresh,
+                    contentDescription = null,
+                    modifier
+                        .padding(end = 4.dp)
+                        .clickable {
+                            onEvent(CreateCheckInEvent.RefreshLocation)
+                        }
+                )
+            }
+        }
     }
 }
