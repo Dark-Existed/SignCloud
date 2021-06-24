@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
 import com.de.signcloud.ui.components.GeneralTextField
+import com.de.signcloud.ui.components.Location
 import com.de.signcloud.ui.components.SignCloudTopAppBarWithBack
 import com.de.signcloud.ui.components.textfieldstate.GenerateNotNullState
 import com.de.signcloud.ui.course.CardItem
@@ -161,34 +162,3 @@ fun TimeLimitContent(
     }
 }
 
-@Composable
-fun Location(
-    modifier: Modifier = Modifier,
-    locationName: String = "",
-    onEvent: (CreateCheckInEvent) -> Unit
-) {
-    Card(shape = RoundedCornerShape(16.dp)) {
-        Row(
-            modifier = Modifier.height(25.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                Icon(
-                    Icons.Outlined.LocationOn,
-                    contentDescription = null,
-                    modifier.padding(start = 4.dp)
-                )
-                Text(text = locationName)
-                Icon(
-                    Icons.Outlined.Refresh,
-                    contentDescription = null,
-                    modifier
-                        .padding(end = 4.dp)
-                        .clickable {
-                            onEvent(CreateCheckInEvent.RefreshLocation)
-                        }
-                )
-            }
-        }
-    }
-}

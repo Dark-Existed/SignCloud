@@ -1,17 +1,21 @@
 package com.de.signcloud.ui.course
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.baidu.mapapi.utils.DistanceUtil
 import com.de.signcloud.R
 import com.de.signcloud.Screen
 import com.de.signcloud.navigate
 import com.de.signcloud.ui.theme.SignCloudTheme
+import com.de.signcloud.utils.getOrNull
 
 class CourseOperationFragment : Fragment() {
 
@@ -24,6 +28,7 @@ class CourseOperationFragment : Fragment() {
     ): View {
         setUpObserver()
         val bundle = arguments
+        val courseCode = bundle?.getString("CourseCode") ?: ""
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
@@ -39,14 +44,16 @@ class CourseOperationFragment : Fragment() {
                                     bundle
                                 )
                             }
-                            is CourseOperationEvent.NavigateToCheckIn -> {
+                            is CourseOperationEvent.NavigateToCheckInList->{
                                 findNavController().popBackStack()
                                 findNavController().navigate(
-                                    R.id.check_in_fragment,
+                                    R.id.check_in_list_fragment,
                                     bundle
                                 )
                             }
-
+                            is CourseOperationEvent.NavigateToCheckIn -> {
+                                viewModel.getCurrentCheckIn(courseCode)
+                            }
                         }
                     }
                 }
@@ -59,6 +66,24 @@ class CourseOperationFragment : Fragment() {
         viewModel.navigateTo.observe(viewLifecycleOwner) { navigateToEvent ->
             navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
                 navigate(navigateTo, Screen.CourseOperation)
+            }
+        }
+        viewModel.currentCheckIn.observe(viewLifecycleOwner) { currentCheckInResult ->
+            val result = currentCheckInResult.getOrNull()
+            if (result != null) {
+                findNavController().popBackStack()
+                val bundle = Bundle()
+                bundle.putSerializable("CheckInInfo", result.data)
+                findNavController().navigate(
+                    R.id.check_in_fragment,
+                    bundle
+                )
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    requireContext().getString(R.string.no_check_in_available),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

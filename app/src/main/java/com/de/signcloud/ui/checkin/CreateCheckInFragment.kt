@@ -78,12 +78,24 @@ class CreateCheckInFragment : Fragment() {
         viewModel.createCheckInLivaData.observe(viewLifecycleOwner) { createResult ->
             val result = createResult.getOrNull()
             if (result != null) {
-                findNavController().popBackStack()
-                Toast.makeText(
-                    requireContext(),
-                    requireContext().getString(R.string.create_success),
-                    Toast.LENGTH_SHORT
-                ).show()
+                when (result.code) {
+                    200 -> {
+                        findNavController().popBackStack()
+                        Toast.makeText(
+                            requireContext(),
+                            requireContext().getString(R.string.create_success),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    400 -> {
+                        Toast.makeText(
+                            requireContext(),
+                            requireContext().getString(R.string.finish_current_check_in),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
             } else {
                 Toast.makeText(
                     requireContext(),

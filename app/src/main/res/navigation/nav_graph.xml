@@ -72,6 +72,10 @@
         android:name="com.de.signcloud.ui.checkin.CreateCheckInFragment"
         android:label="Create Check In"/>
     <fragment
+        android:id="@+id/check_in_list_fragment"
+        android:name="com.de.signcloud.ui.checkin.CheckInListFragment"
+        android:label="Check In List"/>
+    <fragment
         android:id="@+id/check_in_fragment"
         android:name="com.de.signcloud.ui.checkin.CheckInFragment"
         android:label="Check In"/>

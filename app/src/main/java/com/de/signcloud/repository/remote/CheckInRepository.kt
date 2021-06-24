@@ -1,5 +1,6 @@
 package com.de.signcloud.repository.remote
 
+import android.util.Log
 import androidx.lifecycle.liveData
 import com.de.signcloud.api.SignCloudNetwork
 import com.de.signcloud.utils.Result
@@ -17,6 +18,24 @@ object CheckInRepository {
         longitude: BigDecimal
     ) = request(Dispatchers.IO) {
         val result = SignCloudNetwork.createCheckIn(code, mode, minutes, latitude, longitude)
+        when (result.code) {
+            200 -> Result.Success(result)
+            400 -> Result.Success(result)
+            else -> Result.Failure(RuntimeException("response status code is ${result.code}"))
+        }
+    }
+
+    fun getCheckInList(code: String) = request(Dispatchers.IO) {
+        val result = SignCloudNetwork.getCheckInList(code)
+        if (result.code == 200) {
+            Result.Success(result.data.checkInList)
+        } else {
+            Result.Failure(RuntimeException("response status code is ${result.code}"))
+        }
+    }
+
+    fun getCurrentCheckIn(code: String) = request(Dispatchers.IO) {
+        val result = SignCloudNetwork.getCurrentCheckIn(code)
         if (result.code == 200) {
             Result.Success(result)
         } else {

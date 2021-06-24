@@ -92,6 +92,11 @@ object SignCloudNetwork {
         longitude: BigDecimal
     ) = checkInService.createCheckIn(code, mode, minutes, latitude, longitude).await()
 
+    suspend fun getCheckInList(code: String, pageNum: Int = 0, pageSize: Int = 999) =
+        checkInService.getCourseCheckInList(code, pageNum, pageSize).await()
+
+    suspend fun getCurrentCheckIn(code: String) = checkInService.getCurrentCheckIn(code).await()
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {

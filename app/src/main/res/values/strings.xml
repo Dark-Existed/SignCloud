@@ -77,10 +77,13 @@
     <string name="course_operation">Course Operation</string>
 
     <string name="create_check_in">Create Check In</string>
+    <string name="check_in_list">Check In List</string>
     <string name="check_in">Check In</string>
     <string name="one_step">One Step</string>
     <string name="time_limited">Time Limit</string>
     <string name="minutes">Minutes</string>
     <string name="create_success">Create Success</string>
     <string name="create_fail">Create Fail</string>
+    <string name="no_check_in_available">No Check In Available</string>
+    <string name="finish_current_check_in">Please Finish Current Check In</string>
 </resources>

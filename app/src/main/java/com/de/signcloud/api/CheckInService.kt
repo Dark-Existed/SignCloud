@@ -1,6 +1,8 @@
 package com.de.signcloud.api
 
 import com.de.signcloud.bean.CreateCheckInResponse
+import com.de.signcloud.bean.CurrentCheckInResponse
+import com.de.signcloud.bean.GetCheckInList
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -19,19 +21,27 @@ interface CheckInService {
         @Query("longitude") longitude: BigDecimal
     ): Call<CreateCheckInResponse>
 
+    @GET("/api/signIn")
+    fun getCourseCheckInList(
+        @Query("code") code: String,
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int
+    ): Call<GetCheckInList>
+
     @PUT("/api/signIn/end")
     fun finishCheckIn(
         @Query("courseSignInId") checkInId: Int
     )
 
-    @GET("/api/signIn/students")
-    fun getCheckInList(
-        @Query("code") code: String
+    @GET("/api/signIn/students/courses")
+    fun getStudentCheckInStatus(
+        @Query("CourseSignInId") checkInId: Int
     )
 
-    fun getCheckIn(
+    @GET("/api/signIn/courses")
+    fun getCurrentCheckIn(
         @Query("code") code: String
-    )
+    ): Call<CurrentCheckInResponse>
 
     @POST("/api/signIn/students")
     fun checkIn(

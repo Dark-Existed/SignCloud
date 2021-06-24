@@ -20,6 +20,7 @@ import com.de.signcloud.ui.theme.Teal200
 sealed class CourseOperationEvent() {
     object NavigateBack : CourseOperationEvent()
     object NavigateToCreateCheckIn : CourseOperationEvent()
+    object NavigateToCheckInList : CourseOperationEvent()
     object NavigateToCheckIn : CourseOperationEvent()
 }
 
@@ -61,9 +62,11 @@ fun StudentCourseOperation(
 ) {
     Column(modifier.padding(12.dp, 0.dp)) {
         CardItem(
-            modifier = modifier.clickable {
-                onEvent(CourseOperationEvent.NavigateToCheckIn)
-            }.background(Teal200),
+            modifier = modifier
+                .clickable {
+                    onEvent(CourseOperationEvent.NavigateToCheckIn)
+                }
+                .background(Teal200),
             text = stringResource(id = R.string.check_in)
         )
     }
@@ -76,10 +79,19 @@ fun TeacherCourseOperation(
 ) {
     Column(modifier.padding(12.dp, 0.dp)) {
         CardItem(
-            modifier = modifier.clickable {
-                onEvent(CourseOperationEvent.NavigateToCreateCheckIn)
-            }.background(Teal200),
+            modifier = modifier
+                .clickable {
+                    onEvent(CourseOperationEvent.NavigateToCreateCheckIn)
+                }
+                .background(Teal200),
             text = stringResource(id = R.string.create_check_in)
+        )
+        Spacer(modifier = modifier.height(10.dp))
+        CardItem(
+            modifier = modifier.clickable {
+                onEvent(CourseOperationEvent.NavigateToCheckInList)
+            },
+            text = stringResource(id = R.string.check_in_list)
         )
     }
 }
@@ -92,7 +104,9 @@ fun CardItem(
 ) {
     Card(shape = RoundedCornerShape(8.dp)) {
         Column(
-            modifier = modifier.height(180.dp).fillMaxWidth(),
+            modifier = modifier
+                .height(180.dp)
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
