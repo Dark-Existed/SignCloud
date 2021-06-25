@@ -87,5 +87,5 @@
     <string name="time_end">时间截止</string>
     <string name="check_in_success">签到成功</string>
     <string name="check_in_fail">签到失败</string>
-
+    <string name="processing">进行中</string>
 </resources>

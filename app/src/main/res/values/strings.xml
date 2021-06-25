@@ -89,4 +89,5 @@
     <string name="time_end">Time End</string>
     <string name="check_in_success">Check In Success</string>
     <string name="check_in_fail">Check In Fail</string>
+    <string name="processing">Processing</string>
 </resources>

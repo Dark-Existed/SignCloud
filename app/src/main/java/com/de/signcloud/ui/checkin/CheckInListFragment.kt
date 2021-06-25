@@ -39,6 +39,9 @@ class CheckInListFragment : Fragment() {
                             is CheckInListEvent.NavigateBack -> {
                                 findNavController().popBackStack()
                             }
+                            is CheckInListEvent.NavigateToCheckInDetail -> {
+                                
+                            }
                         }
                     }
                 }
