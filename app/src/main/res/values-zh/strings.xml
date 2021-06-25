@@ -84,4 +84,8 @@
     <string name="create_fail">创建失败</string>
     <string name="no_check_in_available">当前没有签到</string>
     <string name="finish_current_check_in">请结束当前签到</string>
+    <string name="time_end">时间截止</string>
+    <string name="check_in_success">签到成功</string>
+    <string name="check_in_fail">签到失败</string>
+
 </resources>

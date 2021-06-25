@@ -12,17 +12,41 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.baidu.mapapi.model.LatLng
 import com.de.signcloud.R
 import com.de.signcloud.bean.CheckInInfo
 import com.de.signcloud.ui.theme.SignCloudTheme
+import com.de.signcloud.utils.getOrNull
 
 class CheckInFragment : Fragment() {
 
-    val viewModel: CheckInViewModel by viewModels()
+    private val viewModel: CheckInViewModel by viewModels()
+
 
     companion object {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
         private const val REQUEST_CODE_PERMISSIONS = 1
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        val bundle = arguments
+        val checkInInfo = bundle?.getSerializable("CheckInInfo") as CheckInInfo
+        super.onCreate(savedInstanceState)
+        if (allPermissionsGranted()) {
+            viewModel.getLocation()
+        } else {
+            requestPermissions(
+                REQUIRED_PERMISSIONS,
+                REQUEST_CODE_PERMISSIONS
+            )
+        }
+        if (checkInInfo.mode == "time") {
+            viewModel.beginCountDown(checkInInfo.endTime)
+        }
+        viewModel.setDestination(
+            LatLng(checkInInfo.latitude.toDouble(), checkInInfo.longitude.toDouble())
+        )
     }
 
     override fun onCreateView(
@@ -32,19 +56,25 @@ class CheckInFragment : Fragment() {
     ): View {
         val bundle = arguments
         val checkInInfo = bundle?.getSerializable("CheckInInfo") as CheckInInfo
+        setUpObserver()
         return ComposeView(requireContext()).apply {
             setContent {
-                val addressName = viewModel.addressName.observeAsState()
+                val addressName = viewModel.addressName.observeAsState("")
+                val countDownText = viewModel.countDownText.observeAsState("")
+                val countDownInt = viewModel.countDownInt.observeAsState(-1)
                 SignCloudTheme {
                     CheckIn(
                         checkInInfo = checkInInfo,
-                        locationName = addressName.value ?: ""
+                        locationName = addressName.value,
+                        countDownText = countDownText.value,
+                        countDownInt = countDownInt.value
                     ) { event ->
                         when (event) {
-                            is CheckInEvent.NavigateBack -> {
-
-                            }
+                            is CheckInEvent.NavigateBack -> findNavController().popBackStack()
                             is CheckInEvent.RefreshLocation -> viewModel.getLocation()
+                            is CheckInEvent.CheckIn -> {
+                                viewModel.checkIn(checkInInfo.id)
+                            }
                         }
                     }
                 }
@@ -52,16 +82,23 @@ class CheckInFragment : Fragment() {
         }
     }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (allPermissionsGranted()) {
-            viewModel.getLocation()
-        } else {
-            requestPermissions(
-                REQUIRED_PERMISSIONS,
-                REQUEST_CODE_PERMISSIONS
-            )
+    private fun setUpObserver() {
+        viewModel.checkInResult.observe(viewLifecycleOwner) { checkInResult ->
+            val result = checkInResult.getOrNull()
+            if (result != null) {
+                findNavController().popBackStack()
+                Toast.makeText(
+                    requireContext(),
+                    requireContext().getString(R.string.check_in_success),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    requireContext().getString(R.string.check_in_fail),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 

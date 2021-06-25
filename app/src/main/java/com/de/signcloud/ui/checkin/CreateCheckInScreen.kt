@@ -114,7 +114,9 @@ fun OneStepContent(
     onEvent: (CreateCheckInEvent) -> Unit
 ) {
     Column(modifier.padding(12.dp, 0.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Location(locationName = locationName, onEvent = onEvent)
+        Location(
+            locationName = locationName,
+            refreshLocation = { onEvent(CreateCheckInEvent.RefreshLocation) })
         Button(
             modifier = Modifier
                 .fillMaxWidth()
@@ -146,7 +148,9 @@ fun TimeLimitContent(
             onImeAction = {}
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Location(locationName = locationName, onEvent = onEvent)
+        Location(
+            locationName = locationName,
+            refreshLocation = { onEvent(CreateCheckInEvent.RefreshLocation) })
         Button(
             modifier = Modifier
                 .fillMaxWidth()

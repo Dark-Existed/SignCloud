@@ -97,6 +97,13 @@ object SignCloudNetwork {
 
     suspend fun getCurrentCheckIn(code: String) = checkInService.getCurrentCheckIn(code).await()
 
+    suspend fun checkIn(
+        checkInId: Int,
+        latitude: BigDecimal,
+        longitude: BigDecimal,
+        distance: Double
+    ) = checkInService.checkIn(checkInId, latitude, longitude, distance).await()
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {

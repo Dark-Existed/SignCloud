@@ -86,4 +86,7 @@
     <string name="create_fail">Create Fail</string>
     <string name="no_check_in_available">No Check In Available</string>
     <string name="finish_current_check_in">Please Finish Current Check In</string>
+    <string name="time_end">Time End</string>
+    <string name="check_in_success">Check In Success</string>
+    <string name="check_in_fail">Check In Fail</string>
 </resources>

@@ -8,6 +8,7 @@ import com.de.signcloud.Screen.Home
 import com.de.signcloud.SignCloudApplication
 import com.de.signcloud.repository.remote.UserRepository
 import com.de.signcloud.utils.Event
+import java.util.*
 
 class SignUpViewModel(
     private val userRepository: UserRepository,

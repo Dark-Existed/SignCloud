@@ -21,3 +21,6 @@ class CheckInInfo(
     val longitude: BigDecimal,
     val isFinished: Int
 ) : Serializable
+
+
+class CheckInResponse(val code: Int, val message: String, val data: String)

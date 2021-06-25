@@ -43,6 +43,20 @@ object CheckInRepository {
         }
     }
 
+    fun checkIn(
+        checkInId: Int,
+        latitude: BigDecimal,
+        longitude: BigDecimal,
+        distance: Double
+    ) = request(Dispatchers.IO) {
+        val result = SignCloudNetwork.checkIn(checkInId, latitude, longitude, distance)
+        if (result.code == 200) {
+            Result.Success(result)
+        } else {
+            Result.Failure(RuntimeException("response status code is ${result.code}"))
+        }
+    }
+
 }
 
 private fun <T> request(context: CoroutineContext, block: suspend () -> Result<T>) =

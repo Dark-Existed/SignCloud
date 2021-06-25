@@ -32,7 +32,7 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         setUpObserver()
         return ComposeView(requireContext()).apply {
             id = R.id.sign_up_fragment

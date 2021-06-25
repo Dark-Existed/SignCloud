@@ -1,5 +1,6 @@
 package com.de.signcloud.api
 
+import com.de.signcloud.bean.CheckInResponse
 import com.de.signcloud.bean.CreateCheckInResponse
 import com.de.signcloud.bean.CurrentCheckInResponse
 import com.de.signcloud.bean.GetCheckInList
@@ -45,7 +46,10 @@ interface CheckInService {
 
     @POST("/api/signIn/students")
     fun checkIn(
-
-    )
+        @Query("courseSignId") checkInId: Int,
+        @Query("latitude") latitude: BigDecimal,
+        @Query("longitude") longitude: BigDecimal,
+        @Query("distance") distance: Double
+    ): Call<CheckInResponse>
 
 }

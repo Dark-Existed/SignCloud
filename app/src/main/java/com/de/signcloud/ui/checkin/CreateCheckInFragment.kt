@@ -3,6 +3,7 @@ package com.de.signcloud.ui.checkin
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +45,9 @@ class CreateCheckInFragment : Fragment() {
                             is CreateCheckInEvent.NavigateBack -> {
                                 findNavController().popBackStack()
                             }
-                            is CreateCheckInEvent.RefreshLocation -> viewModel.getLocation()
+                            is CreateCheckInEvent.RefreshLocation -> {
+                                viewModel.getLocation()
+                            }
                             is CreateCheckInEvent.CreateOneStepCheckIn -> {
                                 val checkInData = CreateCheckInData(courseCode, "oneStep")
                                 viewModel.createCheckIn(checkInData)

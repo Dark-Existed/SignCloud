@@ -1,15 +1,21 @@
 package com.de.signcloud.ui.checkin
 
 import android.app.Application
+import android.os.CountDownTimer
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.baidu.location.LocationClient
 import com.baidu.location.LocationClientOption
+import com.baidu.mapapi.SDKInitializer
+import com.baidu.mapapi.model.LatLng
+import com.baidu.mapapi.utils.DistanceUtil
+import com.de.signcloud.R
+import com.de.signcloud.repository.remote.CheckInRepository
+import java.math.BigDecimal
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CheckInViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -46,4 +52,59 @@ class CheckInViewModel(application: Application) : AndroidViewModel(application)
             Log.d("CreateCheckInViewModel", errorCode.toString())
         }
     }
+
+
+    private val _countDown = MutableLiveData<Long>()
+    val countDownInt
+        get() = _countDown
+    val countDownText = Transformations.map(_countDown) {
+        if (it < 0) {
+            application.getString(R.string.time_end)
+        } else {
+            it.toString() + "s"
+        }
+    }
+
+
+    fun beginCountDown(endTime: String) {
+        val simpleDataFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
+        val endDate = simpleDataFormat.parse(endTime)
+        val curDate = Date()
+        val time = endDate?.time?.minus(curDate.time) ?: -1
+        Log.d("CheckInViewModel", time.toString())
+        _countDown.value = (time / 1000)
+        countDown(time)
+    }
+
+    private fun countDown(time: Long) {
+        object : CountDownTimer(time, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                _countDown.value = _countDown.value?.minus(1)
+            }
+
+            override fun onFinish() {
+                _countDown.value = -1
+            }
+        }.start()
+    }
+
+    private val _destination = MutableLiveData<LatLng>()
+    fun setDestination(location: LatLng) {
+        _destination.value = location
+    }
+
+    private val _checkInId = MutableLiveData<Int>()
+    val checkInResult = Transformations.switchMap(_checkInId) { checkInId ->
+        val latitude = _latitude.value ?: -1.0
+        val longitude = _longitude.value ?: -1.0
+        val curLocation = LatLng(latitude, longitude)
+        SDKInitializer.initialize(context)
+        val distance = DistanceUtil.getDistance(curLocation, _destination.value)
+        CheckInRepository.checkIn(checkInId, BigDecimal(latitude), BigDecimal(longitude), distance)
+    }
+
+    fun checkIn(checkInId: Int) {
+        _checkInId.value = checkInId
+    }
+
 }

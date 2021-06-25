@@ -20,7 +20,7 @@ import com.de.signcloud.ui.checkin.CreateCheckInEvent
 fun Location(
     modifier: Modifier = Modifier,
     locationName: String = "",
-    onEvent: (CreateCheckInEvent) -> Unit
+    refreshLocation: () -> Unit
 ) {
     Card(shape = RoundedCornerShape(16.dp)) {
         Row(
@@ -40,7 +40,7 @@ fun Location(
                     modifier
                         .padding(end = 4.dp)
                         .clickable {
-                            onEvent(CreateCheckInEvent.RefreshLocation)
+                            refreshLocation()
                         }
                 )
             }
