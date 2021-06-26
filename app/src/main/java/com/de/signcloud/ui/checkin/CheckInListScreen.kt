@@ -6,10 +6,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -61,10 +60,13 @@ fun CheckInListContent(
             .fillMaxWidth()
             .padding(12.dp, 0.dp)
     ) {
-        LazyColumn {
-            items(checkInList) { checkInInfo ->
-                Spacer(modifier = modifier.height(12.dp))
-                CheckInItem(checkInInfo = checkInInfo, onEvent = onEvent)
+        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+            LazyColumn(modifier.padding(bottom = 12.dp)) {
+                items(checkInList) { checkInInfo ->
+                    Spacer(modifier = modifier.height(6.dp))
+                    CheckInItem(checkInInfo = checkInInfo, onEvent = onEvent)
+                    Spacer(modifier = modifier.height(6.dp))
+                }
             }
         }
     }

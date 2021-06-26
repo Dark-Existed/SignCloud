@@ -93,4 +93,11 @@
 
     <string name="check_in_detail">Check In Detail</string>
     <string name="finish_chek_in">Finish Check In</string>
+    <string name="checked">Checked</string>
+    <string name="uncheck">UnCheck</string>
+    <string name="experience">Experience: </string>
+    <string name="distance">Distance: "%d"meters</string>
+    <string name="refresh_list">Refresh List</string>
+    <string name="finish_success">Finish Success</string>
+    <string name="check_in_has_finish">Check In Has Finish</string>
 </resources>

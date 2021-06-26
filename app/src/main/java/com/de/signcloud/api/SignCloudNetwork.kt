@@ -107,6 +107,8 @@ object SignCloudNetwork {
     suspend fun getStudentCheckInStatus(checkInId: Int) =
         checkInService.getStudentCheckInStatus(checkInId).await()
 
+    suspend fun finishCheckIn(checkInId: Int) = checkInService.finishCheckIn(checkInId).await()
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {

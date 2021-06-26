@@ -29,11 +29,11 @@ interface CheckInService {
     @PUT("/api/signIn/end")
     fun finishCheckIn(
         @Query("courseSignInId") checkInId: Int
-    )
+    ): Call<FinishCheckInResponse>
 
     @GET("/api/signIn/students/courses")
     fun getStudentCheckInStatus(
-        @Query("CourseSignInId") checkInId: Int
+        @Query("courseSignInId") checkInId: Int
     ): Call<StudentCheckInStatusResponse>
 
     @GET("/api/signIn/courses")

@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.de.signcloud.repository.remote.CheckInRepository
+import com.de.signcloud.utils.getOrNull
 import com.instacart.library.truetime.TrueTime
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,4 +50,23 @@ class CheckInDetailViewModel : ViewModel() {
             }
         }.start()
     }
+
+    private val _studentCheckInStatus = MutableLiveData<Int>()
+    val studentCheckInStatus = Transformations.switchMap(_studentCheckInStatus) {
+        CheckInRepository.getStudentCheckInStatus(it)
+    }
+
+    fun getStudentCheckInStatus(checkInId: Int) {
+        _studentCheckInStatus.value = checkInId
+    }
+
+    private val _finishCheckIn = MutableLiveData<Int>()
+    val finishCheckInResult = Transformations.switchMap(_finishCheckIn) {
+        CheckInRepository.finishCheckIn(it)
+    }
+    fun finishCheckIn(checkInId: Int) {
+        _finishCheckIn.value = checkInId
+    }
+
+    val isFinishCheckInSuccess = MutableLiveData(false)
 }

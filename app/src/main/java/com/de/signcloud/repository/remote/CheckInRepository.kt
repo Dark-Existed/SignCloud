@@ -60,9 +60,17 @@ object CheckInRepository {
     fun getStudentCheckInStatus(checkInId: Int) = request(Dispatchers.IO) {
         val result = SignCloudNetwork.getStudentCheckInStatus(checkInId)
         if (result.code == 200) {
-            Result.Success(result)
+            Result.Success(result.data)
         } else {
             Result.Failure(RuntimeException("response status code is ${result.code}"))
+        }
+    }
+
+    fun finishCheckIn(checkInId: Int) = request(Dispatchers.IO) {
+        val result = SignCloudNetwork.finishCheckIn(checkInId)
+        when (result.code) {
+            200, 400 -> Result.Success(result)
+            else -> Result.Failure(RuntimeException("response status code is ${result.code}"))
         }
     }
 

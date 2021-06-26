@@ -4,11 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -49,9 +47,13 @@ fun CourseOperationContent(
     onEvent: (CourseOperationEvent) -> Unit
 ) {
     if (isStudent) {
-        StudentCourseOperation(modifier = modifier, onEvent = onEvent)
+        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+            StudentCourseOperation(modifier = modifier, onEvent = onEvent)
+        }
     } else {
-        TeacherCourseOperation(modifier = modifier, onEvent = onEvent)
+        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+            TeacherCourseOperation(modifier = modifier, onEvent = onEvent)
+        }
     }
 }
 

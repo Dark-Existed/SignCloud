@@ -91,4 +91,11 @@
 
     <string name="check_in_detail">签到详情</string>
     <string name="finish_chek_in">结束签到</string>
+    <string name="checked">已签到</string>
+    <string name="uncheck">未签到</string>
+    <string name="experience">经验值: </string>
+    <string name="distance">距离: "%d"米</string>
+    <string name="refresh_list">刷新列表</string>
+    <string name="finish_success">结束成功</string>
+    <string name="check_in_has_finish">签到已截止</string>
 </resources>

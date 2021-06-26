@@ -140,7 +140,6 @@ fun TimeLimitContent(
 ) {
     Column(modifier.padding(12.dp, 0.dp), horizontalAlignment = Alignment.CenterHorizontally) {
 
-
         val minutesState = remember { GenerateNotNullState() }
         GeneralTextField(
             generalTextFieldState = minutesState,
