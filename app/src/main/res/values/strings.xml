@@ -90,4 +90,7 @@
     <string name="check_in_success">Check In Success</string>
     <string name="check_in_fail">Check In Fail</string>
     <string name="processing">Processing</string>
+
+    <string name="check_in_detail">Check In Detail</string>
+    <string name="finish_chek_in">Finish Check In</string>
 </resources>

@@ -24,7 +24,7 @@ import com.de.signcloud.ui.theme.LightColorPalette
 
 sealed class CheckInListEvent {
     object NavigateBack : CheckInListEvent()
-    data class NavigateToCheckInDetail(val checkInId: Int) : CheckInListEvent()
+    data class NavigateToCheckInDetail(val checkInInfo: CheckInInfo) : CheckInListEvent()
 }
 
 @Composable
@@ -81,7 +81,7 @@ fun CheckInItem(
             .fillMaxWidth()
             .height(80.dp)
             .clickable {
-                onEvent(CheckInListEvent.NavigateToCheckInDetail(checkInInfo.id))
+                onEvent(CheckInListEvent.NavigateToCheckInDetail(checkInInfo))
             },
         shape = RoundedCornerShape(8.dp),
         elevation = 6.dp

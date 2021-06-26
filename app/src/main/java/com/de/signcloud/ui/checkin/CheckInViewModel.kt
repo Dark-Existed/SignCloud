@@ -13,6 +13,7 @@ import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.utils.DistanceUtil
 import com.de.signcloud.R
 import com.de.signcloud.repository.remote.CheckInRepository
+import com.instacart.library.truetime.TrueTime
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.*
@@ -53,7 +54,6 @@ class CheckInViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-
     private val _countDown = MutableLiveData<Long>()
     val countDownInt
         get() = _countDown
@@ -65,13 +65,11 @@ class CheckInViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-
     fun beginCountDown(endTime: String) {
         val simpleDataFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
         val endDate = simpleDataFormat.parse(endTime)
-        val curDate = Date()
-        val time = endDate?.time?.minus(curDate.time) ?: -1
-        Log.d("CheckInViewModel", time.toString())
+        val trueDate = TrueTime.now()
+        val time = endDate?.time?.minus(trueDate.time) ?: -1
         _countDown.value = (time / 1000)
         countDown(time)
     }

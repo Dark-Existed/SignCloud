@@ -24,3 +24,5 @@ class CheckInInfo(
 
 
 class CheckInResponse(val code: Int, val message: String, val data: String)
+
+class StudentCheckInStatusResponse(val code: Int, val message: String)

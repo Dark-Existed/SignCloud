@@ -104,6 +104,9 @@ object SignCloudNetwork {
         distance: Double
     ) = checkInService.checkIn(checkInId, latitude, longitude, distance).await()
 
+    suspend fun getStudentCheckInStatus(checkInId: Int) =
+        checkInService.getStudentCheckInStatus(checkInId).await()
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {

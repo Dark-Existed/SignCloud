@@ -88,4 +88,7 @@
     <string name="check_in_success">签到成功</string>
     <string name="check_in_fail">签到失败</string>
     <string name="processing">进行中</string>
+
+    <string name="check_in_detail">签到详情</string>
+    <string name="finish_chek_in">结束签到</string>
 </resources>

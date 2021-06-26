@@ -1,9 +1,6 @@
 package com.de.signcloud.api
 
-import com.de.signcloud.bean.CheckInResponse
-import com.de.signcloud.bean.CreateCheckInResponse
-import com.de.signcloud.bean.CurrentCheckInResponse
-import com.de.signcloud.bean.GetCheckInList
+import com.de.signcloud.bean.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -37,7 +34,7 @@ interface CheckInService {
     @GET("/api/signIn/students/courses")
     fun getStudentCheckInStatus(
         @Query("CourseSignInId") checkInId: Int
-    )
+    ): Call<StudentCheckInStatusResponse>
 
     @GET("/api/signIn/courses")
     fun getCurrentCheckIn(
