@@ -26,6 +26,11 @@ interface CheckInService {
         @Query("pageSize") pageSize: Int
     ): Call<GetCheckInList>
 
+    @GET("/api/classes/students")
+    fun getCourseStudents(
+        @Query("code") code: String
+    ): Call<GetCourseStudentResponse>
+
     @PUT("/api/signIn/end")
     fun finishCheckIn(
         @Query("courseSignInId") checkInId: Int

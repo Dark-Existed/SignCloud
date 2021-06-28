@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
 import com.de.signcloud.bean.StudentCheckInStatusResponse
+import com.de.signcloud.ui.components.NoItems
 import com.de.signcloud.ui.components.SignCloudTopAppBarWithBack
 import com.de.signcloud.ui.theme.DarkColorPalette
 import com.de.signcloud.ui.theme.LightColorPalette
@@ -138,10 +139,14 @@ fun CheckedList(
     checkInList: List<StudentCheckInStatusResponse.CheckInStatus> = emptyList(),
     onEvent: (CheckInDetailEvent) -> Unit
 ) {
-    LazyColumn {
-        items(checkInList) { checkInStatus ->
-            CheckedCard(checkInStatus = checkInStatus)
-            Spacer(modifier = modifier.height(12.dp))
+    if (checkInList.isEmpty()) {
+        NoItems()
+    } else {
+        LazyColumn {
+            items(checkInList) { checkInStatus ->
+                CheckedCard(checkInStatus = checkInStatus)
+                Spacer(modifier = modifier.height(12.dp))
+            }
         }
     }
 }
@@ -203,10 +208,14 @@ fun UnCheckedList(
     uncheckInList: List<StudentCheckInStatusResponse.CheckInStatus> = emptyList(),
     onEvent: (CheckInDetailEvent) -> Unit
 ) {
-    LazyColumn {
-        items(uncheckInList) { checkInStatus ->
-            UnCheckedCard(checkInStatus = checkInStatus)
-            Spacer(modifier = modifier.height(12.dp))
+    if (uncheckInList.isEmpty()) {
+        NoItems()
+    } else {
+        LazyColumn {
+            items(uncheckInList) { checkInStatus ->
+                UnCheckedCard(checkInStatus = checkInStatus)
+                Spacer(modifier = modifier.height(12.dp))
+            }
         }
     }
 }
@@ -238,6 +247,5 @@ fun UnCheckedCard(
                 )
             }
         }
-
     }
 }

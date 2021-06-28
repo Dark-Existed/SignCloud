@@ -13,6 +13,7 @@ import com.de.signcloud.R
 import com.de.signcloud.ui.components.SignCloudDivider
 import com.de.signcloud.ui.components.SignCloudTopAppBar
 import com.de.signcloud.ui.components.SignCloudTopAppBarWithBack
+import com.de.signcloud.ui.theme.SignCloudTheme
 import com.google.accompanist.insets.statusBarsHeight
 
 
@@ -38,7 +39,7 @@ fun MeContent(
     onEvent: (HomeEvent) -> Unit
 ) {
     Column(modifier.padding(16.dp, 0.dp)) {
-        Spacer(modifier = modifier.statusBarsHeight())
+        Spacer(modifier = modifier.height(32.dp))
         Text(
             modifier = modifier
                 .fillMaxWidth()
@@ -48,13 +49,24 @@ fun MeContent(
             text = stringResource(id = R.string.change_role),
             fontSize = 20.sp
         )
+        Spacer(modifier = modifier.height(32.dp))
+        Text(
+            modifier = modifier
+                .fillMaxWidth()
+                .clickable {
+                    onEvent(HomeEvent.NavigateToChangeRole)
+                },
+            text = stringResource(id = R.string.student_work_id),
+            fontSize = 20.sp
+        )
+        Spacer(modifier = modifier.height(32.dp))
         TextButton(
             onClick = { onEvent(HomeEvent.SignOut) },
             modifier = modifier.fillMaxWidth()
         ) {
             Text(
                 text = stringResource(id = R.string.sign_out),
-                color = Color(0xffe21365),
+                color = SignCloudTheme.colors.error,
                 fontSize = 18.sp
             )
         }

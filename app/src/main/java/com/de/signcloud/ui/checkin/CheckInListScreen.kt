@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
 import com.de.signcloud.bean.CheckInInfo
+import com.de.signcloud.ui.components.NoItems
 import com.de.signcloud.ui.components.SignCloudTopAppBarWithBack
 import com.de.signcloud.ui.theme.DarkColorPalette
 import com.de.signcloud.ui.theme.LightColorPalette
@@ -60,15 +61,20 @@ fun CheckInListContent(
             .fillMaxWidth()
             .padding(12.dp, 0.dp)
     ) {
-        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-            LazyColumn(modifier.padding(bottom = 12.dp)) {
-                items(checkInList) { checkInInfo ->
-                    Spacer(modifier = modifier.height(6.dp))
-                    CheckInItem(checkInInfo = checkInInfo, onEvent = onEvent)
-                    Spacer(modifier = modifier.height(6.dp))
+        if (checkInList.isEmpty()) {
+            NoItems()
+        } else {
+            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                LazyColumn(modifier.padding(bottom = 12.dp)) {
+                    items(checkInList) { checkInInfo ->
+                        Spacer(modifier = modifier.height(6.dp))
+                        CheckInItem(checkInInfo = checkInInfo, onEvent = onEvent)
+                        Spacer(modifier = modifier.height(6.dp))
+                    }
                 }
             }
         }
+
     }
 }
 

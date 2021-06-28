@@ -53,7 +53,7 @@ class SearchCourseFragment : Fragment() {
             if (result != null) {
                 findNavController().popBackStack()
                 val bundle = Bundle()
-                bundle.putSerializable("course", result)
+                bundle.putSerializable("course", result.course)
                 navigate(Screen.SearchCourseResult, Screen.SearchCourse, bundle)
             }
         }

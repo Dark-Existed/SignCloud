@@ -60,6 +60,7 @@
     <string name="join_success">加入成功</string>
 
     <string name="change_role">修改角色</string>
+    <string name="student_work_id">学工号</string>
     <string name="sign_out">退出登入</string>
     <string name="confirm">确认</string>
 
@@ -70,9 +71,12 @@
 
     <string name="no_camera_permission">获取相机权限失败</string>
     <string name="no_location_permission">获取定位权限失败</string>
+    <string name="course_not_found">没有该课程</string>
 
     <string name="course_detail">课程详情</string>
     <string name="course_operation">课程操作</string>
+
+    <string name="course_member">课程成员</string>
 
     <string name="create_check_in">创建签到</string>
     <string name="check_in_list">签到列表</string>
@@ -98,4 +102,7 @@
     <string name="refresh_list">刷新列表</string>
     <string name="finish_success">结束成功</string>
     <string name="check_in_has_finish">签到已截止</string>
+
+    <string name="no_item">没有数据</string>
+
 </resources>

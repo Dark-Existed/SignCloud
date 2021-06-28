@@ -1,5 +1,6 @@
 package com.de.signcloud.repository.remote
 
+import android.util.Log
 import androidx.lifecycle.liveData
 import com.de.signcloud.api.SignCloudNetwork
 import com.de.signcloud.ui.course.State
@@ -53,10 +54,9 @@ object CourseRepository {
 
     fun getCourseByCode(code: String) = request(Dispatchers.IO) {
         val result = SignCloudNetwork.getCourseByCode(code)
-        if (result.code == 200) {
-            Result.Success(result.course)
-        } else {
-            Result.Failure(RuntimeException("response status code is ${result.code}"))
+        when (result.code) {
+            200, 400 -> Result.Success(result)
+            else -> Result.Failure(RuntimeException("response status code is ${result.code}"))
         }
     }
 

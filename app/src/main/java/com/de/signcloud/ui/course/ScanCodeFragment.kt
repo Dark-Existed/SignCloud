@@ -58,10 +58,22 @@ class ScanCodeFragment : Fragment() {
         viewModel.course.observe(viewLifecycleOwner) { searchCourseResult ->
             val result = searchCourseResult.getOrNull()
             if (result != null) {
-                findNavController().popBackStack()
-                val bundle = Bundle()
-                bundle.putSerializable("course", result)
-                navigate(Screen.SearchCourseResult, Screen.SearchCourse, bundle)
+                when (result.code) {
+                    200 -> {
+                        findNavController().popBackStack()
+                        val bundle = Bundle()
+                        bundle.putSerializable("course", result.course)
+                        navigate(Screen.SearchCourseResult, Screen.SearchCourse, bundle)
+                    }
+                    400 -> {
+                        Toast.makeText(
+                            requireContext(),
+                            requireContext().getString(R.string.course_not_found),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
             }
         }
         return binding.root

@@ -61,6 +61,7 @@
     <string name="join_success">Join Success</string>
 
     <string name="change_role">Change Role</string>
+    <string name="student_work_id">Student/Work Id</string>
     <string name="sign_out">Sign Out</string>
     <string name="confirm">Confirm</string>
 
@@ -71,10 +72,12 @@
 
     <string name="no_camera_permission">No Camera Permission</string>
     <string name="no_location_permission">No Location Permission</string>
+    <string name="course_not_found">Course Not Found</string>
 
     <string name="course_detail">Course Detail</string>
-
     <string name="course_operation">Course Operation</string>
+
+    <string name="course_member">Course Member</string>
 
     <string name="create_check_in">Create Check In</string>
     <string name="check_in_list">Check In List</string>
@@ -100,4 +103,6 @@
     <string name="refresh_list">Refresh List</string>
     <string name="finish_success">Finish Success</string>
     <string name="check_in_has_finish">Check In Has Finish</string>
+
+    <string name="no_item">No Item</string>
 </resources>

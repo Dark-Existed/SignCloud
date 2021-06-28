@@ -65,11 +65,13 @@ enum class HomeSections(
 sealed class HomeEvent {
     object NavigateToJoinCourse : HomeEvent()
     object NavigateToCreateCourse : HomeEvent()
-    object NavigateToChangeRole : HomeEvent()
     object NavigateToScanCode : HomeEvent()
-    data class NavigateToCourseOperation(val code: String) : HomeEvent()
-    object SignOut : HomeEvent()
     data class NavigateToCourseDetail(val course: Course) : HomeEvent()
+    data class NavigateToCourseOperation(val code: String) : HomeEvent()
+
+    object NavigateToChangeRole : HomeEvent()
+    object NavigateSetId : HomeEvent()
+    object SignOut : HomeEvent()
 }
 
 
@@ -104,7 +106,7 @@ fun Home(
                     onEvent
                 )
                 HomeSections.Me -> {
-                    Me(modifier, onEvent)
+                    Me(Modifier, onEvent)
                 }
             }
         }

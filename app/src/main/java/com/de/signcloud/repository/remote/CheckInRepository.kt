@@ -66,6 +66,15 @@ object CheckInRepository {
         }
     }
 
+    fun getCourseStudents(code: String) = request(Dispatchers.IO) {
+        val result = SignCloudNetwork.getCourseStudents(code)
+        if (result.code == 200) {
+            Result.Success(result.data)
+        } else {
+            Result.Failure(RuntimeException("response status code is ${result.code}"))
+        }
+    }
+
     fun finishCheckIn(checkInId: Int) = request(Dispatchers.IO) {
         val result = SignCloudNetwork.finishCheckIn(checkInId)
         when (result.code) {

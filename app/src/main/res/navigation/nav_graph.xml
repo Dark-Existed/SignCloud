@@ -76,6 +76,10 @@
         android:name="com.de.signcloud.ui.checkin.CheckInListFragment"
         android:label="Check In List"/>
     <fragment
+        android:id="@+id/course_student_fragment"
+        android:name="com.de.signcloud.ui.checkin.CourseStudentFragment"
+        android:label="Course Student"/>
+    <fragment
         android:id="@+id/check_in_fragment"
         android:name="com.de.signcloud.ui.checkin.CheckInFragment"
         android:label="Check In"/>
@@ -83,4 +87,8 @@
         android:id="@+id/check_in_detail_fragment"
         android:name="com.de.signcloud.ui.checkin.CheckInDetailFragment"
         android:label="Check In Detail"/>
+    <fragment
+        android:id="@+id/set_id_num_fragment"
+        android:name="com.de.signcloud.ui.setting.SetIdFragment"
+        android:label="Set Id"/>
 </navigation>

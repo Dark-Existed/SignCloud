@@ -22,6 +22,16 @@ class CheckInInfo(
     val isFinished: Int
 ) : Serializable
 
+class GetCourseStudentResponse(val code: Int, val message: String, val data: List<CourseStudent>) {
+    inner class CourseStudent(
+        val userId: Int,
+        val ino: String,
+        val cover: String,
+        val experience: Int,
+        @SerializedName("username") val userName: String,
+        val level: Int
+    )
+}
 
 class CheckInResponse(val code: Int, val message: String, val data: String)
 

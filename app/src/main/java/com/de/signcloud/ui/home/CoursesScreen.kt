@@ -36,6 +36,7 @@ import com.de.signcloud.bean.Course
 import com.de.signcloud.bean.GetCoursesCreateResponse
 import com.de.signcloud.bean.GetJoinedCourseResponse
 import com.de.signcloud.ui.components.LoadNetworkImageWithToken
+import com.de.signcloud.ui.components.NoItems
 import com.de.signcloud.ui.components.SignCloudTopAppBar
 import com.de.signcloud.ui.components.SignCloudTopAppBarWithAction
 import com.de.signcloud.ui.theme.SignCloudTheme
@@ -123,22 +124,27 @@ fun StudentCourseList(
     courses: List<Course>,
     onEvent: (HomeEvent) -> Unit
 ) {
-    LazyColumn(modifier = modifier.padding(12.dp, 0.dp)) {
-        item { Spacer(modifier = modifier.statusBarsHeight()) }
-        items(courses) { course ->
-            Spacer(modifier = modifier.height(12.dp))
-            StudentCourseCardViewItem(
-                modifier = Modifier
-                    .height(96.dp)
-                    .clickable {
-                        onEvent(HomeEvent.NavigateToCourseDetail(course))
-                    },
-                course = course,
-                shape = RoundedCornerShape(topStart = 24.dp),
-                onEvent = onEvent
-            )
+    if (courses.isEmpty()) {
+        NoItems()
+    } else {
+        LazyColumn(modifier = modifier.padding(12.dp, 0.dp)) {
+            item { Spacer(modifier = modifier.statusBarsHeight()) }
+            items(courses) { course ->
+                Spacer(modifier = modifier.height(12.dp))
+                StudentCourseCardViewItem(
+                    modifier = Modifier
+                        .height(96.dp)
+                        .clickable {
+                            onEvent(HomeEvent.NavigateToCourseDetail(course))
+                        },
+                    course = course,
+                    shape = RoundedCornerShape(topStart = 24.dp),
+                    onEvent = onEvent
+                )
+            }
         }
     }
+
 }
 
 @Composable
@@ -147,24 +153,29 @@ fun TeacherCourseList(
     courses: List<Course>,
     onEvent: (HomeEvent) -> Unit
 ) {
-    LazyColumn(modifier = modifier.padding(12.dp, 0.dp)) {
-        item {
-            Spacer(Modifier.statusBarsHeight())
-        }
-        items(courses) { course ->
-            Spacer(modifier = modifier.height(12.dp))
-            TeacherCourseCardViewItem(
-                modifier = Modifier
-                    .height(96.dp)
-                    .clickable {
-                        onEvent(HomeEvent.NavigateToCourseDetail(course))
-                    },
-                course = course,
-                shape = RoundedCornerShape(topStart = 24.dp),
-                onEvent = onEvent
-            )
+    if (courses.isEmpty()) {
+        NoItems()
+    } else {
+        LazyColumn(modifier = modifier.padding(12.dp, 0.dp)) {
+            item {
+                Spacer(Modifier.statusBarsHeight())
+            }
+            items(courses) { course ->
+                Spacer(modifier = modifier.height(12.dp))
+                TeacherCourseCardViewItem(
+                    modifier = Modifier
+                        .height(96.dp)
+                        .clickable {
+                            onEvent(HomeEvent.NavigateToCourseDetail(course))
+                        },
+                    course = course,
+                    shape = RoundedCornerShape(topStart = 24.dp),
+                    onEvent = onEvent
+                )
+            }
         }
     }
+
 }
 
 @Composable
