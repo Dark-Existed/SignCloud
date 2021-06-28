@@ -76,8 +76,8 @@
 
     <string name="course_detail">Course Detail</string>
     <string name="course_operation">Course Operation</string>
-
     <string name="course_member">Course Member</string>
+    <string name="check_in_history">Check In History</string>
 
     <string name="create_check_in">Create Check In</string>
     <string name="check_in_list">Check In List</string>

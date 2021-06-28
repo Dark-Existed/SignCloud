@@ -54,4 +54,10 @@ interface CheckInService {
         @Query("distance") distance: Double
     ): Call<CheckInResponse>
 
+    @GET("/api/signIn/students")
+    fun getCheckStudentInHistory(
+        @Query("code") code: String,
+        @Query("uid") userId: Int
+    ): Call<StudentCheckInHistory>
+
 }

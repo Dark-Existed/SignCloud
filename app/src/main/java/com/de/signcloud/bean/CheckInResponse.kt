@@ -57,3 +57,12 @@ class StudentCheckInStatusResponse(
 }
 
 class FinishCheckInResponse(val code: Int, val message: String, val data: String)
+
+class StudentCheckInHistory(val code: Int, val message: String, val data: List<CheckInHistory>) {
+    inner class CheckInHistory(
+        @SerializedName("courseId") val checkInId: Int,
+        val time: String,
+        val mode: String,
+        val isSignIn: Boolean
+    )
+}

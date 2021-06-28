@@ -91,4 +91,8 @@
         android:id="@+id/set_id_num_fragment"
         android:name="com.de.signcloud.ui.setting.SetIdFragment"
         android:label="Set Id"/>
+    <fragment
+        android:id="@+id/check_in_history_fragment"
+        android:name="com.de.signcloud.ui.checkin.CheckInHistoryFragment"
+        android:label="Check In History"/>
 </navigation>

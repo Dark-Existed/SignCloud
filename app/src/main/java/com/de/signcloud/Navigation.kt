@@ -27,7 +27,8 @@ enum class Screen {
     CheckIn,
     CheckInList,
     CourseStudent,
-    CheckInDetail
+    CheckInDetail,
+    CheckInHistory
 }
 
 fun Fragment.navigate(to: Screen, from: Screen) {
@@ -98,6 +99,9 @@ fun Fragment.navigate(to: Screen, from: Screen) {
         }
         Screen.CheckInDetail -> {
             findNavController().navigate(R.id.check_in_detail_fragment)
+        }
+        Screen.CheckInHistory -> {
+            findNavController().navigate(R.id.check_in_history_fragment)
         }
     }
 
@@ -170,6 +174,9 @@ fun Fragment.navigate(to: Screen, from: Screen, args: Bundle?) {
         }
         Screen.CheckInDetail -> {
             findNavController().navigate(R.id.check_in_detail_fragment, args)
+        }
+        Screen.CheckInHistory -> {
+            findNavController().navigate(R.id.check_in_history_fragment, args)
         }
     }
 }

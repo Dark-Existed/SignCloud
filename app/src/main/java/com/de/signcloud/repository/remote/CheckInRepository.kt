@@ -83,6 +83,15 @@ object CheckInRepository {
         }
     }
 
+    fun getStudentCheckInHistory(code: String, userId: Int) = request(Dispatchers.IO) {
+        val result = SignCloudNetwork.getStudentCheckInHistory(code, userId)
+        if (result.code == 200) {
+            Result.Success(result.data)
+        } else {
+            Result.Failure(RuntimeException("response status code is ${result.code}"))
+        }
+    }
+
 }
 
 private fun <T> request(context: CoroutineContext, block: suspend () -> Result<T>) =

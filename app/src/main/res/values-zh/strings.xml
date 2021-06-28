@@ -75,8 +75,8 @@
 
     <string name="course_detail">课程详情</string>
     <string name="course_operation">课程操作</string>
-
     <string name="course_member">课程成员</string>
+    <string name="check_in_history">签到历史</string>
 
     <string name="create_check_in">创建签到</string>
     <string name="check_in_list">签到列表</string>

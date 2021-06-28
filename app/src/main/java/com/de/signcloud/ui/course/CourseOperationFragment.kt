@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.baidu.mapapi.utils.DistanceUtil
 import com.de.signcloud.R
 import com.de.signcloud.Screen
+import com.de.signcloud.bean.StudentCheckInHistory
 import com.de.signcloud.navigate
 import com.de.signcloud.ui.theme.SignCloudTheme
 import com.de.signcloud.utils.getOrNull
@@ -51,6 +52,10 @@ class CourseOperationFragment : Fragment() {
                             is CourseOperationEvent.NavigateToCourseStudent -> {
                                 findNavController().popBackStack()
                                 navigate(Screen.CourseStudent, Screen.CourseOperation, bundle)
+                            }
+                            is CourseOperationEvent.NavigateToCheckInHistory -> {
+                                findNavController().popBackStack()
+                                navigate(Screen.CheckInHistory, Screen.CourseOperation, bundle)
                             }
                         }
                     }
