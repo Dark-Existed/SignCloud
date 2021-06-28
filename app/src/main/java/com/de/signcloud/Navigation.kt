@@ -103,7 +103,7 @@ fun Fragment.navigate(to: Screen, from: Screen) {
 
 }
 
-fun Fragment.navigate(to: Screen, from: Screen, args: Bundle) {
+fun Fragment.navigate(to: Screen, from: Screen, args: Bundle?) {
     if (to == from) {
         throw InvalidParameterException("Can't navigate to $to")
     }

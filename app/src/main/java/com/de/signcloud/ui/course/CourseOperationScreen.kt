@@ -20,6 +20,7 @@ sealed class CourseOperationEvent() {
     object NavigateToCreateCheckIn : CourseOperationEvent()
     object NavigateToCheckInList : CourseOperationEvent()
     object NavigateToCheckIn : CourseOperationEvent()
+    object NavigateToCourseStudent : CourseOperationEvent()
 }
 
 @Composable
@@ -67,9 +68,16 @@ fun StudentCourseOperation(
             modifier = modifier
                 .clickable {
                     onEvent(CourseOperationEvent.NavigateToCheckIn)
-                }
-                .background(Teal200),
+                },
             text = stringResource(id = R.string.check_in)
+        )
+        Spacer(modifier = modifier.height(10.dp))
+        CardItem(
+            modifier = modifier
+                .clickable {
+                    onEvent(CourseOperationEvent.NavigateToCourseStudent)
+                },
+            text = stringResource(id = R.string.course_member)
         )
     }
 }
@@ -84,8 +92,7 @@ fun TeacherCourseOperation(
             modifier = modifier
                 .clickable {
                     onEvent(CourseOperationEvent.NavigateToCreateCheckIn)
-                }
-                .background(Teal200),
+                },
             text = stringResource(id = R.string.create_check_in)
         )
         Spacer(modifier = modifier.height(10.dp))
@@ -94,6 +101,14 @@ fun TeacherCourseOperation(
                 onEvent(CourseOperationEvent.NavigateToCheckInList)
             },
             text = stringResource(id = R.string.check_in_list)
+        )
+        Spacer(modifier = modifier.height(10.dp))
+        CardItem(
+            modifier = modifier
+                .clickable {
+                    onEvent(CourseOperationEvent.NavigateToCourseStudent)
+                },
+            text = stringResource(id = R.string.course_member)
         )
     }
 }

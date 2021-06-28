@@ -39,20 +39,18 @@ class CourseOperationFragment : Fragment() {
                             }
                             is CourseOperationEvent.NavigateToCreateCheckIn -> {
                                 findNavController().popBackStack()
-                                findNavController().navigate(
-                                    R.id.create_check_in_fragment,
-                                    bundle
-                                )
+                                navigate(Screen.CreateCheckIn, Screen.CourseOperation, bundle)
                             }
-                            is CourseOperationEvent.NavigateToCheckInList->{
+                            is CourseOperationEvent.NavigateToCheckInList -> {
                                 findNavController().popBackStack()
-                                findNavController().navigate(
-                                    R.id.check_in_list_fragment,
-                                    bundle
-                                )
+                                navigate(Screen.CheckInList, Screen.CourseOperation, bundle)
                             }
                             is CourseOperationEvent.NavigateToCheckIn -> {
                                 viewModel.getCurrentCheckIn(courseCode)
+                            }
+                            is CourseOperationEvent.NavigateToCourseStudent -> {
+                                findNavController().popBackStack()
+                                navigate(Screen.CourseStudent, Screen.CourseOperation, bundle)
                             }
                         }
                     }
@@ -74,10 +72,7 @@ class CourseOperationFragment : Fragment() {
                 findNavController().popBackStack()
                 val bundle = Bundle()
                 bundle.putSerializable("CheckInInfo", result.data)
-                findNavController().navigate(
-                    R.id.check_in_fragment,
-                    bundle
-                )
+                navigate(Screen.CheckIn, Screen.CourseOperation, bundle)
             } else {
                 Toast.makeText(
                     requireContext(),
