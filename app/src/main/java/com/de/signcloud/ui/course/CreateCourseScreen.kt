@@ -18,7 +18,7 @@ import com.de.signcloud.ui.components.SingleChoiceTextFieldDialog
 import com.de.signcloud.ui.theme.SignCloudTheme
 
 sealed class CreateCourseEvent {
-    data class OnCourseCreate(val state: State) : CreateCourseEvent()
+    data class OnCourseCreate(val textState: TextState) : CreateCourseEvent()
     object SelectSchool : CreateCourseEvent()
     object NavigateBack : CreateCourseEvent()
 }
@@ -28,7 +28,7 @@ fun CreateCourse(
     modifier: Modifier = Modifier,
     gradeItems: List<String>,
     semesterItems: List<String>,
-    state: State = State(),
+    textState: TextState = TextState(),
     onEvent: (CreateCourseEvent) -> Unit
 ) {
     Scaffold(
@@ -48,7 +48,7 @@ fun CreateCourse(
                             .padding(horizontal = 20.dp)
                     ) {
                         CreateCourseContent(
-                            state = state,
+                            textState = textState,
                             gradeItems = gradeItems,
                             semesterItems = semesterItems,
                             onEvent = onEvent
@@ -62,20 +62,20 @@ fun CreateCourse(
 
 @Composable
 fun CreateCourseContent(
-    state: State,
+    textState: TextState,
     gradeItems: List<String>,
     semesterItems: List<String>,
     onEvent: (CreateCourseEvent) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
 
-        GeneralTextField(generalTextFieldState = state.courseNameState,
+        GeneralTextField(generalTextFieldState = textState.courseNameState,
             hintText = stringResource(id = R.string.course_name),
             onImeAction = {}
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        GeneralTextField(generalTextFieldState = state.classNameState,
+        GeneralTextField(generalTextFieldState = textState.classNameState,
             hintText = stringResource(id = R.string.class_name),
             onImeAction = {}
         )
@@ -84,37 +84,37 @@ fun CreateCourseContent(
         SingleChoiceTextFieldDialog(
             label = stringResource(id = R.string.select_grade),
             items = gradeItems,
-            generateTextFieldState = state.gradeSelectedState
+            generateTextFieldState = textState.gradeSelectedState
         )
         Spacer(modifier = Modifier.height(16.dp))
 
         SingleChoiceTextFieldDialog(
             label = stringResource(id = R.string.select_semester),
             items = semesterItems,
-            generateTextFieldState = state.semesterSelectedState
+            generateTextFieldState = textState.semesterSelectedState
         )
         Spacer(modifier = Modifier.height(16.dp))
 
         ReadonlyTextField(
-            state.schoolSelectState,
+            textState.schoolSelectState,
             label = { Text(text = stringResource(id = R.string.select_school)) },
             onClick = { onEvent(CreateCourseEvent.SelectSchool) }
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        GeneralTextField(generalTextFieldState = state.courseRequirementsState,
+        GeneralTextField(generalTextFieldState = textState.courseRequirementsState,
             hintText = stringResource(id = R.string.course_requirement),
             onImeAction = {}
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        GeneralTextField(generalTextFieldState = state.classScheduleState,
+        GeneralTextField(generalTextFieldState = textState.classScheduleState,
             hintText = stringResource(id = R.string.class_schedule),
             onImeAction = {}
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        GeneralTextField(generalTextFieldState = state.examArrangementState,
+        GeneralTextField(generalTextFieldState = textState.examArrangementState,
             hintText = stringResource(id = R.string.exam_arrangement),
             onImeAction = {}
         )
@@ -123,13 +123,13 @@ fun CreateCourseContent(
         Button(
             modifier = Modifier
                 .fillMaxWidth(),
-            enabled = state.courseNameState.isValid &&
-                    state.classNameState.isValid &&
-                    state.gradeSelectedState.isValid &&
-                    state.semesterSelectedState.isValid &&
-                    state.schoolSelectState.isValid,
+            enabled = textState.courseNameState.isValid &&
+                    textState.classNameState.isValid &&
+                    textState.gradeSelectedState.isValid &&
+                    textState.semesterSelectedState.isValid &&
+                    textState.schoolSelectState.isValid,
             onClick = {
-                onEvent(CreateCourseEvent.OnCourseCreate(state))
+                onEvent(CreateCourseEvent.OnCourseCreate(textState))
             },
         ) {
             Text(text = stringResource(id = R.string.create_course))

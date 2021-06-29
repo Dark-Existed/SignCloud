@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.de.signcloud.R
 import com.de.signcloud.ui.components.GeneralTextField
@@ -16,12 +17,13 @@ import com.de.signcloud.ui.components.textfieldstate.GenerateNotNullState
 
 sealed class SetUserInfoEvent() {
     object NavigateBack : SetUserInfoEvent()
-    data class SetUserInfo(val ino: String, val userName:String) : SetUserInfoEvent()
+    object SetUserInfo : SetUserInfoEvent()
 }
 
 @Composable
 fun SetUserInfo(
     modifier: Modifier = Modifier,
+    textState: TextState = TextState(),
     onEvent: (SetUserInfoEvent) -> Unit
 ) {
     Scaffold(
@@ -34,7 +36,7 @@ fun SetUserInfo(
             )
         },
         content = {
-            SetUserInfoContent(modifier = modifier, onEvent = onEvent)
+            SetUserInfoContent(modifier = modifier, textState = textState, onEvent = onEvent)
         }
     )
 }
@@ -42,24 +44,23 @@ fun SetUserInfo(
 @Composable
 fun SetUserInfoContent(
     modifier: Modifier = Modifier,
+    textState: TextState = TextState(),
     onEvent: (SetUserInfoEvent) -> Unit
 ) {
     Column(
         modifier
             .fillMaxWidth()
-            .padding(12.dp, 0.dp)
+            .padding(20.dp, 0.dp)
     ) {
-        val studentWorkIdState = remember { GenerateNotNullState() }
         GeneralTextField(
-            generalTextFieldState = studentWorkIdState,
+            generalTextFieldState = textState.inoState,
             hintText = stringResource(id = R.string.student_work_id),
             onImeAction = {}
         )
         Spacer(modifier = modifier.height(12.dp))
 
-        val userNameState = remember { GenerateNotNullState() }
         GeneralTextField(
-            generalTextFieldState = userNameState,
+            generalTextFieldState = textState.userNameState,
             hintText = stringResource(id = R.string.user_name),
             onImeAction = {}
         )
@@ -68,8 +69,10 @@ fun SetUserInfoContent(
         Button(
             modifier = Modifier
                 .fillMaxWidth(),
-            onClick = {},
-            enabled = studentWorkIdState.isValid && userNameState.isValid
+            onClick = {
+                onEvent(SetUserInfoEvent.SetUserInfo)
+            },
+            enabled = textState.inoState.isValid && textState.userNameState.isValid
         ) {
             Text(text = stringResource(id = R.string.confirm))
         }

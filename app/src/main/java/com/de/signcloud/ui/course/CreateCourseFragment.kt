@@ -21,7 +21,7 @@ class CreateCourseFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.state.initSemesterSelectedText()
+        viewModel.textState.initSemesterSelectedText()
     }
 
     override fun onCreateView(
@@ -36,14 +36,14 @@ class CreateCourseFragment : Fragment() {
                     CreateCourse(
                         gradeItems = viewModel.gradeItems.value!!,
                         semesterItems = viewModel.semesterItems.value!!,
-                        state = viewModel.state
+                        textState = viewModel.textState
                     ) { event ->
                         when (event) {
                             is CreateCourseEvent.SelectSchool -> {
                                 viewModel.navigateToSelectSchool()
                             }
                             is CreateCourseEvent.OnCourseCreate -> {
-                                viewModel.createCourse(event.state)
+                                viewModel.createCourse(event.textState)
                             }
                             is CreateCourseEvent.NavigateBack -> {
                                 activity?.onBackPressedDispatcher?.onBackPressed()
@@ -93,7 +93,7 @@ class CreateCourseFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        viewModel.state.clearState()
+        viewModel.textState.clearState()
         super.onDestroy()
     }
 }

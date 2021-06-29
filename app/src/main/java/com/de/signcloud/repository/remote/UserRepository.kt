@@ -21,10 +21,10 @@ import kotlin.coroutines.CoroutineContext
 
 class User(
     val id: Int,
-    val name: String,
+    var name: String,
     val phone: String,
     val avatar: String,
-    val ino: String,
+    var ino: String,
     var defaultRole: String,
     val token: String
 )
@@ -185,6 +185,18 @@ object UserRepository {
         if (result.code == 200) {
             UserDao.changeDefaultRole(role)
             _user.defaultRole = role
+            Result.Success(result)
+        } else {
+            Result.Failure(RuntimeException("response status is ${result.code}"))
+        }
+    }
+
+    fun setUserInfo(ino: String, userName: String) = request(Dispatchers.IO) {
+        val result = SignCloudNetwork.setUserInfo(ino, userName)
+        if (result.code == 200) {
+            UserDao.setUserInfo(ino, userName)
+            _user.ino = ino
+            _user.name = userName
             Result.Success(result)
         } else {
             Result.Failure(RuntimeException("response status is ${result.code}"))

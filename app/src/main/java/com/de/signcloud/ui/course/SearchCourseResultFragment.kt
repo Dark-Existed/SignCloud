@@ -58,8 +58,11 @@ class SearchCourseResultFragment : Fragment() {
                     ).show()
                 }
             } else {
-                // TODO: 2021/6/18 add why join fail
-                Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    requireContext().getString(R.string.has_joined_the_course),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

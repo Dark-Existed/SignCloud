@@ -60,6 +60,7 @@ fun ChangeRoleContent(
         val selectedOptionIndex = remember { mutableStateOf(curRoleIndex) }
         LazyColumn {
             itemsIndexed(options) { index, item ->
+                Spacer(modifier = modifier.height(10.dp))
                 Row(
                     Modifier
                         .fillMaxWidth()

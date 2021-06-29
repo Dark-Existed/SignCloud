@@ -1,9 +1,8 @@
 package com.de.signcloud.repository.remote
 
-import android.util.Log
 import androidx.lifecycle.liveData
 import com.de.signcloud.api.SignCloudNetwork
-import com.de.signcloud.ui.course.State
+import com.de.signcloud.ui.course.TextState
 import com.de.signcloud.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
@@ -20,21 +19,21 @@ object CourseRepository {
         }
     }
 
-    fun createCourse(state: State) = request(Dispatchers.IO) {
-        val splitList = state.schoolSelectState.text.split("-")
+    fun createCourse(textState: TextState) = request(Dispatchers.IO) {
+        val splitList = textState.schoolSelectState.text.split("-")
         val schoolName = splitList[0]
         val collegeName = splitList[1]
         val result = SignCloudNetwork.createCourse(
             UserRepository.user.name,
-            state.courseNameState.text,
-            state.classNameState.text,
+            textState.courseNameState.text,
+            textState.classNameState.text,
             schoolName,
             collegeName,
-            state.gradeSelectedState.text,
-            state.semesterSelectedState.text,
-            state.courseRequirementsState.text,
-            state.examArrangementState.text,
-            state.classScheduleState.text
+            textState.gradeSelectedState.text,
+            textState.semesterSelectedState.text,
+            textState.courseRequirementsState.text,
+            textState.examArrangementState.text,
+            textState.classScheduleState.text
         )
         if (result.code == 200) {
             Result.Success(result)

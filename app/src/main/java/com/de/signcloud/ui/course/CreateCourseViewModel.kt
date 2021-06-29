@@ -12,8 +12,8 @@ import java.util.*
 
 class CreateCourseViewModel() : ViewModel() {
 
-    private val _state = State()
-    val state: State
+    private val _state = TextState()
+    val textState: TextState
         get() = _state
 
     private val _schoolsSuggestions = CourseRepository.getSchoolsSuggestions()
@@ -34,14 +34,14 @@ class CreateCourseViewModel() : ViewModel() {
     val semesterItems: LiveData<List<String>>
         get() = _semesterItems
 
-    private val _createState = MutableLiveData<State>()
+    private val _createState = MutableLiveData<TextState>()
 
     val createCourseLiveData = Transformations.switchMap(_createState) {
         CourseRepository.createCourse(it)
     }
 
-    fun createCourse(state: State) {
-        _createState.value = state
+    fun createCourse(textState: TextState) {
+        _createState.value = textState
     }
 
     fun navigateToSelectSchool() {
@@ -75,7 +75,7 @@ class CreateCourseViewModel() : ViewModel() {
 }
 
 
-class State {
+class TextState {
     private val _courseNameState = GenerateNotNullState()
     val courseNameState: GenerateNotNullState
         get() = _courseNameState
@@ -116,7 +116,6 @@ class State {
         val calendar: Calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
-        Log.d("CreateCourseViewModel", month.toString())
         _semesterSelectedState.text = if (month <= 6) {
             "${year - 1}-$year-2"
         } else {

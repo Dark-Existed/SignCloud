@@ -57,6 +57,7 @@
     <string name="search_course">搜索课程</string>
     <string name="search_result">搜索结果</string>
     <string name="join_course">加入课程</string>
+    <string name="has_joined_the_course">已在此课程中</string>
     <string name="join_success">加入成功</string>
 
     <string name="change_role">修改角色</string>

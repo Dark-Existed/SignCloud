@@ -28,7 +28,7 @@ class SelectSchoolFragment : Fragment() {
                         SelectSchool(allSchools = it) { event ->
                             when (event) {
                                 is SelectSchoolEvent.OnItemSelected -> {
-                                    viewModel.state.schoolSelectState.text =
+                                    viewModel.textState.schoolSelectState.text =
                                         event.schoolName + '-' + event.collegeName
                                     findNavController().popBackStack()
                                 }

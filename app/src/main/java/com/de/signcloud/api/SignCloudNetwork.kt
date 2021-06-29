@@ -81,6 +81,9 @@ object SignCloudNetwork {
 
     suspend fun changeRole(role: String) = userSettingService.setUserDefaultRole(role).await()
 
+    suspend fun setUserInfo(ino: String, userName: String) =
+        userSettingService.setUserInfo(ino, userName).await()
+
 
     private val checkInService = ServiceCreator.createWithToken(CheckInService::class.java)
 

@@ -44,4 +44,11 @@ object UserDao {
         }
     }
 
+    suspend fun setUserInfo(ino: String, userName: String) {
+        context.userInfoDataStore.edit { userInfo ->
+            userInfo[UserInfoDataStoreKey.ino] = ino
+            userInfo[UserInfoDataStoreKey.userNameKey] = userName
+        }
+    }
+
 }
