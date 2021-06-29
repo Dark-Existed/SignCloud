@@ -142,6 +142,9 @@ fun StudentCourseList(
                     onEvent = onEvent
                 )
             }
+            item {
+                Spacer(Modifier.height(64.dp))
+            }
         }
     }
 
@@ -172,6 +175,9 @@ fun TeacherCourseList(
                     shape = RoundedCornerShape(topStart = 24.dp),
                     onEvent = onEvent
                 )
+            }
+            item {
+                Spacer(Modifier.height(64.dp))
             }
         }
     }
