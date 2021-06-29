@@ -65,8 +65,7 @@ class CreateCourseFragment : Fragment() {
             val result = createCourseResult.getOrNull()
             if (result != null) {
                 when (result.code) {
-                    -1 -> {
-                    }
+                    -1 -> {}
                     200 -> {
                         val args = Bundle()
                         args.putString("courseCode", result.data?.code)

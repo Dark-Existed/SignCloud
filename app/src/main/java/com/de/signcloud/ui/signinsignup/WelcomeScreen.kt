@@ -49,7 +49,7 @@ fun WelcomeScreen(onEvent: (WelcomeEvent) -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .brandingPreferredHeight(showBranding, heightDp)
-                .offset(y = offset)
+                .offset(y = offset * 9 / 10)
                 .onSizeChanged {
                     if (showBranding) {
                         heightWithBranding = it.height
