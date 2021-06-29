@@ -94,6 +94,7 @@
     <string name="time_end">时间截止</string>
     <string name="check_in_success">签到成功</string>
     <string name="check_in_fail">签到失败</string>
+    <string name="check_in_repeated">签到重复</string>
     <string name="processing">进行中</string>
 
     <string name="check_in_detail">签到详情</string>
@@ -107,5 +108,7 @@
     <string name="check_in_has_finish">签到已截止</string>
 
     <string name="no_item">没有数据</string>
+
+    <string name="sign_in_time_out">登录过期,重新登陆</string>
 
 </resources>

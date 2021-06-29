@@ -86,12 +86,24 @@ class CheckInFragment : Fragment() {
         viewModel.checkInResult.observe(viewLifecycleOwner) { checkInResult ->
             val result = checkInResult.getOrNull()
             if (result != null) {
-                findNavController().popBackStack()
-                Toast.makeText(
-                    requireContext(),
-                    requireContext().getString(R.string.check_in_success),
-                    Toast.LENGTH_SHORT
-                ).show()
+                when (result.code) {
+                    200 -> {
+                        findNavController().popBackStack()
+                        Toast.makeText(
+                            requireContext(),
+                            requireContext().getString(R.string.check_in_success),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    701 -> {
+                        Toast.makeText(
+                            requireContext(),
+                            requireContext().getString(R.string.check_in_repeated),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
             } else {
                 Toast.makeText(
                     requireContext(),

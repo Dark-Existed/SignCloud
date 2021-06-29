@@ -50,10 +50,13 @@ object CheckInRepository {
         distance: Double
     ) = request(Dispatchers.IO) {
         val result = SignCloudNetwork.checkIn(checkInId, latitude, longitude, distance)
-        if (result.code == 200) {
-            Result.Success(result)
-        } else {
-            Result.Failure(RuntimeException("response status code is ${result.code}"))
+        when (result.code) {
+            200, 701 -> {
+                Result.Success(result)
+            }
+            else -> {
+                Result.Failure(RuntimeException("response status code is ${result.code}"))
+            }
         }
     }
 

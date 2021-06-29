@@ -95,4 +95,8 @@
         android:id="@+id/check_in_history_fragment"
         android:name="com.de.signcloud.ui.checkin.CheckInHistoryFragment"
         android:label="Check In History"/>
+    <fragment
+        android:id="@+id/set_user_avatar_fragment"
+        android:name="com.de.signcloud.ui.setting.SetAvatarFragment"
+        android:label="Set User Avatar"/>
 </navigation>

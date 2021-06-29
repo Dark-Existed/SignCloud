@@ -30,6 +30,7 @@ enum class Screen {
     CheckInDetail,
     CheckInHistory,
     SetUserInfo,
+    SetAvatar,
 }
 
 fun Fragment.navigate(to: Screen, from: Screen) {
@@ -106,6 +107,9 @@ fun Fragment.navigate(to: Screen, from: Screen) {
         }
         Screen.SetUserInfo -> {
             findNavController().navigate(R.id.set_user_info_fragment)
+        }
+        Screen.SetAvatar -> {
+            findNavController().navigate(R.id.set_user_avatar_fragment)
         }
     }
 
@@ -184,6 +188,9 @@ fun Fragment.navigate(to: Screen, from: Screen, args: Bundle?) {
         }
         Screen.SetUserInfo -> {
             findNavController().navigate(R.id.set_user_info_fragment, args)
+        }
+        Screen.SetAvatar -> {
+            findNavController().navigate(R.id.set_user_avatar_fragment, args)
         }
     }
 }

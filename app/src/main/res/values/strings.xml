@@ -95,6 +95,7 @@
     <string name="time_end">Time End</string>
     <string name="check_in_success">Check In Success</string>
     <string name="check_in_fail">Check In Fail</string>
+    <string name="check_in_repeated">Check In Repeated</string>
     <string name="processing">Processing</string>
 
     <string name="check_in_detail">Check In Detail</string>
@@ -108,5 +109,7 @@
     <string name="check_in_has_finish">Check In Has Finish</string>
 
     <string name="no_item">No Item</string>
+
+    <string name="sign_in_time_out">Sign In Time Out</string>
 
 </resources>

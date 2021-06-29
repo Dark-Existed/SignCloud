@@ -128,7 +128,7 @@ fun CardItem(
     modifier: Modifier,
     text: String
 ) {
-    Card(shape = RoundedCornerShape(8.dp)) {
+    Card(shape = RoundedCornerShape(8.dp), elevation = 6.dp) {
         Column(
             modifier = modifier
                 .height(180.dp)
