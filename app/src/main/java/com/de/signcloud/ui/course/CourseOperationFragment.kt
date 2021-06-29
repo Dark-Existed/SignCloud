@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -57,6 +58,20 @@ class CourseOperationFragment : Fragment() {
                                 findNavController().popBackStack()
                                 navigate(Screen.CheckInHistory, Screen.CourseOperation, bundle)
                             }
+                            is CourseOperationEvent.DeleteCourse -> {
+                                AlertDialog.Builder(requireContext()).apply {
+                                    setTitle(R.string.delete_course)
+                                    setCancelable(true)
+                                    setPositiveButton(R.string.confirm) { dialog, which ->
+                                        viewModel.deleteCourse(courseCode)
+                                    }
+                                    setNegativeButton(R.string.cancel) { dialog, which ->
+
+                                    }
+                                    show()
+                                }
+
+                            }
                         }
                     }
                 }
@@ -82,6 +97,23 @@ class CourseOperationFragment : Fragment() {
                 Toast.makeText(
                     requireContext(),
                     requireContext().getString(R.string.no_check_in_available),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        viewModel.deleteCourseResponse.observe(viewLifecycleOwner) { deleteResult ->
+            val result = deleteResult.getOrNull()
+            if (result != null) {
+                findNavController().popBackStack()
+                Toast.makeText(
+                    requireContext(),
+                    requireContext().getString(R.string.success),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    requireContext().getString(R.string.fail),
                     Toast.LENGTH_SHORT
                 ).show()
             }

@@ -66,6 +66,7 @@
     <string name="user_name">用户名</string>
     <string name="sign_out">退出登入</string>
     <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
 
     <string name="student">学生</string>
     <string name="teacher">教师</string>
@@ -80,6 +81,7 @@
     <string name="course_operation">课程操作</string>
     <string name="course_member">课程成员</string>
     <string name="check_in_history">签到历史</string>
+    <string name="delete_course">删除课程</string>
 
     <string name="create_check_in">创建签到</string>
     <string name="check_in_list">签到列表</string>

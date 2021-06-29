@@ -67,6 +67,8 @@ object SignCloudNetwork {
 //        null
     ).await()
 
+    suspend fun deleteCourse(code: String) = courseService.deleteCourse(code).await()
+
     suspend fun getCourseCreate(pageNum: Int = 0, pageSize: Int = 999) =
         courseService.getCoursesCreate(pageNum, pageSize).await()
 

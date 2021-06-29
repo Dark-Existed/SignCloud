@@ -61,3 +61,5 @@ class Course(
     val cover: String,
     @SerializedName("qrcode") val qrCode: String,
 ) : Serializable
+
+class DeleteCourseResponse(val code: Int, val message: String)

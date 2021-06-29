@@ -1,5 +1,6 @@
 package com.de.signcloud.repository.remote
 
+import android.util.Log
 import androidx.lifecycle.liveData
 import com.de.signcloud.api.SignCloudNetwork
 import com.de.signcloud.ui.course.TextState
@@ -35,6 +36,17 @@ object CourseRepository {
             textState.examArrangementState.text,
             textState.classScheduleState.text
         )
+        Log.d("CourseRepository", result.code.toString())
+        Log.d("CourseRepository", result.message)
+        if (result.code == 200) {
+            Result.Success(result)
+        } else {
+            Result.Failure(RuntimeException("response status code is ${result.code}"))
+        }
+    }
+
+    fun deleteCourse(code: String) = request(Dispatchers.IO) {
+        val result = SignCloudNetwork.deleteCourse(code)
         if (result.code == 200) {
             Result.Success(result)
         } else {

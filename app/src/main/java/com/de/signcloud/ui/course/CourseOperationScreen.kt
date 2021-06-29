@@ -22,6 +22,7 @@ sealed class CourseOperationEvent() {
     object NavigateToCheckIn : CourseOperationEvent()
     object NavigateToCourseStudent : CourseOperationEvent()
     object NavigateToCheckInHistory : CourseOperationEvent()
+    object DeleteCourse : CourseOperationEvent()
 }
 
 @Composable
@@ -118,6 +119,14 @@ fun TeacherCourseOperation(
                     onEvent(CourseOperationEvent.NavigateToCourseStudent)
                 },
             text = stringResource(id = R.string.course_member)
+        )
+        Spacer(modifier = modifier.height(10.dp))
+        CardItem(
+            modifier = modifier
+                .clickable {
+                    onEvent(CourseOperationEvent.DeleteCourse)
+                },
+            text = stringResource(id = R.string.delete_course)
         )
     }
 }

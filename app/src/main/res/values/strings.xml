@@ -67,6 +67,7 @@
     <string name="user_name">User Name</string>
     <string name="sign_out">Sign Out</string>
     <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 
     <string name="student">Student</string>
     <string name="teacher">Teacher</string>
@@ -81,6 +82,7 @@
     <string name="course_operation">Course Operation</string>
     <string name="course_member">Course Member</string>
     <string name="check_in_history">Check In History</string>
+    <string name="delete_course">Delete Course</string>
 
     <string name="create_check_in">Create Check In</string>
     <string name="check_in_list">Check In List</string>

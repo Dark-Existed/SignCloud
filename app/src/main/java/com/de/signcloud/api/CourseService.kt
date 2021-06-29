@@ -27,6 +27,11 @@ interface CourseService {
         @Query("teachProgress") classSchedule: String?,
     ): Call<CreateCourseResponse>
 
+    @DELETE("/api/classes/courses")
+    fun deleteCourse(
+        @Query("code") code: String
+    ): Call<DeleteCourseResponse>
+
     @GET("/api/classes/courses/uid")
     fun getCoursesCreate(
         @Query("pageNum") pageNum: Int,

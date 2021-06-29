@@ -23,7 +23,6 @@ class ChangeRoleViewModel : ViewModel() {
     }
     fun changeRole(roleType: Int) {
         val role = userType[roleType]
-        Log.d("ChangeRoleViewModel", role)
         _role.value = role
     }
 
