@@ -61,7 +61,9 @@
     <string name="join_success">Join Success</string>
 
     <string name="change_role">Change Role</string>
+    <string name="set_user_info">Set User Info</string>
     <string name="student_work_id">Student/Work Id</string>
+    <string name="user_name">User Name</string>
     <string name="sign_out">Sign Out</string>
     <string name="confirm">Confirm</string>
 

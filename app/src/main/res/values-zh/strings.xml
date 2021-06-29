@@ -60,7 +60,9 @@
     <string name="join_success">加入成功</string>
 
     <string name="change_role">修改角色</string>
+    <string name="set_user_info">设置用户信息</string>
     <string name="student_work_id">学工号</string>
+    <string name="user_name">用户名</string>
     <string name="sign_out">退出登入</string>
     <string name="confirm">确认</string>
 

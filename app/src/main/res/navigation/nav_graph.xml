@@ -88,9 +88,9 @@
         android:name="com.de.signcloud.ui.checkin.CheckInDetailFragment"
         android:label="Check In Detail"/>
     <fragment
-        android:id="@+id/set_id_num_fragment"
-        android:name="com.de.signcloud.ui.setting.SetIdFragment"
-        android:label="Set Id"/>
+        android:id="@+id/set_user_info_fragment"
+        android:name="com.de.signcloud.ui.setting.SetUserInfoFragment"
+        android:label="Set User Info"/>
     <fragment
         android:id="@+id/check_in_history_fragment"
         android:name="com.de.signcloud.ui.checkin.CheckInHistoryFragment"

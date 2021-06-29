@@ -52,21 +52,16 @@ class HomeFragment : Fragment() {
                                 is HomeEvent.NavigateToJoinCourse -> viewModel.navigateToJoinCourse()
                                 is HomeEvent.NavigateToChangeRole -> viewModel.navigateToChangeRole()
                                 is HomeEvent.NavigateToScanCode -> viewModel.navigateToScanCode()
+                                is HomeEvent.NavigateSetUserInfo -> viewModel.navigateToSetUserInfo()
                                 is HomeEvent.NavigateToCourseOperation -> {
                                     val bundle = Bundle()
                                     bundle.putString("CourseCode", event.code)
-                                    findNavController().navigate(
-                                        R.id.course_operation_fragment,
-                                        bundle
-                                    )
+                                    navigate(Screen.CourseOperation, Screen.Home, bundle)
                                 }
                                 is HomeEvent.NavigateToCourseDetail -> {
                                     val bundle = Bundle()
                                     bundle.putSerializable("course", event.course)
-                                    findNavController().navigate(
-                                        R.id.course_detail_fragment,
-                                        bundle
-                                    )
+                                    navigate(Screen.CourseDetail, Screen.Home, bundle)
                                 }
                                 is HomeEvent.SignOut -> {
                                     viewModel.signOut()

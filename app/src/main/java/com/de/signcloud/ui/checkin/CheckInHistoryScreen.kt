@@ -35,7 +35,7 @@ fun CheckInHistory(
         topBar = {
             SignCloudTopAppBarWithBack(
                 topAppBarText = stringResource(id = R.string.check_in_history),
-                onBackPressed = { CheckInHistoryEvent.NavigateBack }
+                onBackPressed = { onEvent(CheckInHistoryEvent.NavigateBack) }
             )
         },
         content = {

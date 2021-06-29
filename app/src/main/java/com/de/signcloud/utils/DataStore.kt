@@ -13,6 +13,7 @@ object UserInfoDataStoreKey {
     val userIdKey = intPreferencesKey("userId")
     val userNameKey = stringPreferencesKey("userName")
     val phoneKey = stringPreferencesKey("phone")
+    val ino = stringPreferencesKey("ino")
     val avatar = stringPreferencesKey("avatar")
     val defaultRoleKey = stringPreferencesKey("defaultRole")
     val tokenKey = stringPreferencesKey("token")

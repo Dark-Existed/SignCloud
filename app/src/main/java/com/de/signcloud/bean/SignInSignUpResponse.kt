@@ -17,6 +17,7 @@ class SignInResponse(val code: Int, val message: String, val data: Data?) {
         val id: Int,
         val phone: String,
         @SerializedName("username") val userName: String,
+        val ino: String,
         val avatar: String,
         val roles: List<String>,
         val defaultRole: String

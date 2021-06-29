@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.de.signcloud.ui.theme.SignCloudTheme
 
-class SetIdFragment : Fragment() {
+class SetUserInfoFragment : Fragment() {
 
-    private val viewModel: SetIdViewModel by viewModels()
+    private val viewModel: SetUserInfoModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,7 +21,7 @@ class SetIdFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 SignCloudTheme {
-                    SetIdContent {
+                    SetUserInfo {
 
                     }
                 }

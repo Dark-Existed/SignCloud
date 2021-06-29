@@ -70,7 +70,7 @@ sealed class HomeEvent {
     data class NavigateToCourseOperation(val code: String) : HomeEvent()
 
     object NavigateToChangeRole : HomeEvent()
-    object NavigateSetId : HomeEvent()
+    object NavigateSetUserInfo : HomeEvent()
     object SignOut : HomeEvent()
 }
 

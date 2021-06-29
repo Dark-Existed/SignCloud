@@ -24,6 +24,7 @@ class User(
     val name: String,
     val phone: String,
     val avatar: String,
+    val ino: String,
     var defaultRole: String,
     val token: String
 )
@@ -46,9 +47,10 @@ object UserRepository {
                 val userName = it[UserInfoDataStoreKey.userNameKey] ?: ""
                 val phone = it[UserInfoDataStoreKey.phoneKey] ?: ""
                 val avatar = it[UserInfoDataStoreKey.avatar] ?: ""
+                val ino = it[UserInfoDataStoreKey.ino] ?: ""
                 val defaultRole = it[UserInfoDataStoreKey.defaultRoleKey] ?: ""
                 val token = it[UserInfoDataStoreKey.tokenKey] ?: ""
-                _user = User(userId, userName, phone, avatar, defaultRole, token)
+                _user = User(userId, userName, phone, avatar, ino, defaultRole, token)
                 true
             }
         }
@@ -161,17 +163,19 @@ object UserRepository {
         val userName = signInResponse.data.userInfo!!.userName
         val phone = signInResponse.data.userInfo.phone
         val avatar = signInResponse.data.userInfo.avatar
+        val ino = signInResponse.data.userInfo.ino
         val defaultRole = signInResponse.data.userInfo.defaultRole
         val token = signInResponse.data.token!!
         context.userInfoDataStore.edit { userInfo ->
             userInfo[UserInfoDataStoreKey.userIdKey] = userId
             userInfo[UserInfoDataStoreKey.userNameKey] = userName
             userInfo[UserInfoDataStoreKey.phoneKey] = phone
+            userInfo[UserInfoDataStoreKey.ino] = ino
             userInfo[UserInfoDataStoreKey.avatar] = avatar
             userInfo[UserInfoDataStoreKey.defaultRoleKey] = defaultRole
             userInfo[UserInfoDataStoreKey.tokenKey] = token
         }
-        _user = User(userId, userName, phone, avatar, defaultRole, token)
+        _user = User(userId, userName, phone, avatar, ino, defaultRole, token)
         UserDao.signIn()
     }
 

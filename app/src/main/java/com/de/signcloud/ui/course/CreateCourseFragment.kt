@@ -64,17 +64,31 @@ class CreateCourseFragment : Fragment() {
         viewModel.createCourseLiveData.observe(viewLifecycleOwner) { createCourseResult ->
             val result = createCourseResult.getOrNull()
             if (result != null) {
-                if (result.code == 200) {
-                    val args = Bundle()
-                    args.putString("courseCode", result.data?.code)
-                    args.putString("imageUrl", result.data?.imageUrl)
-                    findNavController().popBackStack()
-                    navigate(Screen.CreateCourseResult, Screen.CreateCourse, args)
-                } else {
-                    Toast.makeText(context, context?.getString(R.string.create_course_fail), Toast.LENGTH_SHORT).show()
+                when (result.code) {
+                    -1 -> {
+                    }
+                    200 -> {
+                        val args = Bundle()
+                        args.putString("courseCode", result.data?.code)
+                        args.putString("imageUrl", result.data?.imageUrl)
+                        findNavController().popBackStack()
+                        result.code = -1
+                        navigate(Screen.CreateCourseResult, Screen.CreateCourse, args)
+                    }
+                    else -> {
+                        Toast.makeText(
+                            context,
+                            context?.getString(R.string.create_course_fail),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             } else {
-                Toast.makeText(context, context?.getString(R.string.network_error), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context?.getString(R.string.network_error),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
